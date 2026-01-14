@@ -4,10 +4,158 @@
  */
 package dao;
 
+import connection.ConnectionFactory;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JOptionPane;
+import model.Falecido;
+import model.Sepultura;
+
+
 /**
  *
  * @author Váleria Matias
  */
 public class FalecidoDao {
     
+      public void inserir(Falecido falecido){
+        
+        String sql = "INSERT INTO falecido(nomecompleto,dataNascimento,possuiCertidaoObito"
+                + ",cpf,sepultura,dataFalecimento,familiarResponsavel)VALUES(?,?,?,?,?,?,?) ";
+        
+        try( Connection conn = ConnectionFactory.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)
+            )
+        {
+            stmt.setString(1, falecido.getNomeCompleto());
+            stmt.setDate(2, java.sql.Date.valueOf(falecido.getDataNascimento()));
+            stmt.setBoolean(3, falecido.isPossuiCertidaoObito());
+            stmt.setString(4, falecido.getCpf());
+            stmt.setInt(5, falecido.getSepultura().getIdSepultura());  
+            stmt.setDate(6, java.sql.Date.valueOf(falecido.getDataFalecimento()));
+            stmt.setString(7, falecido.getFamiliarResponsavel());
+            
+            stmt.execute();
+            JOptionPane.showMessageDialog(
+            null,
+            "Falecido cadastrado com sucesso!",
+            "Cadastro realizado",
+            JOptionPane.INFORMATION_MESSAGE);           
+        }catch(SQLException e){
+            System.out.println("Erro ao criar registro de falecido");
+            e.printStackTrace();
+        }
+    
+    
+    }  
+    
+    public void atualizar(Falecido falecido){
+        
+        String sql = "UPDATE falecido SET "
+            + "nomecompleto = ?,"
+            + "dataNascimento = ?,"
+            + "possuiCertidaoObito = ?,"
+            + "cpf = ?,"
+            + "sepultura = ?,"
+            + "dataFalecimento = ?,"
+            + "familiarResponsavel = ?"
+            + " WHERE idFalecido = ?";
+        
+        try( Connection conn = ConnectionFactory.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)
+            )
+        {
+            stmt.setString(1, falecido.getNomeCompleto());
+            stmt.setDate(2, java.sql.Date.valueOf(falecido.getDataNascimento()));
+            stmt.setBoolean(3, falecido.isPossuiCertidaoObito());
+            stmt.setString(4, falecido.getCpf());
+            stmt.setInt(5, falecido.getSepultura().getIdSepultura()); 
+            stmt.setDate(6, java.sql.Date.valueOf(falecido.getDataFalecimento()));
+            stmt.setString(7, falecido.getFamiliarResponsavel());
+            stmt.setInt(8, falecido.getIdFalecido());
+            
+            stmt.executeUpdate();
+            JOptionPane.showMessageDialog(
+            null,
+            "Registro de Falecido atualizado com sucesso!",
+            "Atualização realizada",
+            JOptionPane.INFORMATION_MESSAGE);           
+        }catch(SQLException e){
+            System.out.println("Erro ao atualizar Registro de Falecdio");
+            e.printStackTrace();
+        }    
+    }
+    
+    public void deletar(int idFalecido) {
+            //detro dessa string coloca o comando sql do metodo para deletar
+    String sql = "DELETE FROM falecido WHERE idFalecido = ?";
+
+            //abre a conexão e passa o comando sql para o stmt
+    try (Connection conn = ConnectionFactory.getConnection();
+         PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+        stmt.setInt(1, idFalecido);
+
+        stmt.executeUpdate();
+        
+        //abre a caixa de dialogo e exibe uma mensagem de acordo com a operação
+        JOptionPane.showMessageDialog(
+            null,
+            "registro excluído com sucesso!",
+            "Exclusão realizada",
+            JOptionPane.INFORMATION_MESSAGE
+        );
+        
+        //caso dê erro, exibe a mensagem
+    } catch (SQLException e) {
+        System.out.println("Erro ao excluir Registro");
+        e.printStackTrace();
+    }
+  }
+    
+    public List<Falecido> listarTodos(){
+        
+        String sql = "SELECT * FROM falecido";
+        
+        List<Falecido> falecidos = new ArrayList<>();
+        
+      //Abre conexão,Prepara o SQL,Executa o SELECT,Recebe o resultado no ResultSet
+        try(Connection conn = ConnectionFactory.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql); 
+            ResultSet rs = stmt.executeQuery())
+        {
+           //equando exisitir linhas para serem visualizadas ele vai preenchendo os dados
+           while(rs.next()){
+           Falecido f = new Falecido();
+           //nome do jeito que está no bd
+           f.setIdFalecido(rs.getInt("idFalecido"));
+           f.setNomeCompleto(rs.getString("nomeCompleto"));
+           f.setDataNascimento(rs.getDate("dataNascimento").toLocalDate());
+           f.setPossuiCertidaoObito(rs.getBoolean("possuiCertidaoObito"));
+           f.setCpf(rs.getString("cpf"));
+           f.setDataFalecimento(rs.getDate("dataFalecimento").toLocalDate());
+           f.setFamiliarResponsavel(rs.getString("familiarResponsavel"));
+           //adiciona o objeto dentro do array de falecidos
+          //Para pegar a referencia de sepultura tem que ser assim
+            Sepultura s = new Sepultura();
+            s.setIdSepultura(rs.getInt("sepultura")); // nome da coluna FK na tabela falecido
+            f.setSepultura(s);
+                       
+           falecidos.add(f);
+           
+           
+           }      
+                       
+        }catch(SQLException e){
+            System.out.println("Erro ao listar os falecidos");
+            e.printStackTrace();
+        }  
+   
+        return falecidos;
+       
+    }
 }
