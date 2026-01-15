@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package dao;
 
 import connection.ConnectionFactory;
@@ -45,11 +41,11 @@ public class FalecidoDao {
             "Falecido cadastrado com sucesso!",
             "Cadastro realizado",
             JOptionPane.INFORMATION_MESSAGE);           
-        }catch(SQLException e){
-            System.out.println("Erro ao criar registro de falecido");
-            e.printStackTrace();
-        }
-    
+        } catch (SQLException e) {
+        // MUITO IMPORTANTE: Mudar de System.out para THROW
+        // Isso impede que a TelaFalecido mostre a mensagem de "Sucesso"
+        throw new RuntimeException("Erro ao inserir no banco: " + e.getMessage());
+    }
     
     }  
     
@@ -142,7 +138,7 @@ public class FalecidoDao {
            //adiciona o objeto dentro do array de falecidos
           //Para pegar a referencia de sepultura tem que ser assim
             Sepultura s = new Sepultura();
-            s.setIdSepultura(rs.getInt("sepultura")); // nome da coluna FK na tabela falecido
+            s.setIdSepultura(rs.getInt("idepultura")); // nome da coluna FK na tabela falecido
             f.setSepultura(s);
                        
            falecidos.add(f);
@@ -151,11 +147,13 @@ public class FalecidoDao {
            }      
                        
         }catch(SQLException e){
-            System.out.println("Erro ao listar os falecidos");
-            e.printStackTrace();
-        }  
-   
-        return falecidos;
-       
-    }
+            // Além de imprimir, joga o erro para a Tela tratar
+            throw new RuntimeException("Erro no Banco de Dados: " + e.getMessage());
+        }
+           // System.out.println("Erro ao listar os falecidos");
+           // e.printStackTrace();Esses só imprime no console
+           
+    //exibe a lista
+    return falecidos;
+}
 }

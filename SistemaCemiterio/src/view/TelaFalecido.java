@@ -1,8 +1,13 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
-package view;
+ package view;
+
+import java.time.format.DateTimeFormatter;
+import dao.FalecidoDao;
+import java.time.LocalDate;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import model.Falecido;
+import model.Sepultura;
 
 /**
  *
@@ -17,6 +22,155 @@ public class TelaFalecido extends javax.swing.JFrame {
      */
     public TelaFalecido() {
         initComponents();
+        listar();
+    }
+    
+    
+    private void cadastrar(){
+         try{
+            // Converter data de nascimento e falecimento
+            DateTimeFormatter brasil = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            LocalDate dataNascimento = LocalDate.parse(txtDataNascimento.getText(),brasil);
+            LocalDate dataFalecimento = LocalDate.parse(txtDataFalecimento.getText(),brasil);
+
+            // Converte certidão de óbito (entrada: "sim" ou "não")
+            boolean possuiCertidao = txtCertidaoObito.getText().equalsIgnoreCase("sim");
+            
+            //Pega o texto do campo onde o usuário digitou o ID da sepultura e converte para inteiro
+            int idSepultura = Integer.parseInt(txtSepulturaFalecido.getText());
+
+
+            // Cria sepultura apenas com o id
+            Sepultura sepult = new Sepultura();
+            sepult.setIdSepultura(idSepultura);
+
+            
+            //Cria objeto falecido
+            Falecido f = new Falecido(
+               0,// id gerado automaticamente
+               txtNomeCompleto.getText(),
+               dataNascimento,
+               possuiCertidao,
+               txtCpf.getText(),
+               sepult,
+               dataFalecimento,
+               txtFamiliarResponsavelFalecido.getText()
+               );
+            
+               //inserindo no banco
+            new FalecidoDao().inserir(f);
+               JOptionPane.showMessageDialog(this,"Falecido cadastrado com sucesso!");
+               
+               listar();
+               limparCampos();
+               
+        } catch(Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this,"Erro ao cadastrar");
+        }
+    }               
+    
+    private void listar(){
+        try {
+            DefaultTableModel modelo = (DefaultTableModel) tblFalecidos.getModel();
+            modelo.setRowCount(0);
+            
+            List<Falecido> lista = new FalecidoDao().listarTodos();
+            
+            for(Falecido f : lista) {
+                System.out.println("Encontrei: " + f.getNomeCompleto()); // ADICIONE ISSO
+                String temCertidao = f.isPossuiCertidaoObito() ? "Sim" : "Não";
+                
+                modelo.addRow(new Object[]{f.getIdFalecido(),f.getNomeCompleto(),f.getCpf(), temCertidao,
+                f.getSepultura().getIdSepultura(),f.getDataNascimento(),f.getDataFalecimento(),f.getFamiliarResponsavel()});         
+                }
+            
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+    }    
+    
+    private void deletar(){
+        //pega a linha que o usuário selecionar
+        int row = tblFalecidos.getSelectedRow();
+        //Quando nenhuma linha é escolhida
+        if (row == -1) return;
+        
+        int id = Integer.parseInt(tblFalecidos.getValueAt(row,0).toString());
+        
+        try{
+         // chama o DAO para deletar
+            new FalecidoDao().deletar(id);
+            //Atualiza a lista
+            listar();
+            
+            JOptionPane.showMessageDialog(this,"Falecido com ID: \"" + id + "\" foi excluído com sucesso!");
+            
+            limparCampos();
+            
+        } catch(Exception e) {
+              e.printStackTrace();
+              JOptionPane.showMessageDialog(this,"Falha ao Excluir falecido com ID:\""+ id +"\"");
+            }
+        }
+    
+    private void atualizar(){
+        //pega a linha que o usuário selecionar
+        int row = tblFalecidos.getSelectedRow();
+        //Quando nenhuma linha é escolhida
+        if (row == -1) return;
+        
+        int id = Integer.parseInt(tblFalecidos.getValueAt(row,0).toString());
+        
+        try{
+            
+            // ajusta o modelo da data para o formato BR
+            DateTimeFormatter brasil = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            
+            //Pega o texto do campo onde o usuário digitou o ID da sepultura e converte para inteiro
+            int idSepultura = Integer.parseInt(txtSepulturaFalecido.getText());
+            
+            // Cria sepultura apenas com o id
+            Sepultura sepult = new Sepultura();
+            sepult.setIdSepultura(idSepultura);
+
+            //Cria objeto falecido
+            Falecido f = new Falecido(
+               id,// id gerado automaticamente
+               txtNomeCompleto.getText(),
+               LocalDate.parse(txtDataNascimento.getText(), brasil),   
+               txtCertidaoObito.getText().equalsIgnoreCase("Sim"),
+               txtCpf.getText(),
+               sepult,
+               LocalDate.parse(txtDataFalecimento.getText(),brasil),
+               txtFamiliarResponsavelFalecido.getText()
+               );
+           
+         // chama o DAO para atualizar os dados
+            new FalecidoDao().atualizar(f);
+            
+            //Atualiza a lista
+            listar();
+             JOptionPane.showMessageDialog(this,
+            "Dados do falecido \"" + f.getNomeCompleto() + "\" atualizados com sucesso!");    
+             
+             limparCampos();
+             
+        } catch(Exception e) {
+              e.printStackTrace();
+              JOptionPane.showMessageDialog(this,"Falha ao atualizar os dados do falecido com ID:");
+            }
+        }
+    
+    private void limparCampos(){
+        txtNomeCompleto.setText("");
+        txtDataNascimento.setText("");
+        txtCertidaoObito.setText("");
+        txtCpf.setText("");
+        txtSepulturaFalecido.setText("");
+        txtDataFalecimento.setText("");
+        txtFamiliarResponsavelFalecido.setText("");
+        txtNomeCompleto.requestFocus();//O cursor volta pro inicio
     }
 
     /**
@@ -102,8 +256,18 @@ public class TelaFalecido extends javax.swing.JFrame {
         });
 
         btnCadastrarFalecido.setText("Cadastrar");
+        btnCadastrarFalecido.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCadastrarFalecidoActionPerformed(evt);
+            }
+        });
 
         btnAtualizarFalecido.setText("Atualizar");
+        btnAtualizarFalecido.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAtualizarFalecidoActionPerformed(evt);
+            }
+        });
 
         btnDeletarFalecido.setText("Deletar");
         btnDeletarFalecido.addActionListener(new java.awt.event.ActionListener() {
@@ -113,30 +277,27 @@ public class TelaFalecido extends javax.swing.JFrame {
         });
 
         btnListarFalecidos.setText("Listar");
+        btnListarFalecidos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnListarFalecidosActionPerformed(evt);
+            }
+        });
 
         tblFalecidos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Nome Completo", "CPF", "Possui Certidão de Óbito?", "Sepultura", "Data de Nascimento", "Data de Falecimento", "Familiar Responsável"
+                "ID", "Nome Completo", "CPF", "Possui Certidão de Óbito?", "Sepultura", "Data de Nascimento", "Data de Falecimento", "Familiar Responsável"
             }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.Object.class, java.lang.Boolean.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-        });
+        ));
         jScrollPane1.setViewportView(tblFalecidos);
 
         lblDataFalecimento.setText("Data de Falecimento:");
@@ -278,7 +439,8 @@ public class TelaFalecido extends javax.swing.JFrame {
     }//GEN-LAST:event_txtSepulturaFalecidoActionPerformed
 
     private void btnDeletarFalecidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeletarFalecidoActionPerformed
-        // TODO add your handling code here:
+        deletar();
+
     }//GEN-LAST:event_btnDeletarFalecidoActionPerformed
 
     private void txtDataFalecimentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDataFalecimentoActionPerformed
@@ -288,6 +450,18 @@ public class TelaFalecido extends javax.swing.JFrame {
     private void txtFamiliarResponsavelFalecidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFamiliarResponsavelFalecidoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtFamiliarResponsavelFalecidoActionPerformed
+
+    private void btnCadastrarFalecidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarFalecidoActionPerformed
+        cadastrar();
+    }//GEN-LAST:event_btnCadastrarFalecidoActionPerformed
+
+    private void btnAtualizarFalecidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarFalecidoActionPerformed
+        atualizar();
+    }//GEN-LAST:event_btnAtualizarFalecidoActionPerformed
+
+    private void btnListarFalecidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListarFalecidosActionPerformed
+        listar();
+    }//GEN-LAST:event_btnListarFalecidosActionPerformed
 
     /**
      * @param args the command line arguments
@@ -313,7 +487,6 @@ public class TelaFalecido extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> new TelaFalecido().setVisible(true));
     }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAtualizarFalecido;
     private javax.swing.JButton btnCadastrarFalecido;

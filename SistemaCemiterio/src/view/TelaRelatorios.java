@@ -28,59 +28,59 @@ public class TelaRelatorios extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        txttipoServico = new javax.swing.JTextField();
-        txtStatusServiço = new javax.swing.JTextField();
-        txtDataServico = new javax.swing.JTextField();
-        lblTipoServico = new javax.swing.JLabel();
-        lblTituloServicos = new javax.swing.JLabel();
+        txtStatusSepultura = new javax.swing.JTextField();
+        txtConcessoesAVencer = new javax.swing.JTextField();
+        txtPeriodoSepultamentos = new javax.swing.JTextField();
+        lbStatusSepultura = new javax.swing.JLabel();
+        lblTituloRelatorio = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        lblDataServico = new javax.swing.JLabel();
-        lblStatusServico = new javax.swing.JLabel();
-        lblSepulturaServico = new javax.swing.JLabel();
-        txtSepulturaServico = new javax.swing.JTextField();
-        btnCadastrarServicos = new javax.swing.JButton();
-        btnAtualizarServicos = new javax.swing.JButton();
-        btnDeletarServicos = new javax.swing.JButton();
-        btnListarServicos = new javax.swing.JButton();
+        lblPeriodoSepultamentos = new javax.swing.JLabel();
+        lblConcessoesAVencer = new javax.swing.JLabel();
+        lblServicosRealizados = new javax.swing.JLabel();
+        txtServicosRealizados = new javax.swing.JTextField();
+        btnGerarRelatorio = new javax.swing.JButton();
+        btnAtualizarRelatorio = new javax.swing.JButton();
+        btnDeletarRelatorio = new javax.swing.JButton();
+        btnListarRelatorio = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblServicos = new javax.swing.JTable();
+        tblRelatorio = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(null);
 
-        txttipoServico.addActionListener(new java.awt.event.ActionListener() {
+        txtStatusSepultura.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txttipoServicoActionPerformed(evt);
+                txtStatusSepulturaActionPerformed(evt);
             }
         });
-        getContentPane().add(txttipoServico);
-        txttipoServico.setBounds(189, 69, 196, 22);
+        getContentPane().add(txtStatusSepultura);
+        txtStatusSepultura.setBounds(189, 69, 196, 22);
 
-        txtStatusServiço.addActionListener(new java.awt.event.ActionListener() {
+        txtConcessoesAVencer.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtStatusServiçoActionPerformed(evt);
+                txtConcessoesAVencerActionPerformed(evt);
             }
         });
-        getContentPane().add(txtStatusServiço);
-        txtStatusServiço.setBounds(191, 137, 194, 22);
+        getContentPane().add(txtConcessoesAVencer);
+        txtConcessoesAVencer.setBounds(191, 137, 194, 22);
 
-        txtDataServico.addActionListener(new java.awt.event.ActionListener() {
+        txtPeriodoSepultamentos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtDataServicoActionPerformed(evt);
+                txtPeriodoSepultamentosActionPerformed(evt);
             }
         });
-        getContentPane().add(txtDataServico);
-        txtDataServico.setBounds(191, 103, 194, 22);
+        getContentPane().add(txtPeriodoSepultamentos);
+        txtPeriodoSepultamentos.setBounds(191, 103, 194, 22);
 
-        lblTipoServico.setText("Status das Sepulturas:");
-        getContentPane().add(lblTipoServico);
-        lblTipoServico.setBounds(22, 72, 154, 16);
+        lbStatusSepultura.setText("Status das Sepulturas:");
+        getContentPane().add(lbStatusSepultura);
+        lbStatusSepultura.setBounds(22, 72, 154, 16);
 
-        lblTituloServicos.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        lblTituloServicos.setText("Sistema de Gerenciamento de Cemitérios");
-        getContentPane().add(lblTituloServicos);
-        lblTituloServicos.setBounds(251, 22, 290, 20);
+        lblTituloRelatorio.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lblTituloRelatorio.setText("Sistema de Gerenciamento de Cemitérios");
+        getContentPane().add(lblTituloRelatorio);
+        lblTituloRelatorio.setBounds(251, 22, 290, 20);
 
         jLabel3.setText("Área de Relatórios");
         getContentPane().add(jLabel3);
@@ -90,63 +90,63 @@ public class TelaRelatorios extends javax.swing.JFrame {
         getContentPane().add(jLabel4);
         jLabel4.setBounds(31, 25, 143, 16);
 
-        lblDataServico.setText("Períodos dos sepultamentos:");
-        getContentPane().add(lblDataServico);
-        lblDataServico.setBounds(22, 106, 152, 16);
+        lblPeriodoSepultamentos.setText("Períodos dos sepultamentos:");
+        getContentPane().add(lblPeriodoSepultamentos);
+        lblPeriodoSepultamentos.setBounds(22, 106, 152, 16);
 
-        lblStatusServico.setText("Concessões prestes a vencer?");
-        getContentPane().add(lblStatusServico);
-        lblStatusServico.setBounds(22, 140, 154, 16);
+        lblConcessoesAVencer.setText("Concessões prestes a vencer?");
+        getContentPane().add(lblConcessoesAVencer);
+        lblConcessoesAVencer.setBounds(22, 140, 154, 16);
 
-        lblSepulturaServico.setText("Serviços realizados");
-        getContentPane().add(lblSepulturaServico);
-        lblSepulturaServico.setBounds(22, 174, 154, 16);
+        lblServicosRealizados.setText("Serviços realizados:");
+        getContentPane().add(lblServicosRealizados);
+        lblServicosRealizados.setBounds(22, 174, 154, 16);
 
-        txtSepulturaServico.addActionListener(new java.awt.event.ActionListener() {
+        txtServicosRealizados.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtSepulturaServicoActionPerformed(evt);
+                txtServicosRealizadosActionPerformed(evt);
             }
         });
-        getContentPane().add(txtSepulturaServico);
-        txtSepulturaServico.setBounds(191, 171, 194, 22);
+        getContentPane().add(txtServicosRealizados);
+        txtServicosRealizados.setBounds(191, 171, 194, 22);
 
-        btnCadastrarServicos.setText("Gerar");
-        btnCadastrarServicos.addActionListener(new java.awt.event.ActionListener() {
+        btnGerarRelatorio.setText("Gerar");
+        btnGerarRelatorio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCadastrarServicosActionPerformed(evt);
+                btnGerarRelatorioActionPerformed(evt);
             }
         });
-        getContentPane().add(btnCadastrarServicos);
-        btnCadastrarServicos.setBounds(22, 260, 72, 23);
+        getContentPane().add(btnGerarRelatorio);
+        btnGerarRelatorio.setBounds(22, 260, 72, 23);
 
-        btnAtualizarServicos.setText("Atualizar");
-        btnAtualizarServicos.addActionListener(new java.awt.event.ActionListener() {
+        btnAtualizarRelatorio.setText("Atualizar");
+        btnAtualizarRelatorio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAtualizarServicosActionPerformed(evt);
+                btnAtualizarRelatorioActionPerformed(evt);
             }
         });
-        getContentPane().add(btnAtualizarServicos);
-        btnAtualizarServicos.setBounds(100, 260, 77, 23);
+        getContentPane().add(btnAtualizarRelatorio);
+        btnAtualizarRelatorio.setBounds(100, 260, 77, 23);
 
-        btnDeletarServicos.setText("Deletar");
-        btnDeletarServicos.addActionListener(new java.awt.event.ActionListener() {
+        btnDeletarRelatorio.setText("Deletar");
+        btnDeletarRelatorio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDeletarServicosActionPerformed(evt);
+                btnDeletarRelatorioActionPerformed(evt);
             }
         });
-        getContentPane().add(btnDeletarServicos);
-        btnDeletarServicos.setBounds(183, 260, 72, 23);
+        getContentPane().add(btnDeletarRelatorio);
+        btnDeletarRelatorio.setBounds(183, 260, 72, 23);
 
-        btnListarServicos.setText("Listar");
-        btnListarServicos.addActionListener(new java.awt.event.ActionListener() {
+        btnListarRelatorio.setText("Listar");
+        btnListarRelatorio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnListarServicosActionPerformed(evt);
+                btnListarRelatorioActionPerformed(evt);
             }
         });
-        getContentPane().add(btnListarServicos);
-        btnListarServicos.setBounds(261, 260, 124, 23);
+        getContentPane().add(btnListarRelatorio);
+        btnListarRelatorio.setBounds(261, 260, 124, 23);
 
-        tblServicos.setModel(new javax.swing.table.DefaultTableModel(
+        tblRelatorio.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -154,7 +154,7 @@ public class TelaRelatorios extends javax.swing.JFrame {
                 "ID", "Lote", "Status", "Tipo da Sepultura", "Data da Criação", "Familiar Responsável", "Serviço Realizado"
             }
         ));
-        jScrollPane1.setViewportView(tblServicos);
+        jScrollPane1.setViewportView(tblRelatorio);
 
         getContentPane().add(jScrollPane1);
         jScrollPane1.setBounds(22, 323, 780, 350);
@@ -162,37 +162,37 @@ public class TelaRelatorios extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txttipoServicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txttipoServicoActionPerformed
+    private void txtStatusSepulturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtStatusSepulturaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txttipoServicoActionPerformed
+    }//GEN-LAST:event_txtStatusSepulturaActionPerformed
 
-    private void txtDataServicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDataServicoActionPerformed
+    private void txtPeriodoSepultamentosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPeriodoSepultamentosActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtDataServicoActionPerformed
+    }//GEN-LAST:event_txtPeriodoSepultamentosActionPerformed
 
-    private void txtStatusServiçoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtStatusServiçoActionPerformed
+    private void txtConcessoesAVencerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtConcessoesAVencerActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtStatusServiçoActionPerformed
+    }//GEN-LAST:event_txtConcessoesAVencerActionPerformed
 
-    private void txtSepulturaServicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSepulturaServicoActionPerformed
+    private void txtServicosRealizadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtServicosRealizadosActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtSepulturaServicoActionPerformed
+    }//GEN-LAST:event_txtServicosRealizadosActionPerformed
 
-    private void btnDeletarServicosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeletarServicosActionPerformed
+    private void btnDeletarRelatorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeletarRelatorioActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnDeletarServicosActionPerformed
+    }//GEN-LAST:event_btnDeletarRelatorioActionPerformed
 
-    private void btnCadastrarServicosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarServicosActionPerformed
+    private void btnGerarRelatorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGerarRelatorioActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnCadastrarServicosActionPerformed
+    }//GEN-LAST:event_btnGerarRelatorioActionPerformed
 
-    private void btnListarServicosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListarServicosActionPerformed
+    private void btnListarRelatorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListarRelatorioActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnListarServicosActionPerformed
+    }//GEN-LAST:event_btnListarRelatorioActionPerformed
 
-    private void btnAtualizarServicosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarServicosActionPerformed
+    private void btnAtualizarRelatorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarRelatorioActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnAtualizarServicosActionPerformed
+    }//GEN-LAST:event_btnAtualizarRelatorioActionPerformed
 
     /**
      * @param args the command line arguments
@@ -220,22 +220,22 @@ public class TelaRelatorios extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAtualizarServicos;
-    private javax.swing.JButton btnCadastrarServicos;
-    private javax.swing.JButton btnDeletarServicos;
-    private javax.swing.JButton btnListarServicos;
+    private javax.swing.JButton btnAtualizarRelatorio;
+    private javax.swing.JButton btnDeletarRelatorio;
+    private javax.swing.JButton btnGerarRelatorio;
+    private javax.swing.JButton btnListarRelatorio;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JLabel lblDataServico;
-    private javax.swing.JLabel lblSepulturaServico;
-    private javax.swing.JLabel lblStatusServico;
-    private javax.swing.JLabel lblTipoServico;
-    private javax.swing.JLabel lblTituloServicos;
-    private javax.swing.JTable tblServicos;
-    private javax.swing.JTextField txtDataServico;
-    private javax.swing.JTextField txtSepulturaServico;
-    private javax.swing.JTextField txtStatusServiço;
-    private javax.swing.JTextField txttipoServico;
+    private javax.swing.JLabel lbStatusSepultura;
+    private javax.swing.JLabel lblConcessoesAVencer;
+    private javax.swing.JLabel lblPeriodoSepultamentos;
+    private javax.swing.JLabel lblServicosRealizados;
+    private javax.swing.JLabel lblTituloRelatorio;
+    private javax.swing.JTable tblRelatorio;
+    private javax.swing.JTextField txtConcessoesAVencer;
+    private javax.swing.JTextField txtPeriodoSepultamentos;
+    private javax.swing.JTextField txtServicosRealizados;
+    private javax.swing.JTextField txtStatusSepultura;
     // End of variables declaration//GEN-END:variables
 }

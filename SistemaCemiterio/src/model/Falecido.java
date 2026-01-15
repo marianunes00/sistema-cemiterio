@@ -19,7 +19,8 @@ public class Falecido {
     public Falecido() {
     }
 
-    public Falecido(int idFalecido, String nomeCompleto, LocalDate dataNascimento, boolean possuiCertidaoObito, String cpf, Sepultura sepultura, LocalDate dataFalecimento, String familiarResponsavel) {
+    public Falecido(int idFalecido, String nomeCompleto, LocalDate dataNascimento, boolean possuiCertidaoObito, 
+            String cpf, Sepultura sepultura, LocalDate dataFalecimento, String familiarResponsavel) {
         this.idFalecido = idFalecido;
         this.nomeCompleto = nomeCompleto;
         this.dataNascimento = dataNascimento;

@@ -28,7 +28,7 @@ public class TelaServico extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        txttipoServico = new javax.swing.JTextField();
+        txtTipoServico = new javax.swing.JTextField();
         txtStatusServiço = new javax.swing.JTextField();
         txtDataServico = new javax.swing.JTextField();
         lblTipoServico = new javax.swing.JLabel();
@@ -50,9 +50,9 @@ public class TelaServico extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        txttipoServico.addActionListener(new java.awt.event.ActionListener() {
+        txtTipoServico.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txttipoServicoActionPerformed(evt);
+                txtTipoServicoActionPerformed(evt);
             }
         });
 
@@ -166,7 +166,7 @@ public class TelaServico extends javax.swing.JFrame {
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                 .addComponent(lblTipoServico, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txttipoServico))
+                                .addComponent(txtTipoServico))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(lblSepulturaServico, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -194,7 +194,7 @@ public class TelaServico extends javax.swing.JFrame {
                 .addGap(27, 27, 27)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblTipoServico)
-                    .addComponent(txttipoServico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtTipoServico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblDataServico)
@@ -225,9 +225,9 @@ public class TelaServico extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txttipoServicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txttipoServicoActionPerformed
+    private void txtTipoServicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTipoServicoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txttipoServicoActionPerformed
+    }//GEN-LAST:event_txtTipoServicoActionPerformed
 
     private void txtDataServicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDataServicoActionPerformed
         // TODO add your handling code here:
@@ -305,6 +305,6 @@ public class TelaServico extends javax.swing.JFrame {
     private javax.swing.JTextField txtNotificacaoServico;
     private javax.swing.JTextField txtSepulturaServico;
     private javax.swing.JTextField txtStatusServiço;
-    private javax.swing.JTextField txttipoServico;
+    private javax.swing.JTextField txtTipoServico;
     // End of variables declaration//GEN-END:variables
 }
