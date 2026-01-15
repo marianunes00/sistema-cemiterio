@@ -17,7 +17,7 @@ No lado direito da tela é exibida a área principal, contendo o logotipo do sis
 (Nesta tela é exibido uma tabela com dados de cada falecido cadastrado no Sistema.)
 
 ## Tela de Agenda de Serviços/Usuário administrador
-(A tela de serviços apresenta um formulário com campos como id do serviço,tipo,data,status e notificação  botão cadastrar,ao final do formulário haverá o botão cadastrar e botões  adicionais de atualizar e excluir, que funcionarão quando um  serviço for selecioonado na tabela que é exibida abaixo do formulário.)
+(A tela de serviços apresenta um formulário com campos como id do serviço,tipo,data,status e notificação  botão cadastrar,ao final do formulário haverá o botão cadastrar e botões  adicionais de atualizar, excluir e listar, que funcionarão quando um  serviço for selecionado na tabela que é exibida abaixo do formulário.)
 
 ## Tela de Agenda de Serviços/Usuário administrador
 (A tela de serviços apresenta um A tela exibe um formulário simplificado com campos como status e notificação internas,ao final há o botão de atualizar que pode ser utilizado quando um  serviço for selecioonado na tabela que é exibida abaixo do formulário.)
