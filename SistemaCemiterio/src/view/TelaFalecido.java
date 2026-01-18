@@ -22,6 +22,12 @@ public class TelaFalecido extends javax.swing.JFrame {
      */
     public TelaFalecido() {
         initComponents();
+        tblFalecidos.addMouseListener(new java.awt.event.MouseAdapter() {
+        @Override
+        public void mouseClicked(java.awt.event.MouseEvent e) {
+            preencherCamposDaTabela();
+        }
+}       );
         listar();
     }
     
@@ -172,6 +178,50 @@ public class TelaFalecido extends javax.swing.JFrame {
         txtFamiliarResponsavelFalecido.setText("");
         txtNomeCompleto.requestFocus();//O cursor volta pro inicio
     }
+    
+    private void preencherCamposDaTabela() {
+        int row = tblFalecidos.getSelectedRow();
+        if (row == -1) return;
+
+        Object nome       = tblFalecidos.getValueAt(row, 1);
+        Object cpf        = tblFalecidos.getValueAt(row, 2);
+        Object certidao   = tblFalecidos.getValueAt(row, 3);
+        Object idSepult   = tblFalecidos.getValueAt(row, 4);
+        Object dataNasc   = tblFalecidos.getValueAt(row, 5);
+        Object dataFalec  = tblFalecidos.getValueAt(row, 6);
+        Object familiar   = tblFalecidos.getValueAt(row, 7);
+
+        txtNomeCompleto.setText(nome != null ? nome.toString() : "");
+        txtCpf.setText(cpf != null ? cpf.toString() : "");
+        txtCertidaoObito.setText(certidao != null ? certidao.toString() : "");
+        txtSepulturaFalecido.setText(idSepult != null ? idSepult.toString() : "");
+        txtFamiliarResponsavelFalecido.setText(familiar != null ? familiar.toString() : "");
+
+        DateTimeFormatter brasil = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+        // Data de nascimento
+        if (dataNasc != null) {
+            if (dataNasc instanceof java.time.LocalDate ld) {
+                txtDataNascimento.setText(ld.format(brasil));
+            } else {
+                txtDataNascimento.setText(dataNasc.toString());
+            }
+        } else {
+            txtDataNascimento.setText("");
+        }
+
+        // Data de falecimento
+        if (dataFalec != null) {
+            if (dataFalec instanceof java.time.LocalDate ld2) {
+                txtDataFalecimento.setText(ld2.format(brasil));
+            } else {
+                txtDataFalecimento.setText(dataFalec.toString());
+            }
+        } else {
+            txtDataFalecimento.setText("");
+    }
+}
+
 
     /**
      * This method is called from within the constructor to initialize the form.

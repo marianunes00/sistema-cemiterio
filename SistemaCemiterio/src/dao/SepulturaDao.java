@@ -120,7 +120,7 @@ public class SepulturaDao {
            while(rs.next()){
            Sepultura s = new Sepultura();
            //nome do jeito que está no bd
-           s.setIdSepultura(rs.getInt("sepultura"));
+           s.setIdSepultura(rs.getInt("idSepultura"));
            s.setLote(rs.getString("lote"));
            s.setTipoSepultura(rs.getString("tipoSepultura"));
            s.setStatusSepultura(rs.getString("statusSepultura"));

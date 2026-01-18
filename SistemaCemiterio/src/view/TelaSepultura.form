@@ -125,7 +125,7 @@
                   <Component id="btnListarSepulturas" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
-              <Component id="jScrollPane1" pref="403" max="32767" attributes="0"/>
+              <Component id="jScrollPane1" pref="351" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -203,11 +203,17 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Cadastrar"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCadastrarSepulturaActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnAtualizarSepultura">
       <Properties>
         <Property name="text" type="java.lang.String" value="Atualizar"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAtualizarSepulturaActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnDeletarSepultura">
       <Properties>
@@ -221,6 +227,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Listar"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnListarSepulturasActionPerformed"/>
+      </Events>
     </Component>
     <Container class="javax.swing.JScrollPane" name="jScrollPane1">
       <AuxValues>

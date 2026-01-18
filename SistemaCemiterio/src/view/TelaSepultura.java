@@ -1,5 +1,13 @@
 package view;
 
+import dao.SepulturaDao;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import model.Sepultura;
+
 /**
  *
  * @author Váleria Matias
@@ -13,8 +21,159 @@ public class TelaSepultura extends javax.swing.JFrame {
      */
     public TelaSepultura() {
         initComponents();
+        tblSepulturas.addMouseListener(new java.awt.event.MouseAdapter() {
+        @Override
+        public void mouseClicked(java.awt.event.MouseEvent e) {
+            preencherCamposDaTabela();
+        }
+}       );
+        listar();
     }
+    
+    private void cadastrar(){
+        try{
+            //ajusta a data para o padao do Brasil
+            DateTimeFormatter brasil = DateTimeFormatter.ofPattern("dd/MM/yyyy"); 
+            LocalDate dataCriacao = LocalDate.parse(txtDataCriacao.getText(), brasil);
+            
+            //Cria o obj sepultura e dps seta os atributos com base nos valores inseridos nos campos
+            //o s.setLote é a referencia ao atributo, o txtLote é o nome do campo, e getText é o metodo para pegar
+            // o valor do campo com base no tipo;[
+            Sepultura s = new Sepultura();
+            s.setLote(txtLote.getText());
+            s.setTipoSepultura(txtTipoSepultura.getText());
+            s.setStatusSepultura(txtStatusSepultura.getText());
+            s.setFamiliarResponsavel(txtFamiliarResponsavelSepultura.getText());
+            s.setDataCriacao(dataCriacao);
+            
+            //Cria o objeto Dao e depois chama o metodo de dao, inserir;
+            SepulturaDao dao = new SepulturaDao();
+            dao.inserir(s);
+            //metodo listar e limpar campo
+            listar();
+            limparCampos();
+                        
+        }catch(Exception e){
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Erro ao cadastrar Sepultura");
+        
+        }
+        
+    
+    
+    }
+    
+    private void atualizar() {
+    int row = tblSepulturas.getSelectedRow();
+    if (row == -1) return; // nada selecionado
 
+    try {
+        int id = Integer.parseInt(tblSepulturas.getValueAt(row, 0).toString());
+
+        DateTimeFormatter brasil = DateTimeFormatter.ofPattern("dd/MM/yyyy"); 
+        LocalDate dataCriacao = LocalDate.parse(txtDataCriacao.getText(), brasil);
+
+        Sepultura s = new Sepultura();
+        s.setIdSepultura(id);
+        s.setLote(txtLote.getText());
+        s.setTipoSepultura(txtTipoSepultura.getText());
+        s.setStatusSepultura(txtStatusSepultura.getText());
+        s.setFamiliarResponsavel(txtFamiliarResponsavelSepultura.getText());
+        s.setDataCriacao(dataCriacao);
+
+        SepulturaDao dao = new SepulturaDao();
+        dao.atualizar(s);
+
+        listar();
+        limparCampos();
+        JOptionPane.showMessageDialog(this, "Sepultura atualizada com sucesso!");
+    } catch (Exception e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(this, "Erro ao atualizar Sepultura");
+    }
+}
+
+    private void deletar() {
+        int row = tblSepulturas.getSelectedRow();
+        if (row == -1) return;
+
+        try {
+            int id = Integer.parseInt(tblSepulturas.getValueAt(row, 0).toString());
+
+            SepulturaDao dao = new SepulturaDao();
+            dao.deletar(id);
+
+            listar();
+            limparCampos();
+            JOptionPane.showMessageDialog(this, "Sepultura excluída com sucesso!");
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Erro ao excluir Sepultura");
+        }
+}
+    private void listar() {
+        try {
+            DefaultTableModel modelo = (DefaultTableModel) tblSepulturas.getModel();
+            modelo.setRowCount(0);
+
+            SepulturaDao dao = new SepulturaDao();
+            List<Sepultura> lista = dao.listarTodos();
+
+            for (Sepultura s : lista) {
+                modelo.addRow(new Object[] {
+                    s.getIdSepultura(),
+                    s.getLote(),
+                    s.getTipoSepultura(),
+                    s.getStatusSepultura(),
+                    s.getFamiliarResponsavel(),
+                    s.getDataCriacao()
+                });
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Erro ao listar Sepulturas");
+       }
+}
+    private void limparCampos() {
+        txtLote.setText("");
+        txtTipoSepultura.setText("");
+        txtStatusSepultura.setText("");
+        txtFamiliarResponsavelSepultura.setText("");
+        txtDataCriacao.setText("");
+        txtLote.requestFocus();
+}
+
+    private void preencherCamposDaTabela() {
+        int row = tblSepulturas.getSelectedRow();
+        if (row == -1) return;
+
+        Object lote     = tblSepulturas.getValueAt(row, 1);
+        Object tipo     = tblSepulturas.getValueAt(row, 2);
+        Object status   = tblSepulturas.getValueAt(row, 3);
+        Object familiar = tblSepulturas.getValueAt(row, 4);
+        Object data     = tblSepulturas.getValueAt(row, 5);
+
+        txtLote.setText(lote != null ? lote.toString() : "");
+        txtTipoSepultura.setText(tipo != null ? tipo.toString() : "");
+        txtStatusSepultura.setText(status != null ? status.toString() : "");
+        txtFamiliarResponsavelSepultura.setText(familiar != null ? familiar.toString() : "");
+
+        if (data != null) {
+            if (data instanceof java.time.LocalDate ld) {
+                DateTimeFormatter brasil = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                txtDataCriacao.setText(ld.format(brasil));
+            } else {
+            // se já vier como String (ex.: do próprio model ou do DAO)
+                txtDataCriacao.setText(data.toString());
+            }
+        } else {
+            txtDataCriacao.setText("");
+        }
+}
+
+
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -94,8 +253,18 @@ public class TelaSepultura extends javax.swing.JFrame {
         });
 
         btnCadastrarSepultura.setText("Cadastrar");
+        btnCadastrarSepultura.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCadastrarSepulturaActionPerformed(evt);
+            }
+        });
 
         btnAtualizarSepultura.setText("Atualizar");
+        btnAtualizarSepultura.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAtualizarSepulturaActionPerformed(evt);
+            }
+        });
 
         btnDeletarSepultura.setText("Deletar");
         btnDeletarSepultura.addActionListener(new java.awt.event.ActionListener() {
@@ -105,6 +274,11 @@ public class TelaSepultura extends javax.swing.JFrame {
         });
 
         btnListarSepulturas.setText("Listar");
+        btnListarSepulturas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnListarSepulturasActionPerformed(evt);
+            }
+        });
 
         tblSepulturas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -204,7 +378,7 @@ public class TelaSepultura extends javax.swing.JFrame {
                     .addComponent(btnDeletarSepultura)
                     .addComponent(btnListarSepulturas))
                 .addGap(36, 36, 36)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 403, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 351, Short.MAX_VALUE))
         );
 
         pack();
@@ -232,7 +406,23 @@ public class TelaSepultura extends javax.swing.JFrame {
 
     private void btnDeletarSepulturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeletarSepulturaActionPerformed
         // TODO add your handling code here:
+        deletar();
     }//GEN-LAST:event_btnDeletarSepulturaActionPerformed
+
+    private void btnCadastrarSepulturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarSepulturaActionPerformed
+        // TODO add your handling code here:
+      cadastrar();
+    }//GEN-LAST:event_btnCadastrarSepulturaActionPerformed
+
+    private void btnAtualizarSepulturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarSepulturaActionPerformed
+        // TODO add your handling code here:
+        atualizar();
+    }//GEN-LAST:event_btnAtualizarSepulturaActionPerformed
+
+    private void btnListarSepulturasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListarSepulturasActionPerformed
+        // TODO add your handling code here:
+        listar();
+    }//GEN-LAST:event_btnListarSepulturasActionPerformed
 
     /**
      * @param args the command line arguments

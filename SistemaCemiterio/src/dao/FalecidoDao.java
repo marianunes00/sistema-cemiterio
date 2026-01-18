@@ -138,7 +138,7 @@ public class FalecidoDao {
            //adiciona o objeto dentro do array de falecidos
           //Para pegar a referencia de sepultura tem que ser assim
             Sepultura s = new Sepultura();
-            s.setIdSepultura(rs.getInt("idepultura")); // nome da coluna FK na tabela falecido
+            s.setIdSepultura(rs.getInt("sepultura")); // nome da coluna FK na tabela falecido
             f.setSepultura(s);
                        
            falecidos.add(f);
