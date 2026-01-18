@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -134,7 +130,7 @@ public class SepulturaDao {
            sepulturas.add(s);
            
            
-           }      
+           }       
                        
         }catch(SQLException e){
             System.out.println("Erro ao listar as sepulturas");
@@ -142,7 +138,7 @@ public class SepulturaDao {
         }  
    
         return sepulturas;
-       
     }
+    
     
 }

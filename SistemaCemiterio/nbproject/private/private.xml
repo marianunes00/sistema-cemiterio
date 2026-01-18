@@ -11,6 +11,9 @@
             <file>file:/C:/Users/Microsoft/Documents/Projetos/sistema-cemiterio/SistemaCemiterio/src/view/TelaFalecido.java</file>
             <file>file:/C:/Users/Microsoft/Documents/Projetos/sistema-cemiterio/SistemaCemiterio/src/view/TelaServico.java</file>
             <file>file:/C:/Users/Microsoft/Documents/Projetos/sistema-cemiterio/SistemaCemiterio/src/view/TelaRelatorios.java</file>
+            <file>file:/C:/Users/Microsoft/Documents/Projetos/sistema-cemiterio/SistemaCemiterio/src/dao/FalecidoDao.java</file>
+            <file>file:/C:/Users/Microsoft/Documents/Projetos/sistema-cemiterio/SistemaCemiterio/src/dao/ServicoDao.java</file>
+            <file>file:/C:/Users/Microsoft/Documents/Projetos/sistema-cemiterio/SistemaCemiterio/src/dao/SepulturaDao.java</file>
         </group>
     </open-files>
 </project-private>

@@ -217,11 +217,17 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Cadastrar"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCadastrarFalecidoActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnAtualizarFalecido">
       <Properties>
         <Property name="text" type="java.lang.String" value="Atualizar"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAtualizarFalecidoActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnDeletarFalecido">
       <Properties>
@@ -235,6 +241,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Listar"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnListarFalecidosActionPerformed"/>
+      </Events>
     </Component>
     <Container class="javax.swing.JScrollPane" name="jScrollPane1">
       <AuxValues>
@@ -246,10 +255,11 @@
         <Component class="javax.swing.JTable" name="tblFalecidos">
           <Properties>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-              <Table columnCount="7" rowCount="8">
+              <Table columnCount="8" rowCount="8">
+                <Column editable="true" title="ID" type="java.lang.Object"/>
                 <Column editable="true" title="Nome Completo" type="java.lang.Object"/>
                 <Column editable="true" title="CPF" type="java.lang.Object"/>
-                <Column editable="true" title="Possui Certid&#xe3;o de &#xd3;bito?" type="java.lang.Boolean"/>
+                <Column editable="true" title="Possui Certid&#xe3;o de &#xd3;bito?" type="java.lang.Object"/>
                 <Column editable="true" title="Sepultura" type="java.lang.Object"/>
                 <Column editable="true" title="Data de Nascimento" type="java.lang.Object"/>
                 <Column editable="true" title="Data de Falecimento" type="java.lang.Object"/>
@@ -258,6 +268,11 @@
             </Property>
             <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
               <TableColumnModel selectionModel="0">
+                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                  <Title/>
+                  <Editor/>
+                  <Renderer/>
+                </Column>
                 <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
                   <Title/>
                   <Editor/>

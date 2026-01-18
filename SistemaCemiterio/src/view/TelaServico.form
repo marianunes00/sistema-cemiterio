@@ -54,7 +54,7 @@
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="lblTipoServico" min="-2" pref="97" max="-2" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="txttipoServico" max="32767" attributes="0"/>
+                              <Component id="txtTipoServico" max="32767" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="1" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
@@ -93,7 +93,7 @@
               <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="lblTipoServico" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="txttipoServico" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="txtTipoServico" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
@@ -130,9 +130,9 @@
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Component class="javax.swing.JTextField" name="txttipoServico">
+    <Component class="javax.swing.JTextField" name="txtTipoServico">
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txttipoServicoActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtTipoServicoActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="txtStatusServi&#xe7;o">

@@ -8,8 +8,8 @@ import java.time.LocalDate;
  */
 public class Servico {
     private int idServico;
-    private LocalDate dataServico;
     private String tipoServico;
+    private LocalDate dataServico;
     private String statusServico;
     private Sepultura sepultura;
     private String notificacaoServico;
@@ -17,10 +17,10 @@ public class Servico {
     public Servico() {
     }
 
-    public Servico(int idServico, LocalDate dataServico, String tipoServico, String statusServico, Sepultura sepultura, String notificacaoServico) {
+    public Servico(int idServico, String tipoServico, LocalDate dataServico, String statusServico, Sepultura sepultura, String notificacaoServico) {
         this.idServico = idServico;
-        this.dataServico = dataServico;
         this.tipoServico = tipoServico;
+        this.dataServico = dataServico;
         this.statusServico = statusServico;
         this.sepultura = sepultura;
         this.notificacaoServico = notificacaoServico;
@@ -34,20 +34,20 @@ public class Servico {
         this.idServico = idServico;
     }
 
-    public LocalDate getDataServico() {
-        return dataServico;
-    }
-
-    public void setDataServico(LocalDate dataServico) {
-        this.dataServico = dataServico;
-    }
-
     public String getTipoServico() {
         return tipoServico;
     }
 
     public void setTipoServico(String tipoServico) {
         this.tipoServico = tipoServico;
+    }
+    
+    public LocalDate getDataServico() {
+        return dataServico;
+    }
+
+    public void setDataServico(LocalDate dataServico) {
+        this.dataServico = dataServico;
     }
 
     public String getStatusServico() {
