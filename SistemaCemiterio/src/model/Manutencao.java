@@ -8,12 +8,10 @@ package model;
  *
  * @author Váleria Matias
  */
-public class Administrador extends Usuario {
+public class Manutencao extends Usuario {
     
-    public Administrador(int idUsuario, String nomeUsuario, String login, String senha) {
-        super(idUsuario, nomeUsuario, login, senha);
+    public Manutencao(int idUsuario, String nomeUsuario,String login, String senha){
+    super(idUsuario, nomeUsuario, login, senha);
+    
     }
-    
-     
-    
 }

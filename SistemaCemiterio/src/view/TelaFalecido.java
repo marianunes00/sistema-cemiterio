@@ -8,6 +8,8 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.Falecido;
 import model.Sepultura;
+import view.Menu;
+
 
 /**
  *
@@ -76,25 +78,17 @@ public class TelaFalecido extends javax.swing.JFrame {
         }
     }               
     
-    private void listar(){
-        try {
-            DefaultTableModel modelo = (DefaultTableModel) tblFalecidos.getModel();
-            modelo.setRowCount(0);
-            
-            List<Falecido> lista = new FalecidoDao().listarTodos();
-            
-            for(Falecido f : lista) {
-                System.out.println("Encontrei: " + f.getNomeCompleto()); // ADICIONE ISSO
-                String temCertidao = f.isPossuiCertidaoObito() ? "Sim" : "Não";
-                
-                modelo.addRow(new Object[]{f.getIdFalecido(),f.getNomeCompleto(),f.getCpf(), temCertidao,
-                f.getSepultura().getIdSepultura(),f.getDataNascimento(),f.getDataFalecimento(),f.getFamiliarResponsavel()});         
-                }
-            
-        }catch (Exception e) {
-            e.printStackTrace();
-        }
-    }    
+   private void listar() {
+    try {
+        FalecidoDao dao = new FalecidoDao();
+        List<Falecido> lista = dao.listarTodos();
+        preencherTabelaFalecidos(lista);
+    } catch (Exception e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(this, "Erro ao listar falecidos");
+    }
+}
+  
     
     private void deletar(){
         //pega a linha que o usuário selecionar
@@ -180,9 +174,11 @@ public class TelaFalecido extends javax.swing.JFrame {
     }
     
     private void preencherCamposDaTabela() {
+        //pegando a linha
         int row = tblFalecidos.getSelectedRow();
         if (row == -1) return;
 
+        //mapeando cada coluna da tabela para uma variável do formulário.
         Object nome       = tblFalecidos.getValueAt(row, 1);
         Object cpf        = tblFalecidos.getValueAt(row, 2);
         Object certidao   = tblFalecidos.getValueAt(row, 3);
@@ -221,6 +217,27 @@ public class TelaFalecido extends javax.swing.JFrame {
             txtDataFalecimento.setText("");
     }
 }
+    
+    private void preencherTabelaFalecidos(List<Falecido> lista) {
+    DefaultTableModel modelo = (DefaultTableModel) tblFalecidos.getModel();
+    modelo.setRowCount(0);
+
+    for (Falecido f : lista) {
+        String temCertidao = f.isPossuiCertidaoObito() ? "Sim" : "Não";
+
+        modelo.addRow(new Object[]{
+            f.getIdFalecido(),
+            f.getNomeCompleto(),
+            f.getCpf(),
+            temCertidao,
+            f.getSepultura().getIdSepultura(),
+            f.getDataNascimento(),
+            f.getDataFalecimento(),
+            f.getFamiliarResponsavel()
+        });
+    }
+}
+
 
 
     /**
@@ -238,7 +255,6 @@ public class TelaFalecido extends javax.swing.JFrame {
         lblNomeCompleto = new javax.swing.JLabel();
         lblTituloFalecidos = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
         lblDataNascimento = new javax.swing.JLabel();
         lblCertidaoObito = new javax.swing.JLabel();
         lblCpf = new javax.swing.JLabel();
@@ -255,6 +271,13 @@ public class TelaFalecido extends javax.swing.JFrame {
         txtDataFalecimento = new javax.swing.JTextField();
         lblFamiliarResponsavelFalecido = new javax.swing.JLabel();
         txtFamiliarResponsavelFalecido = new javax.swing.JTextField();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        txtBuscarNomeFalecido = new javax.swing.JTextField();
+        btnBuscarNomeFalecido = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        btnVoltarMenu = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -282,8 +305,6 @@ public class TelaFalecido extends javax.swing.JFrame {
         lblTituloFalecidos.setText("Sistema de Gerenciamento de Cemitérios");
 
         jLabel3.setText("Área de falecidos");
-
-        jLabel4.setText("Cemitério Descanso Eterno");
 
         lblDataNascimento.setText("Data de Nascimento:");
 
@@ -366,87 +387,153 @@ public class TelaFalecido extends javax.swing.JFrame {
             }
         });
 
+        txtBuscarNomeFalecido.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtBuscarNomeFalecidoActionPerformed(evt);
+            }
+        });
+
+        btnBuscarNomeFalecido.setText("Buscar");
+        btnBuscarNomeFalecido.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarNomeFalecidoActionPerformed(evt);
+            }
+        });
+
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel2.setText("Pesquise pelo nome completo");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(461, 461, 461)
+                        .addComponent(jLabel1))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(19, 19, 19)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtBuscarNomeFalecido, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnBuscarNomeFalecido)))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(28, 28, 28)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
+                    .addComponent(txtBuscarNomeFalecido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2)
+                    .addComponent(btnBuscarNomeFalecido))
+                .addContainerGap(85, Short.MAX_VALUE))
+        );
+
+        jLabel4.setText("Cemitério Descanso Eterno");
+
+        btnVoltarMenu.setText("Voltar ao Menu");
+        btnVoltarMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVoltarMenuActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(22, 22, 22)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addComponent(btnCadastrarFalecido)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnAtualizarFalecido)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnDeletarFalecido)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnListarFalecidos, javax.swing.GroupLayout.DEFAULT_SIZE, 98, Short.MAX_VALUE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addComponent(lblNomeCompleto, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtNomeCompleto))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel4))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(22, 22, 22)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lblCpf, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(lblSepulturaFalecido, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                        .addComponent(btnCadastrarFalecido)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(btnAtualizarFalecido)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(btnDeletarFalecido)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(btnListarFalecidos, javax.swing.GroupLayout.DEFAULT_SIZE, 97, Short.MAX_VALUE))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                        .addComponent(lblNomeCompleto, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(txtNomeCompleto))
                                     .addGroup(layout.createSequentialGroup()
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(lblDataNascimento)
-                                            .addComponent(lblCertidaoObito))
-                                        .addGap(0, 0, Short.MAX_VALUE))
-                                    .addComponent(lblDataFalecimento, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(lblFamiliarResponsavelFalecido, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addGap(15, 15, 15)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(txtCertidaoObito)
-                                    .addComponent(txtDataNascimento)
-                                    .addComponent(txtCpf, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)
-                                    .addComponent(txtSepulturaFalecido, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)
-                                    .addComponent(txtDataFalecimento)
-                                    .addComponent(txtFamiliarResponsavelFalecido))))
-                        .addGap(458, 458, 458))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(9, 9, 9)
-                                .addComponent(jLabel4)
-                                .addGap(77, 77, 77)
+                                            .addComponent(lblCpf, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(lblSepulturaFalecido, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addComponent(lblDataNascimento)
+                                                    .addComponent(lblCertidaoObito))
+                                                .addGap(0, 0, Short.MAX_VALUE))
+                                            .addComponent(lblDataFalecimento, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(lblFamiliarResponsavelFalecido, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                        .addGap(15, 15, 15)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(txtCertidaoObito)
+                                            .addComponent(txtDataNascimento)
+                                            .addComponent(txtCpf, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)
+                                            .addComponent(txtSepulturaFalecido, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)
+                                            .addComponent(txtDataFalecimento)
+                                            .addComponent(txtFamiliarResponsavelFalecido))))
+                                .addGap(330, 330, 330)
+                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 402, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jScrollPane1)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(btnVoltarMenu)
+                                .addGap(153, 153, 153)
                                 .addComponent(lblTituloFalecidos)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel3)))
-                        .addGap(28, 28, 28))))
+                                .addComponent(jLabel3)))))
+                .addGap(28, 28, 28))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(22, 22, 22)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
                     .addComponent(jLabel3)
-                    .addComponent(lblTituloFalecidos))
-                .addGap(27, 27, 27)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblNomeCompleto)
-                    .addComponent(txtNomeCompleto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblDataNascimento)
-                    .addComponent(txtDataNascimento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblCertidaoObito)
-                    .addComponent(txtCertidaoObito, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblCpf)
-                    .addComponent(txtCpf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblSepulturaFalecido)
-                    .addComponent(txtSepulturaFalecido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblTituloFalecidos)
+                    .addComponent(btnVoltarMenu))
+                .addGap(2, 2, 2)
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblNomeCompleto)
+                            .addComponent(txtNomeCompleto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblDataNascimento)
+                            .addComponent(txtDataNascimento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblCertidaoObito)
+                            .addComponent(txtCertidaoObito, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(16, 16, 16)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblCpf)
+                            .addComponent(txtCpf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblSepulturaFalecido)
+                            .addComponent(txtSepulturaFalecido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(lblDataFalecimento, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -462,7 +549,7 @@ public class TelaFalecido extends javax.swing.JFrame {
                     .addComponent(btnDeletarFalecido)
                     .addComponent(btnListarFalecidos))
                 .addGap(36, 36, 36)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 353, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 347, Short.MAX_VALUE))
         );
 
         pack();
@@ -513,6 +600,26 @@ public class TelaFalecido extends javax.swing.JFrame {
         listar();
     }//GEN-LAST:event_btnListarFalecidosActionPerformed
 
+    private void txtBuscarNomeFalecidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBuscarNomeFalecidoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtBuscarNomeFalecidoActionPerformed
+
+    private void btnBuscarNomeFalecidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarNomeFalecidoActionPerformed
+        // TODO add your handling code here:
+        String nome = txtBuscarNomeFalecido.getText();
+        FalecidoDao dao = new FalecidoDao();
+        List<Falecido> lista = dao.buscarPorNome(nome);
+        preencherTabelaFalecidos(lista);
+    }//GEN-LAST:event_btnBuscarNomeFalecidoActionPerformed
+
+    private void btnVoltarMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarMenuActionPerformed
+        // TODO add your handling code here:
+        Menu menu = new Menu();          // nome da sua classe de menu
+        menu.setLocationRelativeTo(this);
+        menu.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnVoltarMenuActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -539,11 +646,16 @@ public class TelaFalecido extends javax.swing.JFrame {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAtualizarFalecido;
+    private javax.swing.JButton btnBuscarNomeFalecido;
     private javax.swing.JButton btnCadastrarFalecido;
     private javax.swing.JButton btnDeletarFalecido;
     private javax.swing.JButton btnListarFalecidos;
+    private javax.swing.JButton btnVoltarMenu;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblCertidaoObito;
     private javax.swing.JLabel lblCpf;
@@ -554,6 +666,7 @@ public class TelaFalecido extends javax.swing.JFrame {
     private javax.swing.JLabel lblSepulturaFalecido;
     private javax.swing.JLabel lblTituloFalecidos;
     private javax.swing.JTable tblFalecidos;
+    private javax.swing.JTextField txtBuscarNomeFalecido;
     private javax.swing.JTextField txtCertidaoObito;
     private javax.swing.JTextField txtCpf;
     private javax.swing.JTextField txtDataFalecimento;

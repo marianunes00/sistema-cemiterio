@@ -156,4 +156,39 @@ public class FalecidoDao {
     //exibe a lista
     return falecidos;
 }
+    //mesma coisa de listar, só adiciona o where
+    public List<Falecido> buscarPorNome(String nome) {
+    String sql = "SELECT * FROM falecido WHERE nomeCompleto LIKE ?";
+    List<Falecido> falecidos = new ArrayList<>();
+
+    try (Connection conn = ConnectionFactory.getConnection();
+         PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+        stmt.setString(1, "%" + nome + "%");
+
+        try (ResultSet rs = stmt.executeQuery()) {
+            while (rs.next()) {
+                Falecido f = new Falecido();
+                f.setIdFalecido(rs.getInt("idFalecido"));
+                f.setNomeCompleto(rs.getString("nomeCompleto"));
+                f.setDataNascimento(rs.getDate("dataNascimento").toLocalDate());
+                f.setPossuiCertidaoObito(rs.getBoolean("possuiCertidaoObito"));
+                f.setCpf(rs.getString("cpf"));
+                f.setDataFalecimento(rs.getDate("dataFalecimento").toLocalDate());
+                f.setFamiliarResponsavel(rs.getString("familiarResponsavel"));
+
+                Sepultura s = new Sepultura();
+                s.setIdSepultura(rs.getInt("sepultura"));
+                f.setSepultura(s);
+
+                falecidos.add(f);
+            }
+        }
+    } catch (SQLException e) {
+        throw new RuntimeException("Erro ao buscar falecidos por nome: " + e.getMessage());
+    }
+
+    return falecidos;
+}
+
 }

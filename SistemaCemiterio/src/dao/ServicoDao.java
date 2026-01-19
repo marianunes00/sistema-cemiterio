@@ -60,6 +60,7 @@ public class ServicoDao {
             stmt.setString(3, servico.getStatusServico());
             stmt.setInt(4, servico.getSepultura().getIdSepultura());  
             stmt.setString(5, servico.getNotificacaoServico());
+            stmt.setInt(6, servico.getIdServico());
             
             stmt.executeUpdate();
             JOptionPane.showMessageDialog(
@@ -118,6 +119,7 @@ public class ServicoDao {
            f.setIdServico(rs.getInt("idServico"));
            f.setTipoServico(rs.getString("tipoServico"));
            f.setDataServico(rs.getDate("dataServico").toLocalDate());
+           f.setStatusServico(rs.getString("statusServico"));
            f.setNotificacaoServico(rs.getString("notificacaoServico"));
            //adiciona o objeto dentro do array de servicos
           //Para pegar a referencia de sepultura tem que ser assim

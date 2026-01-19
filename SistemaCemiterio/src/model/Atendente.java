@@ -8,12 +8,19 @@ package model;
  *
  * @author Váleria Matias
  */
-public class Administrador extends Usuario {
+public class Atendente extends Usuario{
     
-    public Administrador(int idUsuario, String nomeUsuario, String login, String senha) {
+    public Atendente(int idUsuario, String nomeUsuario,String login,String senha){
         super(idUsuario, nomeUsuario, login, senha);
     }
     
-     
     
+    public boolean podeExcluirRegistro(String login){
+        if(login == "admin"){
+       return true;
+    }else{
+        return false;
+        }
+          
+    }
 }

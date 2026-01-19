@@ -140,5 +140,32 @@ public class SepulturaDao {
         return sepulturas;
     }
     
-    
+    public List<Sepultura> buscarPorLote(String lote) {
+        String sql = "SELECT * FROM sepultura WHERE lote LIKE ?";
+        List<Sepultura> sepulturas = new ArrayList<>();
+
+        try (Connection conn = ConnectionFactory.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, "%" + lote + "%");
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    Sepultura s = new Sepultura();
+                    s.setIdSepultura(rs.getInt("idSepultura"));
+                    s.setLote(rs.getString("lote"));
+                    s.setTipoSepultura(rs.getString("tipoSepultura"));
+                    s.setStatusSepultura(rs.getString("statusSepultura"));
+                    s.setFamiliarResponsavel(rs.getString("familiarResponsavel"));
+                    s.setDataCriacao(rs.getDate("dataCriacao").toLocalDate());
+                    sepulturas.add(s);
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao buscar sepulturas por lote: " + e.getMessage());
+        }
+
+        return sepulturas;
+}
+
 }

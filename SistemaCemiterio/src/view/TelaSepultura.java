@@ -7,6 +7,8 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.Sepultura;
+import view.Menu;
+
 
 /**
  *
@@ -111,29 +113,21 @@ public class TelaSepultura extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Erro ao excluir Sepultura");
         }
 }
+    
     private void listar() {
-        try {
-            DefaultTableModel modelo = (DefaultTableModel) tblSepulturas.getModel();
-            modelo.setRowCount(0);
-
-            SepulturaDao dao = new SepulturaDao();
-            List<Sepultura> lista = dao.listarTodos();
-
-            for (Sepultura s : lista) {
-                modelo.addRow(new Object[] {
-                    s.getIdSepultura(),
-                    s.getLote(),
-                    s.getTipoSepultura(),
-                    s.getStatusSepultura(),
-                    s.getFamiliarResponsavel(),
-                    s.getDataCriacao()
-                });
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Erro ao listar Sepulturas");
-       }
+    try {
+        SepulturaDao dao = new SepulturaDao();
+        List<Sepultura> lista = dao.listarTodos();
+        preencherTabelaSepulturas(lista);
+    } catch (Exception e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(this, "Erro ao listar sepulturas");
+    }
 }
+
+    
+    
+    
     private void limparCampos() {
         txtLote.setText("");
         txtTipoSepultura.setText("");
@@ -171,6 +165,21 @@ public class TelaSepultura extends javax.swing.JFrame {
         }
 }
 
+    private void preencherTabelaSepulturas(List<Sepultura> lista) {
+        DefaultTableModel modelo = (DefaultTableModel) tblSepulturas.getModel();
+        modelo.setRowCount(0);
+
+        for (Sepultura s : lista) {
+            modelo.addRow(new Object[]{
+                s.getIdSepultura(),
+                s.getLote(),
+                s.getTipoSepultura(),
+                s.getStatusSepultura(),
+                s.getFamiliarResponsavel(),
+                s.getDataCriacao()
+            });
+        }
+}
 
     
     
@@ -202,6 +211,11 @@ public class TelaSepultura extends javax.swing.JFrame {
         btnListarSepulturas = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblSepulturas = new javax.swing.JTable();
+        jPanel2 = new javax.swing.JPanel();
+        txtBuscarLoteSepultura = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
+        btnBuscarLote = new javax.swing.JButton();
+        btnVoltarMenu = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -293,6 +307,48 @@ public class TelaSepultura extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(tblSepulturas);
 
+        jLabel5.setText("Pesquise a sepultura informando o lote");
+
+        btnBuscarLote.setText("Buscar");
+        btnBuscarLote.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarLoteActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(21, 21, 21)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnBuscarLote))
+                    .addComponent(txtBuscarLoteSepultura, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(25, Short.MAX_VALUE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(txtBuscarLoteSepultura, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(btnBuscarLote))
+                .addContainerGap(50, Short.MAX_VALUE))
+        );
+
+        btnVoltarMenu.setText("Voltar ao Menu");
+        btnVoltarMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVoltarMenuActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -313,57 +369,66 @@ public class TelaSepultura extends javax.swing.JFrame {
                         .addComponent(btnListarSepulturas)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
             .addGroup(layout.createSequentialGroup()
-                .addGap(31, 31, 31)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lblTipoSepultura)
-                                    .addComponent(lblStatusSepultura)
-                                    .addComponent(lblFamiliarResponsavelSepultura, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(lblDataCriacao))
-                                .addGap(15, 15, 15)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(txtStatusSepultura)
-                                    .addComponent(txtTipoSepultura)
-                                    .addComponent(txtFamiliarResponsavelSepultura, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)
-                                    .addComponent(txtDataCriacao, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(lblLote)
-                                .addGap(18, 18, 18)
-                                .addComponent(txtLote, javax.swing.GroupLayout.PREFERRED_SIZE, 279, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(458, 458, 458))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel4)
-                        .addGap(77, 77, 77)
+                        .addGap(31, 31, 31)
+                        .addComponent(btnVoltarMenu)
+                        .addGap(144, 144, 144)
                         .addComponent(lblTituloSepulturas)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel3)
-                        .addGap(28, 28, 28))))
+                        .addComponent(jLabel3))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(lblTipoSepultura)
+                                            .addComponent(lblStatusSepultura)
+                                            .addComponent(lblFamiliarResponsavelSepultura, javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(lblDataCriacao))
+                                        .addGap(15, 15, 15)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(txtStatusSepultura)
+                                            .addComponent(txtTipoSepultura)
+                                            .addComponent(txtFamiliarResponsavelSepultura, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)
+                                            .addComponent(txtDataCriacao, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(lblLote)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(txtLote, javax.swing.GroupLayout.PREFERRED_SIZE, 279, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(95, 95, 95)
+                                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING))))
+                .addGap(28, 28, 28))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(22, 22, 22)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
                     .addComponent(jLabel3)
-                    .addComponent(lblTituloSepulturas))
-                .addGap(27, 27, 27)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblLote)
-                    .addComponent(txtLote, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblTipoSepultura)
-                    .addComponent(txtTipoSepultura, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblStatusSepultura)
-                    .addComponent(txtStatusSepultura, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(lblTituloSepulturas)
+                    .addComponent(btnVoltarMenu))
+                .addGap(2, 2, 2)
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblLote)
+                            .addComponent(txtLote, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblTipoSepultura)
+                            .addComponent(txtTipoSepultura, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblStatusSepultura)
+                            .addComponent(txtStatusSepultura, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblFamiliarResponsavelSepultura)
                     .addComponent(txtFamiliarResponsavelSepultura, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -378,7 +443,7 @@ public class TelaSepultura extends javax.swing.JFrame {
                     .addComponent(btnDeletarSepultura)
                     .addComponent(btnListarSepulturas))
                 .addGap(36, 36, 36)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 351, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 340, Short.MAX_VALUE))
         );
 
         pack();
@@ -424,6 +489,22 @@ public class TelaSepultura extends javax.swing.JFrame {
         listar();
     }//GEN-LAST:event_btnListarSepulturasActionPerformed
 
+    private void btnBuscarLoteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarLoteActionPerformed
+        // TODO add your handling code here:
+        String lote = txtBuscarLoteSepultura.getText();
+        SepulturaDao dao = new SepulturaDao();
+        List<Sepultura> lista = dao.buscarPorLote(lote);
+        preencherTabelaSepulturas(lista);
+    }//GEN-LAST:event_btnBuscarLoteActionPerformed
+
+    private void btnVoltarMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarMenuActionPerformed
+        // TODO add your handling code here:
+        Menu menu = new Menu();          // nome da sua classe de menu
+        menu.setLocationRelativeTo(this);
+        menu.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnVoltarMenuActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -451,11 +532,19 @@ public class TelaSepultura extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAtualizarSepultura;
+    private javax.swing.JButton btnBuscarLote;
+    private javax.swing.JButton btnBuscarNomeFalecido;
     private javax.swing.JButton btnCadastrarSepultura;
     private javax.swing.JButton btnDeletarSepultura;
     private javax.swing.JButton btnListarSepulturas;
+    private javax.swing.JButton btnVoltarMenu;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblDataCriacao;
     private javax.swing.JLabel lblFamiliarResponsavelSepultura;
@@ -464,6 +553,8 @@ public class TelaSepultura extends javax.swing.JFrame {
     private javax.swing.JLabel lblTipoSepultura;
     private javax.swing.JLabel lblTituloSepulturas;
     private javax.swing.JTable tblSepulturas;
+    private javax.swing.JTextField txtBuscarLoteSepultura;
+    private javax.swing.JTextField txtBuscarNomeFalecido;
     private javax.swing.JTextField txtDataCriacao;
     private javax.swing.JTextField txtFamiliarResponsavelSepultura;
     private javax.swing.JTextField txtLote;

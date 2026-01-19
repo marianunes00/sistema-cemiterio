@@ -4,6 +4,17 @@
  */
 package view;
 
+
+import dao.ServicoDao;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import model.Sepultura;
+import model.Servico;
+import view.Menu;
+
 /**
  *
  * @author Váleria Matias
@@ -17,7 +28,169 @@ public class TelaServico extends javax.swing.JFrame {
      */
     public TelaServico() {
         initComponents();
+        tblServicos.addMouseListener(new java.awt.event.MouseAdapter() {
+        @Override
+        public void mouseClicked(java.awt.event.MouseEvent e) {
+            preencherCamposDaTabela();
+        }
+}       );
+        listar();
     }
+    
+    private void cadastrar(){
+        try{
+            //ajusta a data para o padao do Brasil
+            DateTimeFormatter brasil = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            LocalDate dataServico = LocalDate.parse(txtDataServico.getText(), brasil);
+            int idSepultura = Integer.parseInt(txtSepulturaServico.getText());
+            
+            Sepultura sepult = new Sepultura();
+            sepult.setIdSepultura(idSepultura);
+            //Cria o obj sepultura e dps seta os atributos com base nos valores inseridos nos campos
+            //o s.setLote é a referencia ao atributo, o txtLote é o nome do campo, e getText é o metodo para pegar
+            // o valor do campo com base no tipo;[
+            Servico se = new Servico();
+            se.setTipoServico(txtTipoServico.getText());
+            se.setStatusServico(txtStatusServico.getText());
+            se.setSepultura(sepult);
+            se.setNotificacaoServico(txtNotificacaoServico.getText());
+            se.setDataServico(dataServico);
+            
+            //Cria o objeto Dao e depois chama o metodo de dao, inserir;
+           ServicoDao dao = new ServicoDao();
+            dao.inserir(se);
+            //metodo listar e limpar campo
+            listar();
+            limparCampos();
+                        
+        }catch(Exception e){
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Erro ao cadastrar Sepultura");
+        
+        }
+        
+    
+    
+    }
+    
+    private void atualizar() {
+    int row = tblServicos.getSelectedRow();
+    if (row == -1) return; // nada selecionado
+
+    try {
+        int id = Integer.parseInt(tblServicos.getValueAt(row, 0).toString());
+
+        DateTimeFormatter brasil = DateTimeFormatter.ofPattern("dd/MM/yyyy"); 
+        LocalDate dataServico = LocalDate.parse(txtDataServico.getText(), brasil);
+        
+        //mesmo processo para pegar o id da sepultura
+        int idSepultura = Integer.parseInt(txtSepulturaServico.getText());
+        Sepultura sepult = new Sepultura();
+        sepult.setIdSepultura(idSepultura);
+
+        Servico se = new Servico();
+            se.setIdServico(id);
+            se.setTipoServico(txtTipoServico.getText());
+            se.setStatusServico(txtStatusServico.getText());
+            se.setSepultura(sepult);
+            se.setNotificacaoServico(txtNotificacaoServico.getText());
+            se.setDataServico(dataServico);
+
+        ServicoDao dao = new ServicoDao();
+        dao.atualizar(se);
+
+        listar();
+        limparCampos();
+        JOptionPane.showMessageDialog(this, "Servico atualizado com sucesso!");
+    } catch (Exception e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(this, "Erro ao atualizar Servico");
+    }
+}
+
+    private void deletar() {
+        int row = tblServicos.getSelectedRow();
+        if (row == -1) return;
+
+        try {
+            int id = Integer.parseInt(tblServicos.getValueAt(row, 0).toString());
+
+            ServicoDao dao = new ServicoDao();
+            dao.deletar(id);
+
+            listar();
+            limparCampos();
+            JOptionPane.showMessageDialog(this, "Serviço excluído com sucesso!");
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Erro ao excluir Serviço");
+        }
+}
+    private void listar() {
+        try {
+            DefaultTableModel modelo = (DefaultTableModel) tblServicos.getModel();
+            modelo.setRowCount(0);
+
+            ServicoDao dao = new ServicoDao();
+            List<Servico> lista = dao.listarTodos();
+
+            for (Servico s : lista) {
+                modelo.addRow(new Object[] {
+                    s.getIdServico(),
+                    s.getTipoServico(),
+                    s.getDataServico(),      // tem que estar igual a ordem da tabela
+                    s.getStatusServico(),
+                    s.getSepultura().getIdSepultura(), 
+                    s.getNotificacaoServico()
+});
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Erro ao listar Sepulturas");
+       }
+}
+    private void limparCampos() {
+        txtSepulturaServico.setText("");
+        txtStatusServico.setText("");
+        txtTipoServico.setText("");
+        txtDataServico.setText("");
+        txtNotificacaoServico.setText("");
+          
+  }
+    
+     private void preencherCamposDaTabela() {
+        //pegando a linha
+        int row = tblServicos.getSelectedRow();
+        if (row == -1) return;
+
+        //mapeando cada coluna da tabela para uma variável do formulário.
+        Object tipoServico       = tblServicos.getValueAt(row, 1);
+        Object dataServ        = tblServicos.getValueAt(row, 2);
+        Object statusServ   = tblServicos.getValueAt(row, 3);
+        Object idSepult   = tblServicos.getValueAt(row, 4);
+        Object notificacao   = tblServicos.getValueAt(row, 5);
+       
+        txtTipoServico.setText(tipoServico != null ? tipoServico.toString() : "");
+        txtStatusServico.setText(statusServ != null ? statusServ.toString() : "");
+        txtSepulturaServico.setText(idSepult != null ? idSepult.toString() : "");
+        txtNotificacaoServico.setText(notificacao != null ? notificacao.toString() : "");
+
+        DateTimeFormatter brasil = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+        // Tratamento da Data do servico, verifica se é do tipo localdate se for aplica a formatação
+        //se for de outro tipo converte pra string e senão coloca como vazio
+        if (dataServ != null) {
+            if (dataServ instanceof java.time.LocalDate ld) {
+                txtDataServico.setText(ld.format(brasil));
+            } else {
+                txtDataServico.setText(dataServ.toString());
+            }
+        } else {
+            txtDataServico.setText("");
+        }
+
+        
+}
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -29,7 +202,7 @@ public class TelaServico extends javax.swing.JFrame {
     private void initComponents() {
 
         txtTipoServico = new javax.swing.JTextField();
-        txtStatusServiço = new javax.swing.JTextField();
+        txtStatusServico = new javax.swing.JTextField();
         txtDataServico = new javax.swing.JTextField();
         lblTipoServico = new javax.swing.JLabel();
         lblTituloServicos = new javax.swing.JLabel();
@@ -47,6 +220,7 @@ public class TelaServico extends javax.swing.JFrame {
         btnListarServicos = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblServicos = new javax.swing.JTable();
+        btnVoltarMenu = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -56,9 +230,9 @@ public class TelaServico extends javax.swing.JFrame {
             }
         });
 
-        txtStatusServiço.addActionListener(new java.awt.event.ActionListener() {
+        txtStatusServico.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtStatusServiçoActionPerformed(evt);
+                txtStatusServicoActionPerformed(evt);
             }
         });
 
@@ -135,6 +309,13 @@ public class TelaServico extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(tblServicos);
 
+        btnVoltarMenu.setText("Voltar ao Menu");
+        btnVoltarMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVoltarMenuActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -142,18 +323,7 @@ public class TelaServico extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(22, 22, 22)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(9, 9, 9)
-                                .addComponent(jLabel4)
-                                .addGap(77, 77, 77)
-                                .addComponent(lblTituloServicos)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel3)))
-                        .addGap(31, 31, 31))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                 .addComponent(btnCadastrarServicos)
@@ -162,36 +332,52 @@ public class TelaServico extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnDeletarServicos)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnListarServicos, javax.swing.GroupLayout.DEFAULT_SIZE, 98, Short.MAX_VALUE))
+                                .addComponent(btnListarServicos, javax.swing.GroupLayout.DEFAULT_SIZE, 360, Short.MAX_VALUE))
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                 .addComponent(lblTipoServico, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(txtTipoServico))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lblSepulturaServico, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(lblNotificacaoServico, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(lblDataServico)
-                                        .addGap(0, 0, Short.MAX_VALUE))
-                                    .addComponent(lblStatusServico, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addGap(15, 15, 15)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(lblDataServico)
+                                            .addComponent(lblStatusServico, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(lblSepulturaServico, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGap(0, 0, Short.MAX_VALUE)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(txtStatusServiço)
-                                    .addComponent(txtDataServico)
-                                    .addComponent(txtSepulturaServico, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)
-                                    .addComponent(txtNotificacaoServico, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE))))
-                        .addGap(458, 458, 458))))
+                                    .addComponent(txtStatusServico)
+                                    .addComponent(txtSepulturaServico, javax.swing.GroupLayout.DEFAULT_SIZE, 459, Short.MAX_VALUE)
+                                    .addComponent(txtNotificacaoServico, javax.swing.GroupLayout.DEFAULT_SIZE, 459, Short.MAX_VALUE)
+                                    .addComponent(txtDataServico, javax.swing.GroupLayout.Alignment.TRAILING))))
+                        .addGap(458, 458, 458))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(jLabel4))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btnVoltarMenu)
+                                .addGap(295, 295, 295)
+                                .addComponent(lblTituloServicos)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel3)))
+                        .addGap(31, 31, 31))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(22, 22, 22)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
                     .addComponent(jLabel3)
-                    .addComponent(lblTituloServicos))
-                .addGap(27, 27, 27)
+                    .addComponent(lblTituloServicos)
+                    .addComponent(btnVoltarMenu))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel4)
+                .addGap(13, 13, 13)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblTipoServico)
                     .addComponent(txtTipoServico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -202,7 +388,7 @@ public class TelaServico extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblStatusServico)
-                    .addComponent(txtStatusServiço, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtStatusServico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblSepulturaServico)
@@ -211,15 +397,15 @@ public class TelaServico extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblNotificacaoServico)
                     .addComponent(txtNotificacaoServico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 56, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCadastrarServicos)
                     .addComponent(btnAtualizarServicos)
                     .addComponent(btnDeletarServicos)
                     .addComponent(btnListarServicos))
                 .addGap(37, 37, 37)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 353, Short.MAX_VALUE)
-                .addGap(34, 34, 34))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 374, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
@@ -233,9 +419,9 @@ public class TelaServico extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtDataServicoActionPerformed
 
-    private void txtStatusServiçoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtStatusServiçoActionPerformed
+    private void txtStatusServicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtStatusServicoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtStatusServiçoActionPerformed
+    }//GEN-LAST:event_txtStatusServicoActionPerformed
 
     private void txtSepulturaServicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSepulturaServicoActionPerformed
         // TODO add your handling code here:
@@ -247,19 +433,31 @@ public class TelaServico extends javax.swing.JFrame {
 
     private void btnDeletarServicosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeletarServicosActionPerformed
         // TODO add your handling code here:
+        deletar();
     }//GEN-LAST:event_btnDeletarServicosActionPerformed
 
     private void btnCadastrarServicosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarServicosActionPerformed
         // TODO add your handling code here:
+        cadastrar();
     }//GEN-LAST:event_btnCadastrarServicosActionPerformed
 
     private void btnListarServicosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListarServicosActionPerformed
         // TODO add your handling code here:
+        listar();
     }//GEN-LAST:event_btnListarServicosActionPerformed
 
     private void btnAtualizarServicosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarServicosActionPerformed
+        atualizar();
         // TODO add your handling code here:
     }//GEN-LAST:event_btnAtualizarServicosActionPerformed
+
+    private void btnVoltarMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarMenuActionPerformed
+        // TODO add your handling code here:
+        Menu menu = new Menu();          // nome da sua classe de menu
+        menu.setLocationRelativeTo(this);
+        menu.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnVoltarMenuActionPerformed
 
     /**
      * @param args the command line arguments
@@ -291,6 +489,7 @@ public class TelaServico extends javax.swing.JFrame {
     private javax.swing.JButton btnCadastrarServicos;
     private javax.swing.JButton btnDeletarServicos;
     private javax.swing.JButton btnListarServicos;
+    private javax.swing.JButton btnVoltarMenu;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
@@ -304,7 +503,7 @@ public class TelaServico extends javax.swing.JFrame {
     private javax.swing.JTextField txtDataServico;
     private javax.swing.JTextField txtNotificacaoServico;
     private javax.swing.JTextField txtSepulturaServico;
-    private javax.swing.JTextField txtStatusServiço;
+    private javax.swing.JTextField txtStatusServico;
     private javax.swing.JTextField txtTipoServico;
     // End of variables declaration//GEN-END:variables
 }
