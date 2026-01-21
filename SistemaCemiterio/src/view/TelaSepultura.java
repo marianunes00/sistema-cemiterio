@@ -7,6 +7,7 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.Sepultura;
+import model.Usuario;
 import view.Menu;
 
 
@@ -23,14 +24,41 @@ public class TelaSepultura extends javax.swing.JFrame {
      */
     public TelaSepultura() {
         initComponents();
-        tblSepulturas.addMouseListener(new java.awt.event.MouseAdapter() {
+        
+    }
+    //Permissões de tipos de usuario
+    private void aplicarPermissoes(){
+        
+        if(!usuarioAutenticado.getPerfil().equals("Administrador")){//se o perfil for diferente de administrador
+            if(usuarioAutenticado.getPerfil().equals("Manutenção")){
+                btnCadastrarSepultura.setEnabled(false);
+                btnDeletarSepultura.setEnabled(false);
+            }else if(usuarioAutenticado.getPerfil().equals("Atendente")){
+                btnDeletarSepultura.setEnabled(false);
+            }else if(usuarioAutenticado.getPerfil().equals("Visitante")){
+                btnCadastrarSepultura.setEnabled(false);
+                btnDeletarSepultura.setEnabled(false);
+                btnAtualizarSepultura.setEnabled(false);
+            }
+        }
+    }
+    
+    //Adiciona o construtor que recebe o usuário e guarda o usuario logado em uma variavel
+    private Usuario usuarioAutenticado;
+
+    public TelaSepultura(Usuario usuario) {
+    initComponents();
+    this.usuarioAutenticado = usuario;
+    aplicarPermissoes();
+    tblSepulturas.addMouseListener(new java.awt.event.MouseAdapter() {
         @Override
         public void mouseClicked(java.awt.event.MouseEvent e) {
             preencherCamposDaTabela();
         }
 }       );
         listar();
-    }
+}
+
     
     private void cadastrar(){
         try{
@@ -54,6 +82,7 @@ public class TelaSepultura extends javax.swing.JFrame {
             //metodo listar e limpar campo
             listar();
             limparCampos();
+            JOptionPane.showMessageDialog(this, "Sepultura cadastrada com sucesso!");
                         
         }catch(Exception e){
             e.printStackTrace();
@@ -499,7 +528,7 @@ public class TelaSepultura extends javax.swing.JFrame {
 
     private void btnVoltarMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarMenuActionPerformed
         // TODO add your handling code here:
-        Menu menu = new Menu();          // nome da sua classe de menu
+        Menu menu = new Menu(usuarioAutenticado);          // nome da sua classe de menu
         menu.setLocationRelativeTo(this);
         menu.setVisible(true);
         this.dispose();

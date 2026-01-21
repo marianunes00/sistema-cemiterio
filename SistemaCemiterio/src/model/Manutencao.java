@@ -10,8 +10,8 @@ package model;
  */
 public class Manutencao extends Usuario {
     
-    public Manutencao(int idUsuario, String nomeUsuario,String login, String senha){
-    super(idUsuario, nomeUsuario, login, senha);
+    public Manutencao(int idUsuario, String nomeUsuario,String login, String senha, String perfil){
+    super(idUsuario, nomeUsuario, login, senha, perfil);
     
     }
 }

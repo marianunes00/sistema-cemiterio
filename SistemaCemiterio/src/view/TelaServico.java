@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package view;
 
 
@@ -13,7 +9,7 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.Sepultura;
 import model.Servico;
-import view.Menu;
+import model.Usuario;
 
 /**
  *
@@ -28,6 +24,15 @@ public class TelaServico extends javax.swing.JFrame {
      */
     public TelaServico() {
         initComponents();
+        
+    }
+    
+    private Usuario usuarioAutenticado;
+     //construtor que está recebendo o usuario que foi autenticado na tela de login
+    public TelaServico(Usuario usuario){
+        initComponents();
+        this.usuarioAutenticado = usuario;
+        aplicarPermissoes();
         tblServicos.addMouseListener(new java.awt.event.MouseAdapter() {
         @Override
         public void mouseClicked(java.awt.event.MouseEvent e) {
@@ -35,7 +40,27 @@ public class TelaServico extends javax.swing.JFrame {
         }
 }       );
         listar();
+
     }
+    
+    //Permissões de tipos de usuario
+    private void aplicarPermissoes(){
+        
+        if(!usuarioAutenticado.getPerfil().equals("Administrador")){//se o perfil for diferente de administrador
+            if(usuarioAutenticado.getPerfil().equals("Manutenção")){
+                btnCadastrarServicos.setEnabled(false);
+                btnDeletarServicos.setEnabled(false);
+            }else if(usuarioAutenticado.getPerfil().equals("Atendente")){
+                btnDeletarServicos.setEnabled(false);
+            }else if(usuarioAutenticado.getPerfil().equals("Visitante")){
+                btnCadastrarServicos.setEnabled(false);
+                btnDeletarServicos.setEnabled(false);
+                btnAtualizarServicos.setEnabled(false);
+            }
+        }
+    }
+
+
     
     private void cadastrar(){
         try{
@@ -62,10 +87,11 @@ public class TelaServico extends javax.swing.JFrame {
             //metodo listar e limpar campo
             listar();
             limparCampos();
+            JOptionPane.showMessageDialog(this, "Serviço cadastrado com sucesso!");
                         
         }catch(Exception e){
             e.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Erro ao cadastrar Sepultura");
+            JOptionPane.showMessageDialog(this, "Erro ao cadastrar Serviço");
         
         }
         
@@ -146,7 +172,7 @@ public class TelaServico extends javax.swing.JFrame {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Erro ao listar Sepulturas");
+            JOptionPane.showMessageDialog(this, "Erro ao listar Serviços");
        }
 }
     private void limparCampos() {
@@ -453,7 +479,7 @@ public class TelaServico extends javax.swing.JFrame {
 
     private void btnVoltarMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarMenuActionPerformed
         // TODO add your handling code here:
-        Menu menu = new Menu();          // nome da sua classe de menu
+        Menu menu = new Menu(usuarioAutenticado);          // nome da sua classe de menu
         menu.setLocationRelativeTo(this);
         menu.setVisible(true);
         this.dispose();

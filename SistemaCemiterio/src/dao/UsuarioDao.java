@@ -1,8 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-package dao;
+ package dao;
 
 import model.Usuario;
 import connection.ConnectionFactory;
@@ -14,10 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author Váleria Matias
- */
+ 
 public class UsuarioDao {
 
     public UsuarioDao() {
@@ -33,13 +26,11 @@ public class UsuarioDao {
             stmt.setString(1, usuario.getNomeUsuario());
             stmt.setString(2, usuario.getLogin());
             stmt.setString(3, usuario.getSenha()); 
+            stmt.setString(4, usuario.getPerfil());
             
 
             stmt.executeUpdate();
-            JOptionPane.showMessageDialog(null,
-                "Usuário cadastrado com sucesso!",
-                "Cadastro realizado",
-                JOptionPane.INFORMATION_MESSAGE);
+           
         } catch (SQLException e) {
             throw new RuntimeException("Erro ao cadastrar usuário: " + e.getMessage());
         }
@@ -59,6 +50,7 @@ public class UsuarioDao {
                 u.setNomeUsuario(rs.getString("nomeUsuario"));
                 u.setLogin(rs.getString("login"));
                 u.setSenha(rs.getString("senha"));
+                u.setPerfil(rs.getString("perfil"));
                 usuarios.add(u);
             }
         } catch (SQLException e) {
@@ -67,9 +59,31 @@ public class UsuarioDao {
 
         return usuarios;
     }
+    
+    public Usuario autenticar(String login ,String senha) {
+        String sql = "SELECT * FROM usuario WHERE login = ? AND senha = ?";
+
+        try (Connection conn = ConnectionFactory.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, login);
+            stmt.setString(2, senha);
+            
+            ResultSet rs = stmt.executeQuery();
+            
+            if(rs.next()){
+                return new Usuario(
+                rs.getInt("idUsuario"),
+                rs.getString("nomeUsuario"),
+                rs.getString("login"),
+                rs.getString("senha"),
+                rs.getString("perfil"));
+            }
+           
+        } catch (SQLException e) {
+            throw new RuntimeException("Usuário não autenticado!" + e.getMessage());
+        }
+        return null;
+    }
+
 }
-
-        
-  
-
-

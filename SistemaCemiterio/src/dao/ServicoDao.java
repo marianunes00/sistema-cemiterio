@@ -30,11 +30,7 @@ public class ServicoDao {
             stmt.setString(5, servico.getNotificacaoServico());
             
             stmt.execute();
-            JOptionPane.showMessageDialog(
-            null,
-            "Serviço cadastrado com sucesso!",
-            "Cadastro realizado",
-            JOptionPane.INFORMATION_MESSAGE);           
+                      
         }catch(SQLException e){
             System.out.println("Erro ao criar ordem de serviço");
             e.printStackTrace();
@@ -63,11 +59,7 @@ public class ServicoDao {
             stmt.setInt(6, servico.getIdServico());
             
             stmt.executeUpdate();
-            JOptionPane.showMessageDialog(
-            null,
-            "Ordem de serviço atualizada com sucesso!",
-            "Atualização realizada",
-            JOptionPane.INFORMATION_MESSAGE);           
+                     
         }catch(SQLException e){
             System.out.println("Erro ao atualizar a ordem de serviço");
             e.printStackTrace();
@@ -85,14 +77,6 @@ public class ServicoDao {
         stmt.setInt(1, idServico);
 
         stmt.executeUpdate();
-        
-        //abre a caixa de dialogo e exibe uma mensagem de acordo com a operação
-        JOptionPane.showMessageDialog(
-            null,
-            "Ordem de serviço excluída com sucesso!",
-            "Exclusão realizada",
-            JOptionPane.INFORMATION_MESSAGE
-        );
         
         //caso dê erro, exibe a mensagem
     } catch (SQLException e) {

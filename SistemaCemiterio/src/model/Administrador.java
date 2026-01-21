@@ -10,8 +10,8 @@ package model;
  */
 public class Administrador extends Usuario {
     
-    public Administrador(int idUsuario, String nomeUsuario, String login, String senha) {
-        super(idUsuario, nomeUsuario, login, senha);
+    public Administrador(int idUsuario, String nomeUsuario, String login, String senha, String perfil) {
+        super(idUsuario, nomeUsuario, login, senha, perfil);
     }
     
      

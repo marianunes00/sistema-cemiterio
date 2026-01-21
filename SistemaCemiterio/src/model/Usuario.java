@@ -1,26 +1,21 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package model;
 
-/**
- *
- * @author Váleria Matias
- */
+
 public class Usuario {
     private int idUsuario;
     private String nomeUsuario;
     private String login;
     private String senha;
+    private String perfil;
 
     public Usuario(){}
     
-    public Usuario(int idUsuario, String nomeUsuario, String login, String senha) {
+    public Usuario(int idUsuario, String nomeUsuario, String login, String senha,String perfil) {
         this.idUsuario = idUsuario;
         this.nomeUsuario = nomeUsuario;
         this.login = login;
         this.senha = senha;
+        this.perfil = perfil;
     }
 
     public int getIdUsuario() {
@@ -54,6 +49,15 @@ public class Usuario {
     public void setSenha(String senha) {
         this.senha = senha;
     }
+
+    public String getPerfil() {
+        return perfil;
+    }
+
+    public void setPerfil(String perfil) {
+        this.perfil = perfil;
+    }
+    
     
      public boolean autenticar(String login, String senha) {
         // poderia ter mais regras depois (hash de senha, ativo/inativo etc.)

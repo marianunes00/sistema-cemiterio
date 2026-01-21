@@ -32,11 +32,7 @@ public class SepulturaDao {
             stmt.setDate(5, java.sql.Date.valueOf(sepultura.getDataCriacao()));
             
             stmt.execute();
-            JOptionPane.showMessageDialog(
-            null,
-            "Sepultura cadastrada com sucesso!",
-            "Cadastro realizado",
-            JOptionPane.INFORMATION_MESSAGE);           
+            
         }catch(SQLException e){
             System.out.println("Erro ao criar Sepultura");
             e.printStackTrace();
@@ -67,11 +63,7 @@ public class SepulturaDao {
             stmt.setInt(6, sepultura.getIdSepultura());
             
             stmt.executeUpdate();
-            JOptionPane.showMessageDialog(
-            null,
-            "Sepultura atualizada com sucesso!",
-            "Atualização realizada",
-            JOptionPane.INFORMATION_MESSAGE);           
+                     
         }catch(SQLException e){
             System.out.println("Erro ao atualizar Sepultura");
             e.printStackTrace();
@@ -89,14 +81,6 @@ public class SepulturaDao {
         stmt.setInt(1, idSepultura);
 
         stmt.executeUpdate();
-        
-        //abre a caixa de dialogo e exibe uma mensagem de acordo com a operação
-        JOptionPane.showMessageDialog(
-            null,
-            "Sepultura excluída com sucesso!",
-            "Exclusão realizada",
-            JOptionPane.INFORMATION_MESSAGE
-        );
         
         //caso dê erro, exibe a mensagem
     } catch (SQLException e) {

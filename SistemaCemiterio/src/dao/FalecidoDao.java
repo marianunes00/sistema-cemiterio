@@ -36,11 +36,7 @@ public class FalecidoDao {
             stmt.setString(7, falecido.getFamiliarResponsavel());
             
             stmt.execute();
-            JOptionPane.showMessageDialog(
-            null,
-            "Falecido cadastrado com sucesso!",
-            "Cadastro realizado",
-            JOptionPane.INFORMATION_MESSAGE);           
+                       
         } catch (SQLException e) {
         // MUITO IMPORTANTE: Mudar de System.out para THROW
         // Isso impede que a TelaFalecido mostre a mensagem de "Sucesso"
@@ -75,11 +71,7 @@ public class FalecidoDao {
             stmt.setInt(8, falecido.getIdFalecido());
             
             stmt.executeUpdate();
-            JOptionPane.showMessageDialog(
-            null,
-            "Registro de Falecido atualizado com sucesso!",
-            "Atualização realizada",
-            JOptionPane.INFORMATION_MESSAGE);           
+                   
         }catch(SQLException e){
             System.out.println("Erro ao atualizar Registro de Falecdio");
             e.printStackTrace();
@@ -98,13 +90,6 @@ public class FalecidoDao {
 
         stmt.executeUpdate();
         
-        //abre a caixa de dialogo e exibe uma mensagem de acordo com a operação
-        JOptionPane.showMessageDialog(
-            null,
-            "registro excluído com sucesso!",
-            "Exclusão realizada",
-            JOptionPane.INFORMATION_MESSAGE
-        );
         
         //caso dê erro, exibe a mensagem
     } catch (SQLException e) {

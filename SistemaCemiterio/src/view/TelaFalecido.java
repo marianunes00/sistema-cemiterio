@@ -8,7 +8,7 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.Falecido;
 import model.Sepultura;
-import view.Menu;
+import model.Usuario;
 
 
 /**
@@ -24,6 +24,14 @@ public class TelaFalecido extends javax.swing.JFrame {
      */
     public TelaFalecido() {
         initComponents();
+            }
+    
+    private Usuario usuarioAutenticado;
+     //construtor que está recebendo o usuario que foi autenticado na tela de login
+    public TelaFalecido(Usuario usuario){
+        initComponents();
+        this.usuarioAutenticado = usuario;
+        aplicarPermissoes();
         tblFalecidos.addMouseListener(new java.awt.event.MouseAdapter() {
         @Override
         public void mouseClicked(java.awt.event.MouseEvent e) {
@@ -31,7 +39,26 @@ public class TelaFalecido extends javax.swing.JFrame {
         }
 }       );
         listar();
+
     }
+    
+    //Permissões de tipos de usuario
+    private void aplicarPermissoes(){
+        
+        if(!usuarioAutenticado.getPerfil().equals("Administrador")){//se o perfil for diferente de administrador
+            if(usuarioAutenticado.getPerfil().equals("Manutenção")){
+                btnCadastrarFalecido.setEnabled(false);
+                btnDeletarFalecido.setEnabled(false);
+            }else if(usuarioAutenticado.getPerfil().equals("Atendente")){
+                btnDeletarFalecido.setEnabled(false);
+            }else if(usuarioAutenticado.getPerfil().equals("Visitante")){
+                btnCadastrarFalecido.setEnabled(false);
+                btnDeletarFalecido.setEnabled(false);
+                btnAtualizarFalecido.setEnabled(false);
+            }
+        }
+    }
+
     
     
     private void cadastrar(){
@@ -614,7 +641,7 @@ public class TelaFalecido extends javax.swing.JFrame {
 
     private void btnVoltarMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarMenuActionPerformed
         // TODO add your handling code here:
-        Menu menu = new Menu();          // nome da sua classe de menu
+        Menu menu = new Menu(usuarioAutenticado);          // nome da sua classe de menu
         menu.setLocationRelativeTo(this);
         menu.setVisible(true);
         this.dispose();

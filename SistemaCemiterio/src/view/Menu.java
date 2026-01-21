@@ -1,8 +1,5 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package view;
+import model.Usuario;
 import view.TelaSepultura;
 import view.TelaFalecido;
 import view.TelaServico;
@@ -21,6 +18,14 @@ public class Menu extends javax.swing.JFrame {
     public Menu() {
         initComponents();
     }
+    
+    private Usuario usuarioAutenticado;
+     //construtor que está recebendo o usuario que foi autenticado na tela de login
+    public Menu(Usuario usuario){
+        initComponents();
+        this.usuarioAutenticado = usuario;
+    }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -240,23 +245,26 @@ public class Menu extends javax.swing.JFrame {
 
     private void jbtAcessarSepulturasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtAcessarSepulturasActionPerformed
         // TODO add your handling code here:
-        TelaSepultura tela = new TelaSepultura();
+        TelaSepultura tela = new TelaSepultura(usuarioAutenticado);
         tela.setLocationRelativeTo(this); // centraliza em relação ao menu (opcional)
         tela.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_jbtAcessarSepulturasActionPerformed
 
     private void jbtAcessarFalecidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtAcessarFalecidosActionPerformed
-        // TODO add your handling code here:
-        TelaFalecido tela = new TelaFalecido();
+        TelaFalecido tela = new TelaFalecido(usuarioAutenticado);
         tela.setLocationRelativeTo(this);
         tela.setVisible(true);
+        this.dispose();
+        
     }//GEN-LAST:event_jbtAcessarFalecidosActionPerformed
 
     private void jbtAcessarServicosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtAcessarServicosActionPerformed
         // TODO add your handling code here:
-        TelaServico tela = new TelaServico();
+        TelaServico tela = new TelaServico(usuarioAutenticado);
         tela.setLocationRelativeTo(this);
         tela.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_jbtAcessarServicosActionPerformed
 
     /**
