@@ -352,9 +352,9 @@ public class TelaServico extends javax.swing.JFrame {
         lblNotificacaoServico.setForeground(new java.awt.Color(255, 255, 255));
         lblNotificacaoServico.setText("Notificação interna:");
 
-        lblTituloServicos.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lblTituloServicos.setFont(new java.awt.Font("Garamond", 1, 24)); // NOI18N
         lblTituloServicos.setForeground(new java.awt.Color(255, 255, 255));
-        lblTituloServicos.setText("Sistema de Gerenciamento de Cemitérios");
+        lblTituloServicos.setText("Gerenciamento de Serviços");
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
