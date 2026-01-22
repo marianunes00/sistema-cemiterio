@@ -562,17 +562,13 @@ public class TelaSepultura extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAtualizarSepultura;
     private javax.swing.JButton btnBuscarLote;
-    private javax.swing.JButton btnBuscarNomeFalecido;
     private javax.swing.JButton btnCadastrarSepultura;
     private javax.swing.JButton btnDeletarSepultura;
     private javax.swing.JButton btnListarSepulturas;
     private javax.swing.JButton btnVoltarMenu;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblDataCriacao;
@@ -583,7 +579,6 @@ public class TelaSepultura extends javax.swing.JFrame {
     private javax.swing.JLabel lblTituloSepulturas;
     private javax.swing.JTable tblSepulturas;
     private javax.swing.JTextField txtBuscarLoteSepultura;
-    private javax.swing.JTextField txtBuscarNomeFalecido;
     private javax.swing.JTextField txtDataCriacao;
     private javax.swing.JTextField txtFamiliarResponsavelSepultura;
     private javax.swing.JTextField txtLote;
