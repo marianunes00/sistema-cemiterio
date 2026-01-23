@@ -3,6 +3,8 @@ import model.Usuario;
 import view.TelaSepultura;
 import view.TelaFalecido;
 import view.TelaServico;
+import view.TelaRelatorios;
+import view.TelaAvisos;
 
 /**
  *
@@ -25,12 +27,21 @@ public class Menu extends javax.swing.JFrame {
         initComponents();
         this.usuarioAutenticado = usuario;
         mostrarNomeUsuario();
+        aplicarPermissoes();
     }
     
     private void mostrarNomeUsuario(){
         lblNomeUsuario.setText("Usuário: " + usuarioAutenticado.getNomeUsuario());
         lblPerfilUsuario.setText("Perfil: " + usuarioAutenticado.getPerfil());
+    } 
+    
+        //Permissões de tipos de usuario
+    private void aplicarPermissoes(){
+        if(usuarioAutenticado.getPerfil().equals("Visitante")){//se o perfil for de visitante ele não pode ver as notificações internas
+            btnAvisosInternos.setEnabled(false);
     }
+    }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -62,8 +73,9 @@ public class Menu extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         jPanel9 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
-        jbtAcessarServicos1 = new javax.swing.JButton();
+        btnAcessarRelatorio = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
+        btnAvisosInternos = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -243,14 +255,14 @@ public class Menu extends javax.swing.JFrame {
                 .addGap(0, 4, Short.MAX_VALUE))
         );
 
-        jbtAcessarServicos1.setBackground(new java.awt.Color(0, 102, 102));
-        jbtAcessarServicos1.setFont(new java.awt.Font("Garamond", 1, 18)); // NOI18N
-        jbtAcessarServicos1.setForeground(new java.awt.Color(255, 255, 255));
-        jbtAcessarServicos1.setText("Relátorios");
-        jbtAcessarServicos1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jbtAcessarServicos1.addActionListener(new java.awt.event.ActionListener() {
+        btnAcessarRelatorio.setBackground(new java.awt.Color(0, 102, 102));
+        btnAcessarRelatorio.setFont(new java.awt.Font("Garamond", 1, 18)); // NOI18N
+        btnAcessarRelatorio.setForeground(new java.awt.Color(255, 255, 255));
+        btnAcessarRelatorio.setText("Relátorios");
+        btnAcessarRelatorio.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnAcessarRelatorio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbtAcessarServicos1ActionPerformed(evt);
+                btnAcessarRelatorioActionPerformed(evt);
             }
         });
 
@@ -276,7 +288,7 @@ public class Menu extends javax.swing.JFrame {
                 .addGap(168, 168, 168)
                 .addComponent(jbtAcessarServicos, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 173, Short.MAX_VALUE)
-                .addComponent(jbtAcessarServicos1, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnAcessarRelatorio, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(122, 122, 122))
         );
         jPanel2Layout.setVerticalGroup(
@@ -294,30 +306,45 @@ public class Menu extends javax.swing.JFrame {
                     .addComponent(jbtAcessarSepulturas, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE)
                     .addComponent(jbtAcessarFalecidos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jbtAcessarServicos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jbtAcessarServicos1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnAcessarRelatorio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(53, 53, 53))
         );
 
         jLabel8.setFont(new java.awt.Font("Garamond", 2, 18)); // NOI18N
         jLabel8.setText("Organizando informações com facilidade e segurança.");
 
+        btnAvisosInternos.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnAvisosInternos.setText("Avisos Internos");
+        btnAvisosInternos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAvisosInternosActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGap(43, 43, 43)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 1169, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(104, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 404, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(50, 50, 50))
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addGap(43, 43, 43)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 1169, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addGap(51, 51, 51)
+                        .addComponent(btnAvisosInternos)))
+                .addContainerGap(104, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGap(57, 57, 57)
+                .addGap(16, 16, 16)
+                .addComponent(btnAvisosInternos)
+                .addGap(18, 18, 18)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 404, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(77, 77, 77)
                 .addComponent(jLabel8)
@@ -402,9 +429,14 @@ public class Menu extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_jbtAcessarServicosActionPerformed
 
-    private void jbtAcessarServicos1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtAcessarServicos1ActionPerformed
+    private void btnAcessarRelatorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAcessarRelatorioActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jbtAcessarServicos1ActionPerformed
+        TelaRelatorios telaR = new TelaRelatorios(usuarioAutenticado);
+        telaR.setLocationRelativeTo(this);
+        telaR.setVisible(true);
+        this.dispose();
+        
+    }//GEN-LAST:event_btnAcessarRelatorioActionPerformed
 
     private void btnSairLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairLoginActionPerformed
         TelaLogin telaL = new TelaLogin();
@@ -412,6 +444,13 @@ public class Menu extends javax.swing.JFrame {
         telaL.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnSairLoginActionPerformed
+
+    private void btnAvisosInternosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAvisosInternosActionPerformed
+        TelaAvisos telaA = new TelaAvisos(usuarioAutenticado);
+        telaA.setLocationRelativeTo(this);
+        telaA.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnAvisosInternosActionPerformed
 
     /**
      * @param args the command line arguments
@@ -439,6 +478,8 @@ public class Menu extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAcessarRelatorio;
+    private javax.swing.JButton btnAvisosInternos;
     private javax.swing.JButton btnSairLogin;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -459,7 +500,6 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JButton jbtAcessarFalecidos;
     private javax.swing.JButton jbtAcessarSepulturas;
     private javax.swing.JButton jbtAcessarServicos;
-    private javax.swing.JButton jbtAcessarServicos1;
     private javax.swing.JLabel lblNomeUsuario;
     private javax.swing.JLabel lblPerfilUsuario;
     // End of variables declaration//GEN-END:variables

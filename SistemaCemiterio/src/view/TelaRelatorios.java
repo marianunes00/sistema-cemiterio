@@ -4,6 +4,9 @@
  */
 package view;
 
+import model.Usuario;
+
+
 /**
  *
  * @author Váleria Matias
@@ -12,11 +15,15 @@ public class TelaRelatorios extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(TelaRelatorios.class.getName());
 
-    /**
-     * Creates new form Telasimulacao
-     */
+    
     public TelaRelatorios() {
         initComponents();
+    }
+     private Usuario usuarioAutenticado;
+     //construtor que está recebendo o usuario que foi autenticado na tela de login
+    public TelaRelatorios(Usuario usuario){
+        initComponents();
+        this.usuarioAutenticado = usuario;
     }
 
     /**

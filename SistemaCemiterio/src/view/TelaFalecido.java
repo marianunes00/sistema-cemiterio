@@ -9,6 +9,7 @@ import javax.swing.table.DefaultTableModel;
 import model.Falecido;
 import model.Sepultura;
 import model.Usuario;
+import view.Menu;
 
 
 /**
@@ -51,7 +52,8 @@ public class TelaFalecido extends javax.swing.JFrame {
                 btnDeletarFalecido.setEnabled(false);
             }else if(usuarioAutenticado.getPerfil().equals("Atendente")){
                 btnDeletarFalecido.setEnabled(false);
-            }else if(usuarioAutenticado.getPerfil().equals("Visitante")){
+            }else if(usuarioAutenticado.getPerfil().equals("Financeiro")
+                || usuarioAutenticado.getPerfil().equals("Visitante")){
                 btnCadastrarFalecido.setEnabled(false);
                 btnDeletarFalecido.setEnabled(false);
                 btnAtualizarFalecido.setEnabled(false);

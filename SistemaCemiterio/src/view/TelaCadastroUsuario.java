@@ -220,7 +220,7 @@ public class TelaCadastroUsuario extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(12, 1, 63, 0);
         getContentPane().add(btnVoltarAoLogin, gridBagConstraints);
 
-        cmbPerfilNovo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Administrador", "Manutenção", "Atendente", "Visitante" }));
+        cmbPerfilNovo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Administrador", "Manutenção", "Atendente", "Financeiro", "Visitante" }));
         cmbPerfilNovo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cmbPerfilNovoActionPerformed(evt);

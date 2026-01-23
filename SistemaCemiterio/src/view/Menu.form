@@ -218,22 +218,32 @@
               <Layout>
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" attributes="0">
-                          <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
-                          <Component id="jPanel2" min="-2" pref="1169" max="-2" attributes="0"/>
-                          <EmptySpace pref="104" max="32767" attributes="0"/>
-                      </Group>
                       <Group type="102" alignment="1" attributes="0">
                           <EmptySpace max="32767" attributes="0"/>
                           <Component id="jLabel8" min="-2" pref="404" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" attributes="0">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" attributes="0">
+                                  <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
+                                  <Component id="jPanel2" min="-2" pref="1169" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <EmptySpace min="-2" pref="51" max="-2" attributes="0"/>
+                                  <Component id="btnAvisosInternos" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
+                          <EmptySpace pref="104" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" pref="57" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
+                          <Component id="btnAvisosInternos" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="jPanel2" min="-2" pref="404" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="77" max="-2" attributes="0"/>
                           <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
@@ -272,7 +282,7 @@
                               <EmptySpace min="-2" pref="168" max="-2" attributes="0"/>
                               <Component id="jbtAcessarServicos" min="-2" pref="158" max="-2" attributes="0"/>
                               <EmptySpace pref="173" max="32767" attributes="0"/>
-                              <Component id="jbtAcessarServicos1" min="-2" pref="99" max="-2" attributes="0"/>
+                              <Component id="btnAcessarRelatorio" min="-2" pref="99" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="122" max="-2" attributes="0"/>
                           </Group>
                       </Group>
@@ -294,7 +304,7 @@
                                   <Component id="jbtAcessarSepulturas" alignment="0" pref="37" max="32767" attributes="0"/>
                                   <Component id="jbtAcessarFalecidos" max="32767" attributes="0"/>
                                   <Component id="jbtAcessarServicos" max="32767" attributes="0"/>
-                                  <Component id="jbtAcessarServicos1" max="32767" attributes="0"/>
+                                  <Component id="btnAcessarRelatorio" max="32767" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" pref="53" max="-2" attributes="0"/>
                           </Group>
@@ -509,7 +519,7 @@
                         </Component>
                       </SubComponents>
                     </Container>
-                    <Component class="javax.swing.JButton" name="jbtAcessarServicos1">
+                    <Component class="javax.swing.JButton" name="btnAcessarRelatorio">
                       <Properties>
                         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                           <Color blue="66" green="66" red="0" type="rgb"/>
@@ -528,7 +538,7 @@
                         </Property>
                       </Properties>
                       <Events>
-                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbtAcessarServicos1ActionPerformed"/>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAcessarRelatorioActionPerformed"/>
                       </Events>
                     </Component>
                   </SubComponents>
@@ -540,6 +550,17 @@
                     </Property>
                     <Property name="text" type="java.lang.String" value="Organizando informa&#xe7;&#xf5;es com facilidade e seguran&#xe7;a."/>
                   </Properties>
+                </Component>
+                <Component class="javax.swing.JButton" name="btnAvisosInternos">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Segoe UI" size="12" style="1"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Avisos Internos"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAvisosInternosActionPerformed"/>
+                  </Events>
                 </Component>
               </SubComponents>
             </Container>

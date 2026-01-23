@@ -10,7 +10,7 @@ import javax.swing.table.DefaultTableModel;
 import model.Sepultura;
 import model.Servico;
 import model.Usuario;
-
+import view.Menu;
 /**
  *
  * @author Váleria Matias
@@ -52,7 +52,8 @@ public class TelaServico extends javax.swing.JFrame {
                 btnDeletarServicos.setEnabled(false);
             }else if(usuarioAutenticado.getPerfil().equals("Atendente")){
                 btnDeletarServicos.setEnabled(false);
-            }else if(usuarioAutenticado.getPerfil().equals("Visitante")){
+            }else if(usuarioAutenticado.getPerfil().equals("Financeiro")
+                    || usuarioAutenticado.getPerfil().equals("Visitante")){
                 btnCadastrarServicos.setEnabled(false);
                 btnDeletarServicos.setEnabled(false);
                 btnAtualizarServicos.setEnabled(false);
