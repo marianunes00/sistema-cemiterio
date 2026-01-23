@@ -1,3 +1,10 @@
-/SistemaCeminterio/nbproject/private/
-/SistemaCemiterio/build/
-/SistemaCemiterio/dist/
+# NetBeans (configurações locais)
+SistemaCemiterio/nbproject/private/
+
+# Build do projeto
+SistemaCemiterio/build/
+SistemaCemiterio/dist/
+
+# Arquivos privados específicos
+SistemaCemiterio/nbproject/private/private.properties
+SistemaCemiterio/nbproject/private/private.xml

@@ -634,10 +634,14 @@ public class TelaSepultura extends javax.swing.JFrame {
     private javax.swing.JButton btnDeletarSepultura;
     private javax.swing.JButton btnListarSepulturas;
     private javax.swing.JButton btnVoltarMenu;
+<<<<<<< HEAD
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+=======
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+>>>>>>> 18c018ed61a4b1fa19500ca28c678a78214cd8dd
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
