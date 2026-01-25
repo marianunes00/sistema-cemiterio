@@ -4,6 +4,10 @@
  */
 package view;
 
+import dao.SepulturaDao;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+import model.Sepultura;
 import model.Usuario;
 
 
@@ -14,18 +18,15 @@ import model.Usuario;
 public class TelaRelatorios extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(TelaRelatorios.class.getName());
-
     
+    /**
+     * Creates new form TelaRelatorio
+     */
     public TelaRelatorios() {
         initComponents();
     }
-     private Usuario usuarioAutenticado;
-     //construtor que está recebendo o usuario que foi autenticado na tela de login
-    public TelaRelatorios(Usuario usuario){
-        initComponents();
-        this.usuarioAutenticado = usuario;
-    }
 
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -35,171 +36,189 @@ public class TelaRelatorios extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        txtStatusSepultura = new javax.swing.JTextField();
-        txtConcessoesAVencer = new javax.swing.JTextField();
-        txtPeriodoSepultamentos = new javax.swing.JTextField();
-        lbStatusSepultura = new javax.swing.JLabel();
-        lblTituloRelatorio = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        lblPeriodoSepultamentos = new javax.swing.JLabel();
-        lblConcessoesAVencer = new javax.swing.JLabel();
-        lblServicosRealizados = new javax.swing.JLabel();
-        txtServicosRealizados = new javax.swing.JTextField();
-        btnGerarRelatorio = new javax.swing.JButton();
-        btnAtualizarRelatorio = new javax.swing.JButton();
-        btnDeletarRelatorio = new javax.swing.JButton();
-        btnListarRelatorio = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        cbStatus = new javax.swing.JComboBox<>();
+        jLabel2 = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblRelatorio = new javax.swing.JTable();
+        tblRelatorioSepultura = new javax.swing.JTable();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        getContentPane().setLayout(null);
 
-        txtStatusSepultura.addActionListener(new java.awt.event.ActionListener() {
+        jPanel1.setBackground(new java.awt.Color(0, 102, 102));
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setText("Relátorios");
+
+        cbStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "TODOS", "DISPONIVEL", "OCUPADO ", "RESERVADO", "MANUTENCAO" }));
+        cbStatus.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        cbStatus.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtStatusSepulturaActionPerformed(evt);
+                cbStatusActionPerformed(evt);
             }
         });
-        getContentPane().add(txtStatusSepultura);
-        txtStatusSepultura.setBounds(189, 69, 196, 22);
 
-        txtConcessoesAVencer.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtConcessoesAVencerActionPerformed(evt);
-            }
-        });
-        getContentPane().add(txtConcessoesAVencer);
-        txtConcessoesAVencer.setBounds(191, 137, 194, 22);
+        jLabel2.setFont(new java.awt.Font("Garamond", 1, 18)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setText("Infrome o status da sepultura para o relátorio");
 
-        txtPeriodoSepultamentos.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtPeriodoSepultamentosActionPerformed(evt);
-            }
-        });
-        getContentPane().add(txtPeriodoSepultamentos);
-        txtPeriodoSepultamentos.setBounds(191, 103, 194, 22);
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
-        lbStatusSepultura.setText("Status das Sepulturas:");
-        getContentPane().add(lbStatusSepultura);
-        lbStatusSepultura.setBounds(22, 72, 154, 16);
-
-        lblTituloRelatorio.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        lblTituloRelatorio.setText("Sistema de Gerenciamento de Cemitérios");
-        getContentPane().add(lblTituloRelatorio);
-        lblTituloRelatorio.setBounds(251, 22, 290, 20);
-
-        jLabel3.setText("Área de Relatórios");
-        getContentPane().add(jLabel3);
-        jLabel3.setBounds(705, 30, 110, 16);
-
-        jLabel4.setText("Cemitério Descanso Eterno");
-        getContentPane().add(jLabel4);
-        jLabel4.setBounds(31, 25, 143, 16);
-
-        lblPeriodoSepultamentos.setText("Períodos dos sepultamentos:");
-        getContentPane().add(lblPeriodoSepultamentos);
-        lblPeriodoSepultamentos.setBounds(22, 106, 152, 16);
-
-        lblConcessoesAVencer.setText("Concessões prestes a vencer?");
-        getContentPane().add(lblConcessoesAVencer);
-        lblConcessoesAVencer.setBounds(22, 140, 154, 16);
-
-        lblServicosRealizados.setText("Serviços realizados:");
-        getContentPane().add(lblServicosRealizados);
-        lblServicosRealizados.setBounds(22, 174, 154, 16);
-
-        txtServicosRealizados.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtServicosRealizadosActionPerformed(evt);
-            }
-        });
-        getContentPane().add(txtServicosRealizados);
-        txtServicosRealizados.setBounds(191, 171, 194, 22);
-
-        btnGerarRelatorio.setText("Gerar");
-        btnGerarRelatorio.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnGerarRelatorioActionPerformed(evt);
-            }
-        });
-        getContentPane().add(btnGerarRelatorio);
-        btnGerarRelatorio.setBounds(22, 260, 72, 23);
-
-        btnAtualizarRelatorio.setText("Atualizar");
-        btnAtualizarRelatorio.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAtualizarRelatorioActionPerformed(evt);
-            }
-        });
-        getContentPane().add(btnAtualizarRelatorio);
-        btnAtualizarRelatorio.setBounds(100, 260, 77, 23);
-
-        btnDeletarRelatorio.setText("Deletar");
-        btnDeletarRelatorio.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDeletarRelatorioActionPerformed(evt);
-            }
-        });
-        getContentPane().add(btnDeletarRelatorio);
-        btnDeletarRelatorio.setBounds(183, 260, 72, 23);
-
-        btnListarRelatorio.setText("Listar");
-        btnListarRelatorio.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnListarRelatorioActionPerformed(evt);
-            }
-        });
-        getContentPane().add(btnListarRelatorio);
-        btnListarRelatorio.setBounds(261, 260, 124, 23);
-
-        tblRelatorio.setModel(new javax.swing.table.DefaultTableModel(
+        tblRelatorioSepultura.setBackground(new java.awt.Color(0, 102, 102));
+        tblRelatorioSepultura.setForeground(new java.awt.Color(255, 255, 255));
+        tblRelatorioSepultura.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "ID", "Lote", "Status", "Tipo da Sepultura", "Data da Criação", "Familiar Responsável", "Serviço Realizado"
+                "ID", "Lote", "Tipo", "Status", "Familiar Responsável"
             }
         ));
-        jScrollPane1.setViewportView(tblRelatorio);
+        tblRelatorioSepultura.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+                tblRelatorioSepulturaAncestorAdded(evt);
+            }
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+        });
+        jScrollPane1.setViewportView(tblRelatorioSepultura);
 
-        getContentPane().add(jScrollPane1);
-        jScrollPane1.setBounds(22, 323, 780, 350);
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(14, 14, 14)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1185, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 504, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        jButton1.setText("Gerar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jButton2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jButton2.setForeground(new java.awt.Color(0, 102, 102));
+        jButton2.setText("Voltar ao menu");
+        jButton2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(53, 53, 53)
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(456, 456, 456)
+                        .addComponent(jLabel1))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(339, 339, 339)
+                        .addComponent(jLabel2)
+                        .addGap(18, 18, 18)
+                        .addComponent(cbStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(71, 71, 71)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(63, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(cbStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(46, 46, 46)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(47, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtStatusSepulturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtStatusSepulturaActionPerformed
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtStatusSepulturaActionPerformed
+        String status = cbStatus.getSelectedItem().toString();
+    
+        SepulturaDao dao = new SepulturaDao();
+        List<Sepultura> lista = dao.listarPorStatus(status);
 
-    private void txtPeriodoSepultamentosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPeriodoSepultamentosActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtPeriodoSepultamentosActionPerformed
+        DefaultTableModel model = (DefaultTableModel) tblRelatorioSepultura.getModel();
+        model.setRowCount(0);
 
-    private void txtConcessoesAVencerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtConcessoesAVencerActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtConcessoesAVencerActionPerformed
+        for (Sepultura s : lista) {
+            model.addRow(new Object[]{
+                s.getIdSepultura(),
+                s.getLote(),
+                s.getTipoSepultura(),
+                s.getStatusSepultura(),
+                s.getFamiliarResponsavel()
+            });
+       
+        }
+    
+    }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void txtServicosRealizadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtServicosRealizadosActionPerformed
+    private void tblRelatorioSepulturaAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_tblRelatorioSepulturaAncestorAdded
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtServicosRealizadosActionPerformed
+    }//GEN-LAST:event_tblRelatorioSepulturaAncestorAdded
 
-    private void btnDeletarRelatorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeletarRelatorioActionPerformed
+    private void cbStatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbStatusActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnDeletarRelatorioActionPerformed
+    }//GEN-LAST:event_cbStatusActionPerformed
 
-    private void btnGerarRelatorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGerarRelatorioActionPerformed
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnGerarRelatorioActionPerformed
-
-    private void btnListarRelatorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListarRelatorioActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnListarRelatorioActionPerformed
-
-    private void btnAtualizarRelatorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarRelatorioActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnAtualizarRelatorioActionPerformed
+        Menu menu = new Menu();          // nome da sua classe de menu
+        menu.setLocationRelativeTo(this);
+        menu.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -224,25 +243,17 @@ public class TelaRelatorios extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> new TelaRelatorios().setVisible(true));
+    
     }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAtualizarRelatorio;
-    private javax.swing.JButton btnDeletarRelatorio;
-    private javax.swing.JButton btnGerarRelatorio;
-    private javax.swing.JButton btnListarRelatorio;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
+    private javax.swing.JComboBox<String> cbStatus;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JLabel lbStatusSepultura;
-    private javax.swing.JLabel lblConcessoesAVencer;
-    private javax.swing.JLabel lblPeriodoSepultamentos;
-    private javax.swing.JLabel lblServicosRealizados;
-    private javax.swing.JLabel lblTituloRelatorio;
-    private javax.swing.JTable tblRelatorio;
-    private javax.swing.JTextField txtConcessoesAVencer;
-    private javax.swing.JTextField txtPeriodoSepultamentos;
-    private javax.swing.JTextField txtServicosRealizados;
-    private javax.swing.JTextField txtStatusSepultura;
+    private javax.swing.JTable tblRelatorioSepultura;
     // End of variables declaration//GEN-END:variables
 }

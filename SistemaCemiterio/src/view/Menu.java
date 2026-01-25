@@ -109,14 +109,14 @@ public class Menu extends javax.swing.JFrame {
         jPanel6Layout.setHorizontalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addGap(670, 670, 670)
+                        .addGap(968, 968, 968)
                         .addComponent(jLabel3)
                         .addGap(0, 381, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addGap(19, 19, 19)
+                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblNomeUsuario, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -126,18 +126,20 @@ public class Menu extends javax.swing.JFrame {
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                .addContainerGap())
             .addGroup(jPanel6Layout.createSequentialGroup()
-                .addGap(17, 17, 17)
-                .addComponent(lblNomeUsuario)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblPerfilUsuario)
-                .addGap(23, 23, 23)
-                .addComponent(btnSairLogin)
-                .addGap(22, 22, 22)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addGap(17, 17, 17)
+                        .addComponent(lblNomeUsuario)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblPerfilUsuario)
+                        .addGap(23, 23, 23)
+                        .addComponent(btnSairLogin)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                 .addComponent(jLabel3)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -287,7 +289,7 @@ public class Menu extends javax.swing.JFrame {
                 .addComponent(jbtAcessarFalecidos, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(168, 168, 168)
                 .addComponent(jbtAcessarServicos, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 173, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 177, Short.MAX_VALUE)
                 .addComponent(btnAcessarRelatorio, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(122, 122, 122))
         );
@@ -314,7 +316,9 @@ public class Menu extends javax.swing.JFrame {
         jLabel8.setText("Organizando informações com facilidade e segurança.");
 
         btnAvisosInternos.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnAvisosInternos.setForeground(new java.awt.Color(0, 102, 102));
         btnAvisosInternos.setText("Avisos Internos");
+        btnAvisosInternos.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnAvisosInternos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAvisosInternosActionPerformed(evt);
@@ -336,19 +340,19 @@ public class Menu extends javax.swing.JFrame {
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 1169, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGap(51, 51, 51)
-                        .addComponent(btnAvisosInternos)))
+                        .addComponent(btnAvisosInternos, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(104, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addGap(16, 16, 16)
-                .addComponent(btnAvisosInternos)
-                .addGap(18, 18, 18)
+                .addComponent(btnAvisosInternos, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 404, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(77, 77, 77)
                 .addComponent(jLabel8)
-                .addContainerGap(94, Short.MAX_VALUE))
+                .addContainerGap(97, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
@@ -405,39 +409,6 @@ public class Menu extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jbtAcessarSepulturasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtAcessarSepulturasActionPerformed
-        // TODO add your handling code here:
-        TelaSepultura tela = new TelaSepultura(usuarioAutenticado);
-        tela.setLocationRelativeTo(this); // centraliza em relação ao menu (opcional)
-        tela.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_jbtAcessarSepulturasActionPerformed
-
-    private void jbtAcessarFalecidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtAcessarFalecidosActionPerformed
-        TelaFalecido tela = new TelaFalecido(usuarioAutenticado);
-        tela.setLocationRelativeTo(this);
-        tela.setVisible(true);
-        this.dispose();
-        
-    }//GEN-LAST:event_jbtAcessarFalecidosActionPerformed
-
-    private void jbtAcessarServicosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtAcessarServicosActionPerformed
-        // TODO add your handling code here:
-        TelaServico tela = new TelaServico(usuarioAutenticado);
-        tela.setLocationRelativeTo(this);
-        tela.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_jbtAcessarServicosActionPerformed
-
-    private void btnAcessarRelatorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAcessarRelatorioActionPerformed
-        // TODO add your handling code here:
-        TelaRelatorios telaR = new TelaRelatorios(usuarioAutenticado);
-        telaR.setLocationRelativeTo(this);
-        telaR.setVisible(true);
-        this.dispose();
-        
-    }//GEN-LAST:event_btnAcessarRelatorioActionPerformed
-
     private void btnSairLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairLoginActionPerformed
         TelaLogin telaL = new TelaLogin();
         telaL.setLocationRelativeTo(this);
@@ -451,6 +422,37 @@ public class Menu extends javax.swing.JFrame {
         telaA.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnAvisosInternosActionPerformed
+
+    private void btnAcessarRelatorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAcessarRelatorioActionPerformed
+        // TODO add your handling code here:
+        TelaRelatorios telaR = new TelaRelatorios();
+        telaR.setLocationRelativeTo(this);
+        telaR.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnAcessarRelatorioActionPerformed
+
+    private void jbtAcessarServicosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtAcessarServicosActionPerformed
+        // TODO add your handling code here:
+        TelaServico tela = new TelaServico(usuarioAutenticado);
+        tela.setLocationRelativeTo(this);
+        tela.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jbtAcessarServicosActionPerformed
+
+    private void jbtAcessarFalecidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtAcessarFalecidosActionPerformed
+        TelaFalecido tela = new TelaFalecido(usuarioAutenticado);
+        tela.setLocationRelativeTo(this);
+        tela.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jbtAcessarFalecidosActionPerformed
+
+    private void jbtAcessarSepulturasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtAcessarSepulturasActionPerformed
+        // TODO add your handling code here:
+        TelaSepultura tela = new TelaSepultura(usuarioAutenticado);
+        tela.setLocationRelativeTo(this); // centraliza em relação ao menu (opcional)
+        tela.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jbtAcessarSepulturasActionPerformed
 
     /**
      * @param args the command line arguments

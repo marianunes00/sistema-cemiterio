@@ -152,4 +152,37 @@ public class SepulturaDao {
         return sepulturas;
 }
 
+    public List<Sepultura> listarPorStatus(String status) {
+        List<Sepultura> lista = new ArrayList<>();
+        String sql;
+
+        if (status.equalsIgnoreCase("TODOS")) {
+            sql = "SELECT * FROM sepultura";
+        } else {
+            sql = "SELECT * FROM sepultura WHERE statusSepultura = ?";
+        }
+
+        try (Connection conn = ConnectionFactory.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            if (!status.equalsIgnoreCase("TODOS")) {
+                stmt.setString(1, status);
+            }
+
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                Sepultura s = new Sepultura();
+                s.setIdSepultura(rs.getInt("idSepultura"));
+                s.setLote(rs.getString("lote"));
+                s.setTipoSepultura(rs.getString("tipoSepultura"));
+                s.setStatusSepultura(rs.getString("statusSepultura"));
+                s.setFamiliarResponsavel(rs.getString("familiarResponsavel"));
+                lista.add(s);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return lista;
+}
+
 }
