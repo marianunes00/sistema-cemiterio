@@ -184,5 +184,41 @@ public class SepulturaDao {
         }
         return lista;
 }
+    public List<Sepultura> listarPorTipo(String tipo){
+        
+        ArrayList lista = new ArrayList<>();
+        String sql;
+        
+        if(tipo.equalsIgnoreCase("TODOS")){
+            sql = "SELECT * FROM sepultura ";
+        }else{
+            sql = "SELECT * FROM sepultura WHERE tipoSepultura = ?";
+        }
+        
+        try(Connection conn = ConnectionFactory.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql)){
+            
+            if(!tipo.equalsIgnoreCase("TODOS")){
+                stmt.setString(1,tipo);
+            }
+            ResultSet rs = stmt.executeQuery();
+            
+            while(rs.next()){
+                Sepultura s = new Sepultura();
+                s.setIdSepultura(rs.getInt("idSepultura"));
+                s.setLote(rs.getString("lote"));
+                s.setTipoSepultura(rs.getString("tipoSepultura"));
+                s.setStatusSepultura(rs.getString("statusSepultura"));
+                s.setFamiliarResponsavel(rs.getString("familiarResponsavel"));
+                lista.add(s);    
+                        
+            }
+        
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return lista;   
+       
+    }
 
 }
