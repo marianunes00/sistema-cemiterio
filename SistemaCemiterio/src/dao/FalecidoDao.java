@@ -176,4 +176,66 @@ public class FalecidoDao {
     return falecidos;
 }
 
+    
+    public List<Sepultura> buscarPorLote(String lote) {
+        String sql = "SELECT * FROM sepultura WHERE lote LIKE ?";
+        List<Sepultura> sepulturas = new ArrayList<>();
+
+        try (Connection conn = ConnectionFactory.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, "%" + lote + "%");
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    Sepultura s = new Sepultura();
+                    s.setIdSepultura(rs.getInt("idSepultura"));
+                    s.setLote(rs.getString("lote"));
+                    s.setTipoSepultura(rs.getString("tipoSepultura"));
+                    s.setStatusSepultura(rs.getString("statusSepultura"));
+                    s.setFamiliarResponsavel(rs.getString("familiarResponsavel"));
+                    s.setDataCriacao(rs.getDate("dataCriacao").toLocalDate());
+                    sepulturas.add(s);
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao buscar sepulturas por lote: " + e.getMessage());
+        }
+
+        return sepulturas;
+}
+
+    public List<Falecido> listarPorSepultura(int idSepultura) {
+        List<Falecido> lista = new ArrayList<>();
+        String sql = "SELECT * FROM falecido WHERE sepultura = ?";        
+
+        try (Connection conn = ConnectionFactory.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1,idSepultura);
+            
+
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                Falecido f = new Falecido();
+                f.setIdFalecido(rs.getInt("idFalecido"));
+                f.setNomeCompleto(rs.getString("nomeCompleto"));
+                f.setDataNascimento(rs.getDate("dataNascimento").toLocalDate());
+                f.setPossuiCertidaoObito(rs.getBoolean("possuiCertidaoObito"));
+                f.setCpf(rs.getString("cpf"));
+                f.setDataFalecimento(rs.getDate("dataFalecimento").toLocalDate());
+                f.setFamiliarResponsavel(rs.getString("familiarResponsavel"));
+
+                Sepultura s = new Sepultura();
+                s.setIdSepultura(rs.getInt("sepultura"));
+                f.setSepultura(s);
+                
+                lista.add(f);
+                
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return lista;
+}
 }
