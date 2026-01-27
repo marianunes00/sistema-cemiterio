@@ -19,30 +19,6 @@ public class TelaSepultura extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(TelaSepultura.class.getName());
 
-    /**
-     * Creates new form Telasimulacao
-     */
-    public TelaSepultura() {
-        initComponents();
-        
-    }
-    //Permissões de tipos de usuario
-    private void aplicarPermissoes(){
-        
-        if(!usuarioAutenticado.getPerfil().equals("Administrador")){//se o perfil for diferente de administrador
-            if(usuarioAutenticado.getPerfil().equals("Manutenção")){
-                btnCadastrarSepultura.setEnabled(false);
-                btnDeletarSepultura.setEnabled(false);
-            }else if(usuarioAutenticado.getPerfil().equals("Atendente")){
-                btnDeletarSepultura.setEnabled(false);
-            }else if(usuarioAutenticado.getPerfil().equals("Financeiro")
-                   || usuarioAutenticado.getPerfil().equals("Visitante") ){
-                btnCadastrarSepultura.setEnabled(false);
-                btnDeletarSepultura.setEnabled(false);
-                btnAtualizarSepultura.setEnabled(false);
-            }
-        }
-    }
     
     //Adiciona o construtor que recebe o usuário e guarda o usuario logado em uma variavel
     private Usuario usuarioAutenticado;
@@ -59,6 +35,24 @@ public class TelaSepultura extends javax.swing.JFrame {
 }       );
         listar();
 }
+    
+      //Permissões de tipos de usuario
+    private void aplicarPermissoes(){
+        
+        if(!usuarioAutenticado.getPerfil().equals("Administrador")){//se o perfil for diferente de administrador
+            if(usuarioAutenticado.getPerfil().equals("Manutenção")){
+                btnCadastrarSepultura.setEnabled(false);
+                btnDeletarSepultura.setEnabled(false);
+            }else if(usuarioAutenticado.getPerfil().equals("Atendente")){
+                btnDeletarSepultura.setEnabled(false);
+            }else if(usuarioAutenticado.getPerfil().equals("Financeiro")
+                   || usuarioAutenticado.getPerfil().equals("Visitante") ){
+                btnCadastrarSepultura.setEnabled(false);
+                btnDeletarSepultura.setEnabled(false);
+                btnAtualizarSepultura.setEnabled(false);
+            }
+        }
+    }
 
     
     private void cadastrar(){
@@ -603,30 +597,6 @@ public class TelaSepultura extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btnVoltarMenuActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
-            logger.log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new TelaSepultura().setVisible(true));
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAtualizarSepultura;

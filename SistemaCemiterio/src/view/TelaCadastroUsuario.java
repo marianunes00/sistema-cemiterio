@@ -4,22 +4,17 @@ import dao.UsuarioDao;
 import javax.swing.JOptionPane;
 import model.Usuario;
 
-/**
- *
- * @author Váleria Matias
- */
+
 public class TelaCadastroUsuario extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(TelaCadastroUsuario.class.getName());
 
-    /**
-     * Creates new form TelaLogin
-     */
+    
     public TelaCadastroUsuario() {
         initComponents();
     }
     
-    private void cadastrarNovoUsuario(){
+        private void cadastrarNovoUsuario(){
         try{
             
             //Verifica se há espaços vazios nos campos de usuario,login e senha
@@ -59,6 +54,7 @@ public class TelaCadastroUsuario extends javax.swing.JFrame {
         this.dispose();
     }
 
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -67,192 +63,196 @@ public class TelaCadastroUsuario extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-        java.awt.GridBagConstraints gridBagConstraints;
 
-        txtUsuarioNovo = new javax.swing.JTextField();
+        jPanel1 = new javax.swing.JPanel();
+        jPanel2 = new javax.swing.JPanel();
+        Tela = new javax.swing.JPanel();
         lblUsuarioNovo = new javax.swing.JLabel();
-        lblSenhaNovo = new javax.swing.JLabel();
-        txtSenhaNova = new javax.swing.JTextField();
+        lblPerfilNovo = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        txtUsuarioNovo = new javax.swing.JTextField();
+        btnCadastrarNovoUsuario = new javax.swing.JButton();
         lblLoginNovo = new javax.swing.JLabel();
         txtLoginNovo = new javax.swing.JTextField();
-        btnCadastrarNovoUsuario = new javax.swing.JButton();
-        lblPerfilNovo = new javax.swing.JLabel();
-        btnVoltarAoLogin = new javax.swing.JButton();
+        lblSenhaNovo = new javax.swing.JLabel();
+        txtSenhaNova = new javax.swing.JTextField();
         cmbPerfilNovo = new javax.swing.JComboBox<>();
+        btnVoltarAoLogin = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        getContentPane().setLayout(new java.awt.GridBagLayout());
 
-        txtUsuarioNovo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtUsuarioNovoActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 7;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.gridwidth = 7;
-        gridBagConstraints.gridheight = 2;
-        gridBagConstraints.ipadx = 108;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(51, 18, 0, 0);
-        getContentPane().add(txtUsuarioNovo, gridBagConstraints);
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
-        lblUsuarioNovo.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jPanel2.setBackground(new java.awt.Color(0, 102, 102));
+
+        Tela.setBackground(new java.awt.Color(255, 255, 255));
+        Tela.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        lblUsuarioNovo.setFont(new java.awt.Font("Garamond", 1, 18)); // NOI18N
+        lblUsuarioNovo.setForeground(new java.awt.Color(0, 102, 102));
         lblUsuarioNovo.setText("Usuário");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.gridwidth = 5;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(51, 404, 0, 0);
-        getContentPane().add(lblUsuarioNovo, gridBagConstraints);
 
-        lblSenhaNovo.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        lblSenhaNovo.setText("Senha");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 5;
-        gridBagConstraints.gridwidth = 3;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(12, 404, 0, 0);
-        getContentPane().add(lblSenhaNovo, gridBagConstraints);
+        lblPerfilNovo.setFont(new java.awt.Font("Garamond", 1, 18)); // NOI18N
+        lblPerfilNovo.setForeground(new java.awt.Color(0, 102, 102));
+        lblPerfilNovo.setText("Perfil");
 
-        txtSenhaNova.addActionListener(new java.awt.event.ActionListener() {
+        jLabel3.setFont(new java.awt.Font("Garamond", 1, 36)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(0, 102, 102));
+        jLabel3.setText("Cadastro ");
+
+        btnCadastrarNovoUsuario.setBackground(new java.awt.Color(0, 102, 102));
+        btnCadastrarNovoUsuario.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnCadastrarNovoUsuario.setForeground(new java.awt.Color(255, 255, 255));
+        btnCadastrarNovoUsuario.setText("Cadastar");
+        btnCadastrarNovoUsuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtSenhaNovaActionPerformed(evt);
+                btnCadastrarNovoUsuarioActionPerformed(evt);
             }
         });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 7;
-        gridBagConstraints.gridy = 5;
-        gridBagConstraints.gridwidth = 7;
-        gridBagConstraints.gridheight = 2;
-        gridBagConstraints.ipadx = 108;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(12, 18, 0, 0);
-        getContentPane().add(txtSenhaNova, gridBagConstraints);
 
-        jLabel3.setBackground(new java.awt.Color(0, 102, 102));
-        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(0, 102, 102));
-        jLabel3.setText("CADASTRAR NOVO USUÁRIO");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridwidth = 15;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(150, 400, 0, 393);
-        getContentPane().add(jLabel3, gridBagConstraints);
-
-        lblLoginNovo.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lblLoginNovo.setFont(new java.awt.Font("Garamond", 1, 18)); // NOI18N
+        lblLoginNovo.setForeground(new java.awt.Color(0, 102, 102));
         lblLoginNovo.setText("Login");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 3;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(12, 404, 0, 0);
-        getContentPane().add(lblLoginNovo, gridBagConstraints);
 
         txtLoginNovo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtLoginNovoActionPerformed(evt);
             }
         });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 7;
-        gridBagConstraints.gridy = 3;
-        gridBagConstraints.gridwidth = 7;
-        gridBagConstraints.gridheight = 2;
-        gridBagConstraints.ipadx = 108;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(12, 18, 0, 0);
-        getContentPane().add(txtLoginNovo, gridBagConstraints);
 
-        btnCadastrarNovoUsuario.setBackground(new java.awt.Color(0, 153, 153));
-        btnCadastrarNovoUsuario.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        btnCadastrarNovoUsuario.setForeground(new java.awt.Color(255, 255, 255));
-        btnCadastrarNovoUsuario.setText("Cadastrar");
-        btnCadastrarNovoUsuario.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        btnCadastrarNovoUsuario.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCadastrarNovoUsuarioActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 8;
-        gridBagConstraints.gridwidth = 6;
-        gridBagConstraints.ipadx = 99;
-        gridBagConstraints.ipady = 14;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(16, 1, 0, 0);
-        getContentPane().add(btnCadastrarNovoUsuario, gridBagConstraints);
+        lblSenhaNovo.setFont(new java.awt.Font("Garamond", 1, 18)); // NOI18N
+        lblSenhaNovo.setForeground(new java.awt.Color(0, 102, 102));
+        lblSenhaNovo.setText("Senha");
 
-        lblPerfilNovo.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        lblPerfilNovo.setText("Perfil");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 7;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(18, 404, 0, 0);
-        getContentPane().add(lblPerfilNovo, gridBagConstraints);
-
-        btnVoltarAoLogin.setBackground(new java.awt.Color(0, 102, 102));
-        btnVoltarAoLogin.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        btnVoltarAoLogin.setForeground(new java.awt.Color(255, 255, 255));
-        btnVoltarAoLogin.setText("Voltar ao login");
-        btnVoltarAoLogin.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        btnVoltarAoLogin.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnVoltarAoLoginActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 9;
-        gridBagConstraints.gridwidth = 6;
-        gridBagConstraints.ipadx = 63;
-        gridBagConstraints.ipady = 14;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(12, 1, 63, 0);
-        getContentPane().add(btnVoltarAoLogin, gridBagConstraints);
-
+        cmbPerfilNovo.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        cmbPerfilNovo.setForeground(new java.awt.Color(0, 102, 102));
         cmbPerfilNovo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Administrador", "Manutenção", "Atendente", "Financeiro", "Visitante" }));
         cmbPerfilNovo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cmbPerfilNovoActionPerformed(evt);
             }
         });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 7;
-        gridBagConstraints.gridy = 7;
-        gridBagConstraints.gridwidth = 7;
-        gridBagConstraints.ipadx = 62;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(16, 18, 0, 0);
-        getContentPane().add(cmbPerfilNovo, gridBagConstraints);
+
+        btnVoltarAoLogin.setBackground(new java.awt.Color(0, 102, 102));
+        btnVoltarAoLogin.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnVoltarAoLogin.setForeground(new java.awt.Color(255, 255, 255));
+        btnVoltarAoLogin.setText("Login");
+        btnVoltarAoLogin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVoltarAoLoginActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout TelaLayout = new javax.swing.GroupLayout(Tela);
+        Tela.setLayout(TelaLayout);
+        TelaLayout.setHorizontalGroup(
+            TelaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(TelaLayout.createSequentialGroup()
+                .addGroup(TelaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(TelaLayout.createSequentialGroup()
+                        .addGap(66, 66, 66)
+                        .addGroup(TelaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblUsuarioNovo)
+                            .addComponent(lblLoginNovo)
+                            .addGroup(TelaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(lblSenhaNovo, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(TelaLayout.createSequentialGroup()
+                                    .addComponent(lblPerfilNovo)
+                                    .addGap(50, 50, 50)
+                                    .addGroup(TelaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(cmbPerfilNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGroup(TelaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(txtUsuarioNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(txtLoginNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(txtSenhaNova, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                            .addComponent(btnCadastrarNovoUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnVoltarAoLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(TelaLayout.createSequentialGroup()
+                        .addGap(126, 126, 126)
+                        .addComponent(jLabel3)))
+                .addContainerGap(67, Short.MAX_VALUE))
+        );
+        TelaLayout.setVerticalGroup(
+            TelaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(TelaLayout.createSequentialGroup()
+                .addGap(27, 27, 27)
+                .addComponent(jLabel3)
+                .addGap(53, 53, 53)
+                .addGroup(TelaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lblUsuarioNovo)
+                    .addComponent(txtUsuarioNovo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(26, 26, 26)
+                .addGroup(TelaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lblLoginNovo)
+                    .addComponent(txtLoginNovo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(24, 24, 24)
+                .addGroup(TelaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblSenhaNovo)
+                    .addComponent(txtSenhaNova, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(25, 25, 25)
+                .addGroup(TelaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblPerfilNovo)
+                    .addComponent(cmbPerfilNovo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(btnCadastrarNovoUsuario)
+                .addGap(18, 18, 18)
+                .addComponent(btnVoltarAoLogin)
+                .addContainerGap(29, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(105, 105, 105)
+                .addComponent(Tela, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(115, Short.MAX_VALUE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(41, Short.MAX_VALUE)
+                .addComponent(Tela, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(86, 86, 86))
+        );
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/logoretangularnova (500 x 400 px).png"))); // NOI18N
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(38, 38, 38)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 498, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(132, 132, 132))
+        );
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void txtUsuarioNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUsuarioNovoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtUsuarioNovoActionPerformed
-
-    private void txtSenhaNovaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSenhaNovaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtSenhaNovaActionPerformed
-
-    private void txtLoginNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtLoginNovoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtLoginNovoActionPerformed
-
-    private void btnCadastrarNovoUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarNovoUsuarioActionPerformed
-        cadastrarNovoUsuario();
-    }//GEN-LAST:event_btnCadastrarNovoUsuarioActionPerformed
 
     private void btnVoltarAoLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarAoLoginActionPerformed
         voltarAoLogin();
@@ -262,36 +262,23 @@ public class TelaCadastroUsuario extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_cmbPerfilNovoActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
-            logger.log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
+    private void txtLoginNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtLoginNovoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtLoginNovoActionPerformed
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new TelaCadastroUsuario().setVisible(true));
-    }
+    private void btnCadastrarNovoUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarNovoUsuarioActionPerformed
+        cadastrarNovoUsuario();
+    }//GEN-LAST:event_btnCadastrarNovoUsuarioActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel Tela;
     private javax.swing.JButton btnCadastrarNovoUsuario;
     private javax.swing.JButton btnVoltarAoLogin;
     private javax.swing.JComboBox<String> cmbPerfilNovo;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JLabel lblLoginNovo;
     private javax.swing.JLabel lblPerfilNovo;
     private javax.swing.JLabel lblSenhaNovo;

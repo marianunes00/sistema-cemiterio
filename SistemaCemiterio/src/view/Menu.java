@@ -1,4 +1,6 @@
 package view;
+import java.awt.Cursor;
+import javax.swing.JOptionPane;
 import model.Usuario;
 import view.TelaSepultura;
 import view.TelaFalecido;
@@ -17,9 +19,6 @@ public class Menu extends javax.swing.JFrame {
     /**
      * Creates new form Menu
      */
-    public Menu() {
-        initComponents();
-    }
     
     private Usuario usuarioAutenticado;
      //construtor que está recebendo o usuario que foi autenticado na tela de login
@@ -37,8 +36,12 @@ public class Menu extends javax.swing.JFrame {
     
         //Permissões de tipos de usuario
     private void aplicarPermissoes(){
-        if(usuarioAutenticado.getPerfil().equals("Visitante")){//se o perfil for de visitante ele não pode ver as notificações internas
-            btnAvisosInternos.setEnabled(false);
+        if(usuarioAutenticado.getPerfil().equals("Visitante")){//se o perfil for de visitante ele não pode ver as notificações internas e nem acessar os relatórios
+            btnAvisosInternos.setVisible(false);
+            btnAcessarRelatorio.setEnabled(false);
+            
+            
+            lblImgRelatorio.setCursor(new Cursor(Cursor.HAND_CURSOR));
     }
     }
 
@@ -71,8 +74,8 @@ public class Menu extends javax.swing.JFrame {
         jbtAcessarServicos = new javax.swing.JButton();
         jPanel8 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
-        jPanel9 = new javax.swing.JPanel();
-        jLabel5 = new javax.swing.JLabel();
+        jpImgRelatorio = new javax.swing.JPanel();
+        lblImgRelatorio = new javax.swing.JLabel();
         btnAcessarRelatorio = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
         btnAvisosInternos = new javax.swing.JButton();
@@ -84,11 +87,13 @@ public class Menu extends javax.swing.JFrame {
 
         jPanel6.setBackground(new java.awt.Color(0, 102, 102));
 
+        lblNomeUsuario.setBackground(new java.awt.Color(255, 255, 255));
         lblNomeUsuario.setFont(new java.awt.Font("Garamond", 1, 18)); // NOI18N
         lblNomeUsuario.setForeground(new java.awt.Color(255, 255, 255));
         lblNomeUsuario.setText("  ");
 
         btnSairLogin.setFont(new java.awt.Font("Garamond", 1, 18)); // NOI18N
+        btnSairLogin.setForeground(new java.awt.Color(0, 102, 102));
         btnSairLogin.setText("Sair");
         btnSairLogin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -107,22 +112,23 @@ public class Menu extends javax.swing.JFrame {
         jPanel6Layout.setHorizontalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGap(968, 968, 968)
+                .addComponent(jLabel3)
+                .addGap(0, 398, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
+                .addGap(33, 33, 33)
+                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addGap(968, 968, 968)
-                        .addComponent(jLabel3)
-                        .addGap(0, 381, Short.MAX_VALUE))
-                    .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addGap(33, 33, 33)
-                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 885, Short.MAX_VALUE)
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
-                                .addComponent(lblPerfilUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnSairLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(lblNomeUsuario, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(17, 17, 17))
+                            .addComponent(btnSairLogin, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblNomeUsuario, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(17, 17, 17))
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addGap(885, 885, 885)
+                        .addComponent(lblPerfilUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -131,15 +137,11 @@ public class Menu extends javax.swing.JFrame {
                     .addGroup(jPanel6Layout.createSequentialGroup()
                         .addGap(17, 17, 17)
                         .addComponent(lblNomeUsuario)
-                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel6Layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(lblPerfilUsuario)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnSairLogin)
-                                .addGap(17, 17, 17))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
+                        .addComponent(lblPerfilUsuario)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnSairLogin)
+                        .addGap(17, 17, 17))
                     .addGroup(jPanel6Layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -174,7 +176,7 @@ public class Menu extends javax.swing.JFrame {
         jbtAcessarSepulturas.setFont(new java.awt.Font("Garamond", 1, 18)); // NOI18N
         jbtAcessarSepulturas.setForeground(new java.awt.Color(255, 255, 255));
         jbtAcessarSepulturas.setText("Sepulturas");
-        jbtAcessarSepulturas.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jbtAcessarSepulturas.setBorder(null);
         jbtAcessarSepulturas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtAcessarSepulturasActionPerformed(evt);
@@ -205,7 +207,7 @@ public class Menu extends javax.swing.JFrame {
         jbtAcessarFalecidos.setFont(new java.awt.Font("Garamond", 1, 18)); // NOI18N
         jbtAcessarFalecidos.setForeground(new java.awt.Color(255, 255, 255));
         jbtAcessarFalecidos.setText("Falecidos");
-        jbtAcessarFalecidos.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jbtAcessarFalecidos.setBorder(null);
         jbtAcessarFalecidos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtAcessarFalecidosActionPerformed(evt);
@@ -216,7 +218,7 @@ public class Menu extends javax.swing.JFrame {
         jbtAcessarServicos.setFont(new java.awt.Font("Garamond", 1, 18)); // NOI18N
         jbtAcessarServicos.setForeground(new java.awt.Color(255, 255, 255));
         jbtAcessarServicos.setText("Agendar Serviços");
-        jbtAcessarServicos.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jbtAcessarServicos.setBorder(null);
         jbtAcessarServicos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtAcessarServicosActionPerformed(evt);
@@ -239,32 +241,32 @@ public class Menu extends javax.swing.JFrame {
             .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 217, Short.MAX_VALUE)
         );
 
-        jPanel9.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jpImgRelatorio.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
-        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/icone RELATORIO (2).png"))); // NOI18N
+        lblImgRelatorio.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblImgRelatorio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/icone RELATORIO (2).png"))); // NOI18N
+        lblImgRelatorio.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblImgRelatorioMouseClicked(evt);
+            }
+        });
 
-        javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
-        jPanel9.setLayout(jPanel9Layout);
-        jPanel9Layout.setHorizontalGroup(
-            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel9Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                .addContainerGap())
+        javax.swing.GroupLayout jpImgRelatorioLayout = new javax.swing.GroupLayout(jpImgRelatorio);
+        jpImgRelatorio.setLayout(jpImgRelatorioLayout);
+        jpImgRelatorioLayout.setHorizontalGroup(
+            jpImgRelatorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(lblImgRelatorio, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
         );
-        jPanel9Layout.setVerticalGroup(
-            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel9Layout.createSequentialGroup()
-                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 4, Short.MAX_VALUE))
+        jpImgRelatorioLayout.setVerticalGroup(
+            jpImgRelatorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(lblImgRelatorio, javax.swing.GroupLayout.PREFERRED_SIZE, 215, Short.MAX_VALUE)
         );
 
         btnAcessarRelatorio.setBackground(new java.awt.Color(0, 102, 102));
         btnAcessarRelatorio.setFont(new java.awt.Font("Garamond", 1, 18)); // NOI18N
         btnAcessarRelatorio.setForeground(new java.awt.Color(255, 255, 255));
         btnAcessarRelatorio.setText("Relátorios");
-        btnAcessarRelatorio.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnAcessarRelatorio.setBorder(null);
         btnAcessarRelatorio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAcessarRelatorioActionPerformed(evt);
@@ -283,7 +285,7 @@ public class Menu extends javax.swing.JFrame {
                 .addGap(56, 56, 56)
                 .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(67, 67, 67)
-                .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jpImgRelatorio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(70, 70, 70))
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(91, 91, 91)
@@ -292,7 +294,7 @@ public class Menu extends javax.swing.JFrame {
                 .addComponent(jbtAcessarFalecidos, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(168, 168, 168)
                 .addComponent(jbtAcessarServicos, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 177, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 179, Short.MAX_VALUE)
                 .addComponent(btnAcessarRelatorio, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(122, 122, 122))
         );
@@ -305,7 +307,7 @@ public class Menu extends javax.swing.JFrame {
                         .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jpImgRelatorio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jbtAcessarSepulturas, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE)
@@ -321,7 +323,7 @@ public class Menu extends javax.swing.JFrame {
         btnAvisosInternos.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnAvisosInternos.setForeground(new java.awt.Color(0, 102, 102));
         btnAvisosInternos.setText("Avisos Internos");
-        btnAvisosInternos.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnAvisosInternos.setBorder(null);
         btnAvisosInternos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAvisosInternosActionPerformed(evt);
@@ -363,9 +365,8 @@ public class Menu extends javax.swing.JFrame {
         jPanel7Layout.setHorizontalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
-                .addContainerGap(78, Short.MAX_VALUE)
-                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 1316, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(37, 37, 37))
+                .addGap(0, 115, Short.MAX_VALUE)
+                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 1316, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -428,7 +429,7 @@ public class Menu extends javax.swing.JFrame {
 
     private void btnAcessarRelatorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAcessarRelatorioActionPerformed
         // TODO add your handling code here:
-        TelaRelatorios telaR = new TelaRelatorios();
+        TelaRelatorios telaR = new TelaRelatorios(usuarioAutenticado);
         telaR.setLocationRelativeTo(this);
         telaR.setVisible(true);
         this.dispose();
@@ -457,30 +458,13 @@ public class Menu extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_jbtAcessarSepulturasActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
-            logger.log(java.util.logging.Level.SEVERE, null, ex);
+    private void lblImgRelatorioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblImgRelatorioMouseClicked
+        // TODO add your handling code here:
+        if (usuarioAutenticado.getPerfil().equals("Visitante")) {
+        JOptionPane.showMessageDialog(this,
+            "Você não tem permissão para acessar relatórios.");
         }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new Menu().setVisible(true));
-    }
+    }//GEN-LAST:event_lblImgRelatorioMouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAcessarRelatorio;
@@ -490,7 +474,6 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
@@ -501,10 +484,11 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
-    private javax.swing.JPanel jPanel9;
     private javax.swing.JButton jbtAcessarFalecidos;
     private javax.swing.JButton jbtAcessarSepulturas;
     private javax.swing.JButton jbtAcessarServicos;
+    private javax.swing.JPanel jpImgRelatorio;
+    private javax.swing.JLabel lblImgRelatorio;
     private javax.swing.JLabel lblNomeUsuario;
     private javax.swing.JLabel lblPerfilUsuario;
     // End of variables declaration//GEN-END:variables
