@@ -36,14 +36,29 @@ public class Menu extends javax.swing.JFrame {
     
         //Permissões de tipos de usuario
     private void aplicarPermissoes(){
-        if(usuarioAutenticado.getPerfil().equals("Visitante")){//se o perfil for de visitante ele não pode ver as notificações internas e nem acessar os relatórios
+        //Se o usuário for vistante não pode ver os avisos internos
+        if (!usuarioAutenticado.podeVerAvisosInternos()) {
             btnAvisosInternos.setVisible(false);
+        }
+        //Se o usuário for vistante não pode ter acesso ao relátório
+        if (!usuarioAutenticado.podeAcessarRelatorios()) {
             btnAcessarRelatorio.setEnabled(false);
-            
-            
             lblImgRelatorio.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        }
+
+        // Somente Administrador pode cadastrar usuário,utilização de polimorfismo do model
+        if (!usuarioAutenticado.podeCadastrarUsuario()) {
+            btnCadastrarUsuario.setVisible(false);
+}
+
     }
+    
+    private void cadastroNovoUsuario(){
+        TelaCadastroUsuario u = new TelaCadastroUsuario(usuarioAutenticado);
+        u.setVisible(true);
+        this.dispose();
     }
+
 
 
     /**
@@ -79,6 +94,7 @@ public class Menu extends javax.swing.JFrame {
         lblImgRelatorio = new javax.swing.JLabel();
         btnAcessarRelatorio = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
+        btnCadastrarUsuario = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -101,14 +117,15 @@ public class Menu extends javax.swing.JFrame {
             }
         });
 
+        lblPerfilUsuario.setBackground(new java.awt.Color(0, 204, 204));
         lblPerfilUsuario.setFont(new java.awt.Font("Garamond", 0, 18)); // NOI18N
-        lblPerfilUsuario.setForeground(new java.awt.Color(255, 255, 255));
+        lblPerfilUsuario.setForeground(new java.awt.Color(0, 102, 102));
         lblPerfilUsuario.setText("  ");
 
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/logoretangularnova.png"))); // NOI18N
 
         btnAvisosInternos.setBackground(new java.awt.Color(0, 102, 102));
-        btnAvisosInternos.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnAvisosInternos.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnAvisosInternos.setForeground(new java.awt.Color(255, 255, 255));
         btnAvisosInternos.setText("Avisos Internos");
         btnAvisosInternos.setBorder(null);
@@ -128,19 +145,19 @@ public class Menu extends javax.swing.JFrame {
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addGap(45, 45, 45)
-                .addComponent(btnAvisosInternos, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 462, Short.MAX_VALUE)
-                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(245, 245, 245)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
-                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnSairLogin, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblNomeUsuario, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(17, 17, 17))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
-                        .addComponent(lblPerfilUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())))
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(245, 245, 245))
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addComponent(btnAvisosInternos, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(925, 925, 925)))
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnSairLogin, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblNomeUsuario, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblPerfilUsuario, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(17, 17, 17))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -304,13 +321,13 @@ public class Menu extends javax.swing.JFrame {
                 .addComponent(jpImgRelatorio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(70, 70, 70))
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(91, 91, 91)
-                .addComponent(jbtAcessarSepulturas)
-                .addGap(182, 182, 182)
+                .addGap(85, 85, 85)
+                .addComponent(jbtAcessarSepulturas, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(175, 175, 175)
                 .addComponent(jbtAcessarFalecidos, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(168, 168, 168)
                 .addComponent(jbtAcessarServicos, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 183, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 179, Short.MAX_VALUE)
                 .addComponent(btnAcessarRelatorio, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(122, 122, 122))
         );
@@ -337,6 +354,17 @@ public class Menu extends javax.swing.JFrame {
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
         jLabel8.setText("Organizando informações com facilidade e segurança.");
 
+        btnCadastrarUsuario.setBackground(new java.awt.Color(153, 153, 153));
+        btnCadastrarUsuario.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnCadastrarUsuario.setForeground(new java.awt.Color(0, 102, 102));
+        btnCadastrarUsuario.setText("Cadastrar Usuário");
+        btnCadastrarUsuario.setBorder(null);
+        btnCadastrarUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCadastrarUsuarioActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
@@ -347,17 +375,24 @@ public class Menu extends javax.swing.JFrame {
                 .addContainerGap(115, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 404, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(73, 73, 73))
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 404, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(73, 73, 73))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                        .addComponent(btnCadastrarUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(35, 35, 35))))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGap(54, 54, 54)
+                .addGap(10, 10, 10)
+                .addComponent(btnCadastrarUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 404, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(35, 35, 35)
+                .addGap(36, 36, 36)
                 .addComponent(jLabel8)
-                .addContainerGap(148, Short.MAX_VALUE))
+                .addContainerGap(147, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
@@ -421,12 +456,9 @@ public class Menu extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btnSairLoginActionPerformed
 
-    private void btnAvisosInternosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAvisosInternosActionPerformed
-        TelaAvisos telaA = new TelaAvisos(usuarioAutenticado);
-        telaA.setLocationRelativeTo(this);
-        telaA.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_btnAvisosInternosActionPerformed
+    private void btnCadastrarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarUsuarioActionPerformed
+        cadastroNovoUsuario();
+    }//GEN-LAST:event_btnCadastrarUsuarioActionPerformed
 
     private void btnAcessarRelatorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAcessarRelatorioActionPerformed
         // TODO add your handling code here:
@@ -467,9 +499,19 @@ public class Menu extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_lblImgRelatorioMouseClicked
 
+    private void btnAvisosInternosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAvisosInternosActionPerformed
+        // TODO add your handling code here:
+        TelaAvisos telaA = new TelaAvisos(usuarioAutenticado);
+        telaA.setLocationRelativeTo(this);
+        telaA.setVisible(true);
+        this.dispose();
+
+    }//GEN-LAST:event_btnAvisosInternosActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAcessarRelatorio;
     private javax.swing.JButton btnAvisosInternos;
+    private javax.swing.JButton btnCadastrarUsuario;
     private javax.swing.JButton btnSairLogin;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

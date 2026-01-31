@@ -35,13 +35,6 @@ public class TelaLogin extends javax.swing.JFrame {
             return;
         }
     }
-    
-    private void cadastroNovoUsuario(){
-        TelaCadastroUsuario u = new TelaCadastroUsuario();
-        u.setVisible(true);
-        this.dispose();
-    }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -60,7 +53,6 @@ public class TelaLogin extends javax.swing.JFrame {
         txtSenha = new javax.swing.JTextField();
         txtLogin = new javax.swing.JTextField();
         btnEntrar = new javax.swing.JButton();
-        btnCadastrarUsuario = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -100,16 +92,6 @@ public class TelaLogin extends javax.swing.JFrame {
             }
         });
 
-        btnCadastrarUsuario.setBackground(new java.awt.Color(0, 102, 102));
-        btnCadastrarUsuario.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        btnCadastrarUsuario.setForeground(new java.awt.Color(255, 255, 255));
-        btnCadastrarUsuario.setText("Cadastrar novo usuário");
-        btnCadastrarUsuario.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCadastrarUsuarioActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -128,8 +110,7 @@ public class TelaLogin extends javax.swing.JFrame {
                                     .addComponent(lblSenha)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(txtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addComponent(btnEntrar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnCadastrarUsuario, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                .addComponent(btnEntrar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(153, 153, 153)
                         .addComponent(jLabel3)))
@@ -151,9 +132,7 @@ public class TelaLogin extends javax.swing.JFrame {
                     .addComponent(txtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(49, 49, 49)
                 .addComponent(btnEntrar)
-                .addGap(28, 28, 28)
-                .addComponent(btnCadastrarUsuario)
-                .addContainerGap(51, Short.MAX_VALUE))
+                .addContainerGap(73, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -170,7 +149,7 @@ public class TelaLogin extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap(194, Short.MAX_VALUE)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(109, 109, 109))
+                .addGap(142, 142, 142))
         );
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/logoretangularnova (500 x 400 px).png"))); // NOI18N
@@ -219,11 +198,6 @@ public class TelaLogin extends javax.swing.JFrame {
         loginUsuario();
     }//GEN-LAST:event_btnEntrarActionPerformed
 
-    private void btnCadastrarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarUsuarioActionPerformed
-        // TODO add your handling code here:
-        cadastroNovoUsuario();
-    }//GEN-LAST:event_btnCadastrarUsuarioActionPerformed
-
     /**
      * @param args the command line arguments
      */
@@ -243,7 +217,6 @@ public class TelaLogin extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnCadastrarUsuario;
     private javax.swing.JButton btnEntrar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;

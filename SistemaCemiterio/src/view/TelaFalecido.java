@@ -10,12 +10,7 @@ import model.Falecido;
 import model.Sepultura;
 import model.Usuario;
 import view.Menu;
-
-
-/**
- *
- * @author Váleria Matias
- */
+ 
 public class TelaFalecido extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(TelaFalecido.class.getName());
@@ -39,23 +34,17 @@ public class TelaFalecido extends javax.swing.JFrame {
     
     //Permissões de tipos de usuario
     private void aplicarPermissoes(){
+                 
+        btnCadastrarFalecido.setEnabled(
+            usuarioAutenticado.podeCadastrarFalecido());
         
-        if(!usuarioAutenticado.getPerfil().equals("Administrador")){//se o perfil for diferente de administrador
-            if(usuarioAutenticado.getPerfil().equals("Manutenção")){
-                btnCadastrarFalecido.setEnabled(false);
-                btnDeletarFalecido.setEnabled(false);
-            }else if(usuarioAutenticado.getPerfil().equals("Atendente")){
-                btnDeletarFalecido.setEnabled(false);
-            }else if(usuarioAutenticado.getPerfil().equals("Financeiro")
-                || usuarioAutenticado.getPerfil().equals("Visitante")){
-                btnCadastrarFalecido.setEnabled(false);
-                btnDeletarFalecido.setEnabled(false);
-                btnAtualizarFalecido.setEnabled(false);
+        btnDeletarFalecido.setEnabled(
+            usuarioAutenticado.podeDeletarFalecido());
+        
+        btnAtualizarFalecido.setEnabled(
+            usuarioAutenticado.podeAtualizarFalecido());
             }
-        }
-    }
 
-    
     
     private void cadastrar(){
          try{

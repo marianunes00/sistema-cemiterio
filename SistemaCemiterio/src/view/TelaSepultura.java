@@ -37,24 +37,20 @@ public class TelaSepultura extends javax.swing.JFrame {
 }
     
       //Permissões de tipos de usuario
-    private void aplicarPermissoes(){
-        
-        if(!usuarioAutenticado.getPerfil().equals("Administrador")){//se o perfil for diferente de administrador
-            if(usuarioAutenticado.getPerfil().equals("Manutenção")){
-                btnCadastrarSepultura.setEnabled(false);
-                btnDeletarSepultura.setEnabled(false);
-            }else if(usuarioAutenticado.getPerfil().equals("Atendente")){
-                btnDeletarSepultura.setEnabled(false);
-            }else if(usuarioAutenticado.getPerfil().equals("Financeiro")
-                   || usuarioAutenticado.getPerfil().equals("Visitante") ){
-                btnCadastrarSepultura.setEnabled(false);
-                btnDeletarSepultura.setEnabled(false);
-                btnAtualizarSepultura.setEnabled(false);
-            }
-        }
+    private void aplicarPermissoes() {
+
+        btnCadastrarSepultura.setEnabled(
+              usuarioAutenticado.podeCadastrarSepultura());
+
+        btnAtualizarSepultura.setEnabled(
+              usuarioAutenticado.podeAtualizarSepultura());
+
+        btnDeletarSepultura.setEnabled(
+              usuarioAutenticado.podeDeletarSepultura());
     }
 
-    
+        
+           
     private void cadastrar(){
         try{
             //ajusta a data para o padao do Brasil
@@ -591,7 +587,7 @@ public class TelaSepultura extends javax.swing.JFrame {
 
     private void btnVoltarMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarMenuActionPerformed
         // TODO add your handling code here:
-        Menu menu = new Menu(usuarioAutenticado);          // nome da sua classe de menu
+        Menu menu = new Menu(usuarioAutenticado);          
         menu.setLocationRelativeTo(this);
         menu.setVisible(true);
         this.dispose();
