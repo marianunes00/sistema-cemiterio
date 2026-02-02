@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package model;
 
 /**
@@ -11,7 +7,31 @@ package model;
 public class Manutencao extends Usuario {
     
     public Manutencao(int idUsuario, String nomeUsuario,String login, String senha, String perfil){
-    super(idUsuario, nomeUsuario, login, senha, perfil);
+        super(idUsuario, nomeUsuario, login, senha, perfil);
     
     }
+    
+    @Override
+    public boolean podeVerAvisosInternos() {
+        return true;
+}
+    @Override
+     public boolean podeAcessarRelatorios() {
+        return true;
+}
+    
+    //A manutenção pode atualizar sepulturas, falecidos e serviços
+    @Override
+    public boolean podeAtualizarSepultura() {
+        return true;
+    }
+    @Override
+    public boolean podeAtualizarFalecido() {
+        return true;
+    }
+    @Override
+    public boolean podeAtualizarServicos() {
+        return true;
+    }
+
 }

@@ -36,26 +36,19 @@ public class TelaServico extends javax.swing.JFrame {
     //Permissões de tipos de usuario
     private void aplicarPermissoes(){
         
-        if(!usuarioAutenticado.getPerfil().equals("Administrador")){//se o perfil for diferente de administrador
-            if(usuarioAutenticado.getPerfil().equals("Manutenção")){
-                btnCadastrarServicos.setEnabled(false);
-                btnDeletarServicos.setEnabled(false);
-            }else if(usuarioAutenticado.getPerfil().equals("Atendente")){
-                btnDeletarServicos.setEnabled(false);
-            }else if(usuarioAutenticado.getPerfil().equals("Financeiro")
-                    || usuarioAutenticado.getPerfil().equals("Visitante")){
-                btnCadastrarServicos.setEnabled(false);
-                btnDeletarServicos.setEnabled(false);
-                btnAtualizarServicos.setEnabled(false);
+        btnCadastrarServicos.setEnabled(
+            usuarioAutenticado.podeCadastrarServicos());
+        
+        btnDeletarServicos.setEnabled(
+            usuarioAutenticado.podeDeletarServicos());
+        
+        btnAtualizarServicos.setEnabled(
+            usuarioAutenticado.podeAtualizarServicos());
             }
-        }
-    }
-
-
-    
+   
     private void cadastrar(){
         try{
-            //ajusta a data para o padao do Brasil
+            //ajusta a data para o padrao do Brasil
             DateTimeFormatter brasil = DateTimeFormatter.ofPattern("dd/MM/yyyy");
             LocalDate dataServico = LocalDate.parse(txtDataServico.getText(), brasil);
             int idSepultura = Integer.parseInt(txtSepulturaServico.getText());

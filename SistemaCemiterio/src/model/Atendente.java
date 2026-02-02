@@ -1,13 +1,5 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package model;
 
-/**
- *
- * @author Váleria Matias
- */
 public class Atendente extends Usuario{
     
     public Atendente(int idUsuario, String nomeUsuario,String login,String senha, String perfil){
@@ -15,12 +7,43 @@ public class Atendente extends Usuario{
     }
     
     
-    public boolean podeExcluirRegistro(String login){
-        if(login == "admin"){
-       return true;
-    }else{
-        return false;
-        }
-          
+    @Override
+    public boolean podeVerAvisosInternos() {
+        return true;
+}
+    @Override
+     public boolean podeAcessarRelatorios() {
+        return true;
+}    
+    //O atendente pode cadastrar ou atualizar sepulturas
+    @Override
+    public boolean podeCadastrarSepultura() {
+        return true;
+    }
+
+    @Override
+    public boolean podeAtualizarSepultura() {
+        return true;
+    }
+
+    //Atendente pode cadastrar e atualizar falecidos
+    @Override
+    public boolean podeCadastrarFalecido() {
+        return true;
+    }
+
+    @Override
+    public boolean podeAtualizarFalecido() {
+        return true;
+        
+    }
+    @Override
+    //Atendente pode cadastrar e atualizar serviços
+    public boolean podeCadastrarServicos() {
+        return true;
+    }
+    @Override
+    public boolean podeAtualizarServicos() {
+        return true;
     }
 }

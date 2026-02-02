@@ -10,8 +10,12 @@ public class TelaCadastroUsuario extends javax.swing.JFrame {
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(TelaCadastroUsuario.class.getName());
 
     
-    public TelaCadastroUsuario() {
+    private Usuario usuarioAutenticado;
+        
+     //construtor que está recebendo o usuario que foi autenticado na tela de login
+    public TelaCadastroUsuario(Usuario usuario){
         initComponents();
+        this.usuarioAutenticado = usuario;
     }
     
         private void cadastrarNovoUsuario(){
@@ -47,13 +51,6 @@ public class TelaCadastroUsuario extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this,"Erro ao cadastrar");
         }
     }    
-    
-    private void voltarAoLogin(){
-        TelaLogin tl = new TelaLogin();
-        tl.setVisible(true);
-        this.dispose();
-    }
-
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -77,7 +74,7 @@ public class TelaCadastroUsuario extends javax.swing.JFrame {
         lblSenhaNovo = new javax.swing.JLabel();
         txtSenhaNova = new javax.swing.JTextField();
         cmbPerfilNovo = new javax.swing.JComboBox<>();
-        btnVoltarAoLogin = new javax.swing.JButton();
+        btnVoltarAoMenu = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -134,13 +131,13 @@ public class TelaCadastroUsuario extends javax.swing.JFrame {
             }
         });
 
-        btnVoltarAoLogin.setBackground(new java.awt.Color(0, 102, 102));
-        btnVoltarAoLogin.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        btnVoltarAoLogin.setForeground(new java.awt.Color(255, 255, 255));
-        btnVoltarAoLogin.setText("Login");
-        btnVoltarAoLogin.addActionListener(new java.awt.event.ActionListener() {
+        btnVoltarAoMenu.setBackground(new java.awt.Color(0, 102, 102));
+        btnVoltarAoMenu.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnVoltarAoMenu.setForeground(new java.awt.Color(255, 255, 255));
+        btnVoltarAoMenu.setText("Voltar ao menu");
+        btnVoltarAoMenu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnVoltarAoLoginActionPerformed(evt);
+                btnVoltarAoMenuActionPerformed(evt);
             }
         });
 
@@ -167,7 +164,7 @@ public class TelaCadastroUsuario extends javax.swing.JFrame {
                                             .addComponent(txtLoginNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(txtSenhaNova, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                             .addComponent(btnCadastrarNovoUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnVoltarAoLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(btnVoltarAoMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(TelaLayout.createSequentialGroup()
                         .addGap(126, 126, 126)
                         .addComponent(jLabel3)))
@@ -197,7 +194,7 @@ public class TelaCadastroUsuario extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(btnCadastrarNovoUsuario)
                 .addGap(18, 18, 18)
-                .addComponent(btnVoltarAoLogin)
+                .addComponent(btnVoltarAoMenu)
                 .addContainerGap(29, Short.MAX_VALUE))
         );
 
@@ -254,9 +251,12 @@ public class TelaCadastroUsuario extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnVoltarAoLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarAoLoginActionPerformed
-        voltarAoLogin();
-    }//GEN-LAST:event_btnVoltarAoLoginActionPerformed
+    private void btnVoltarAoMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarAoMenuActionPerformed
+        Menu menu = new Menu(usuarioAutenticado);          
+        menu.setLocationRelativeTo(this);
+        menu.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnVoltarAoMenuActionPerformed
 
     private void cmbPerfilNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbPerfilNovoActionPerformed
         // TODO add your handling code here:
@@ -273,7 +273,7 @@ public class TelaCadastroUsuario extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Tela;
     private javax.swing.JButton btnCadastrarNovoUsuario;
-    private javax.swing.JButton btnVoltarAoLogin;
+    private javax.swing.JButton btnVoltarAoMenu;
     private javax.swing.JComboBox<String> cmbPerfilNovo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;

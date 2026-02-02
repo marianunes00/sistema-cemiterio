@@ -9,6 +9,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
+import model.Administrador;
+import model.Atendente;
+import model.Financeiro;
+import model.Manutencao;
+import model.Visitante;
 
  
 public class UsuarioDao {
@@ -71,15 +76,27 @@ public class UsuarioDao {
             
             ResultSet rs = stmt.executeQuery();
             
-            if(rs.next()){
-                return new Usuario(
-                rs.getInt("idUsuario"),
-                rs.getString("nomeUsuario"),
-                rs.getString("login"),
-                rs.getString("senha"),
-                rs.getString("perfil"));
-            }
+            if (rs.next()) {
+            String perfil = rs.getString("perfil");
+            int id = rs.getInt("idUsuario");
+            String nome = rs.getString("nomeUsuario");
+            String log = rs.getString("login");
+            String sen = rs.getString("senha");
            
+            // Aqui acontece o Polimorfismo:instancia usuario de acordo com seu perfil
+            // Dependendo do texto no banco, criamos um objeto diferente
+            if ("Administrador".equalsIgnoreCase(perfil)) {
+                return new Administrador(id, nome, log, sen, perfil);
+            } else if ("Atendente".equalsIgnoreCase(perfil)) {
+                return new Atendente(id, nome, log, sen, perfil);
+            } else if ("Manutenção".equalsIgnoreCase(perfil)) {
+                return new Manutencao(id, nome, log, sen, perfil);
+            } else if ("Financeiro".equalsIgnoreCase(perfil)) {
+                return new Financeiro(id, nome, log, sen, perfil);
+            } else {
+                return new Visitante(id, nome, log, sen, perfil);
+            }
+        }
         } catch (SQLException e) {
             throw new RuntimeException("Usuário não autenticado!" + e.getMessage());
         }
