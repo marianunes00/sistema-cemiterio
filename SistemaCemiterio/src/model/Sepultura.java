@@ -74,7 +74,7 @@ public class Sepultura {
         this.statusSepultura = statusSepultura;
     }
     
-    public boolean estaDisponivel(){
+    public boolean isDisponivel(){
         return this.getStatusSepultura() != null && this.getStatusSepultura().equalsIgnoreCase("Disponível");
     }
     
