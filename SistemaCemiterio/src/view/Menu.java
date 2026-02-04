@@ -112,7 +112,7 @@ public class Menu extends javax.swing.JFrame {
         btnSairLogin.setFont(new java.awt.Font("Garamond", 1, 18)); // NOI18N
         btnSairLogin.setForeground(new java.awt.Color(255, 255, 255));
         btnSairLogin.setText("Sair");
-        btnSairLogin.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        btnSairLogin.setBorder(null);
         btnSairLogin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSairLoginActionPerformed(evt);
@@ -130,7 +130,7 @@ public class Menu extends javax.swing.JFrame {
         btnAvisosInternos.setFont(new java.awt.Font("Garamond", 1, 14)); // NOI18N
         btnAvisosInternos.setForeground(new java.awt.Color(255, 255, 255));
         btnAvisosInternos.setText("Avisos Internos");
-        btnAvisosInternos.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        btnAvisosInternos.setBorder(null);
         btnAvisosInternos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAvisosInternosActionPerformed(evt);
