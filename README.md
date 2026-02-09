@@ -1,6 +1,7 @@
 # sistema-cemiterio
 
 📌 Descrição
+
 O *Sistema de Gerenciamento de Cemitério* é uma aplicação desktop desenvolvida em Java, com o objetivo de organizar e centralizar o controle de sepulturas, falecidos, serviços e usuários. O sistema substitui controles manuais, proporcionando mais eficiência, segurança e confiabilidade.
 
  🛠 Tecnologias Utilizadas
