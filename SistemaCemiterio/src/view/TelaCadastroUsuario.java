@@ -20,11 +20,12 @@ public class TelaCadastroUsuario extends javax.swing.JFrame {
     
         private void cadastrarNovoUsuario(){
         try{
-            
+            String senha = new String(jpfSenhaCadastro.getPassword());
             //Verifica se há espaços vazios nos campos de usuario,login e senha
             if(txtUsuarioNovo.getText().trim().isEmpty()||
                txtLoginNovo.getText().trim().isEmpty()||
-               txtSenhaNova.getText().trim().isEmpty()){
+               senha.trim().isEmpty()){
+
                  JOptionPane.showMessageDialog(this,"Preencha todos os campos");
                  return;//se sim, impede de continuar o cadastramento
                 
@@ -37,7 +38,7 @@ public class TelaCadastroUsuario extends javax.swing.JFrame {
                0,// id gerado automaticamente
                txtUsuarioNovo.getText(),
                txtLoginNovo.getText(),
-               txtSenhaNova.getText(),
+               senha,
                perfil 
                );
             
@@ -72,9 +73,9 @@ public class TelaCadastroUsuario extends javax.swing.JFrame {
         lblLoginNovo = new javax.swing.JLabel();
         txtLoginNovo = new javax.swing.JTextField();
         lblSenhaNovo = new javax.swing.JLabel();
-        txtSenhaNova = new javax.swing.JTextField();
         cmbPerfilNovo = new javax.swing.JComboBox<>();
         btnVoltarAoMenu = new javax.swing.JButton();
+        jpfSenhaCadastro = new javax.swing.JPasswordField();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -141,6 +142,12 @@ public class TelaCadastroUsuario extends javax.swing.JFrame {
             }
         });
 
+        jpfSenhaCadastro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jpfSenhaCadastroActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout TelaLayout = new javax.swing.GroupLayout(Tela);
         Tela.setLayout(TelaLayout);
         TelaLayout.setHorizontalGroup(
@@ -152,17 +159,19 @@ public class TelaCadastroUsuario extends javax.swing.JFrame {
                         .addGroup(TelaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblUsuarioNovo)
                             .addComponent(lblLoginNovo)
-                            .addGroup(TelaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(lblSenhaNovo, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(TelaLayout.createSequentialGroup()
-                                    .addComponent(lblPerfilNovo)
-                                    .addGap(50, 50, 50)
-                                    .addGroup(TelaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(cmbPerfilNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGroup(TelaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(txtUsuarioNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(txtLoginNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(txtSenhaNova, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                            .addGroup(TelaLayout.createSequentialGroup()
+                                .addGroup(TelaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, TelaLayout.createSequentialGroup()
+                                        .addComponent(lblPerfilNovo)
+                                        .addGap(50, 50, 50))
+                                    .addGroup(TelaLayout.createSequentialGroup()
+                                        .addComponent(lblSenhaNovo)
+                                        .addGap(44, 44, 44)))
+                                .addGroup(TelaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(cmbPerfilNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtUsuarioNovo, javax.swing.GroupLayout.DEFAULT_SIZE, 182, Short.MAX_VALUE)
+                                    .addComponent(txtLoginNovo, javax.swing.GroupLayout.DEFAULT_SIZE, 182, Short.MAX_VALUE)
+                                    .addComponent(jpfSenhaCadastro)))
                             .addComponent(btnCadastrarNovoUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnVoltarAoMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(TelaLayout.createSequentialGroup()
@@ -186,7 +195,7 @@ public class TelaCadastroUsuario extends javax.swing.JFrame {
                 .addGap(24, 24, 24)
                 .addGroup(TelaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblSenhaNovo)
-                    .addComponent(txtSenhaNova, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jpfSenhaCadastro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(25, 25, 25)
                 .addGroup(TelaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblPerfilNovo)
@@ -273,6 +282,10 @@ public class TelaCadastroUsuario extends javax.swing.JFrame {
         cadastrarNovoUsuario();
     }//GEN-LAST:event_btnCadastrarNovoUsuarioActionPerformed
 
+    private void jpfSenhaCadastroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jpfSenhaCadastroActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jpfSenhaCadastroActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Tela;
     private javax.swing.JButton btnCadastrarNovoUsuario;
@@ -282,12 +295,12 @@ public class TelaCadastroUsuario extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPasswordField jpfSenhaCadastro;
     private javax.swing.JLabel lblLoginNovo;
     private javax.swing.JLabel lblPerfilNovo;
     private javax.swing.JLabel lblSenhaNovo;
     private javax.swing.JLabel lblUsuarioNovo;
     private javax.swing.JTextField txtLoginNovo;
-    private javax.swing.JTextField txtSenhaNova;
     private javax.swing.JTextField txtUsuarioNovo;
     // End of variables declaration//GEN-END:variables
 }

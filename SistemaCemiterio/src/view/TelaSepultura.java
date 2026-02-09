@@ -56,14 +56,25 @@ public class TelaSepultura extends javax.swing.JFrame {
             //ajusta a data para o padao do Brasil
             DateTimeFormatter brasil = DateTimeFormatter.ofPattern("dd/MM/yyyy"); 
             LocalDate dataCriacao = LocalDate.parse(txtDataCriacao.getText(), brasil);
+            //Verifica se já foi selecionado o tipo e status da sepultura ou se está nulo. 
+            if (jcbTipoSepultura.getSelectedItem() == null) {
+                JOptionPane.showMessageDialog(this, "Selecione o tipo da sepultura.");
+                return;
+            }
+
+            if (jcbStatusSepultura.getSelectedItem() == null) {
+                JOptionPane.showMessageDialog(this, "Selecione o status da sepultura.");
+                return;
+            }
+
             
             //Cria o obj sepultura e dps seta os atributos com base nos valores inseridos nos campos
             //o s.setLote é a referencia ao atributo, o txtLote é o nome do campo, e getText é o metodo para pegar
             // o valor do campo com base no tipo;[
             Sepultura s = new Sepultura();
             s.setLote(txtLote.getText());
-            s.setTipoSepultura(txtTipoSepultura.getText());
-            s.setStatusSepultura(txtStatusSepultura.getText());
+            s.setTipoSepultura(jcbTipoSepultura.getSelectedItem().toString());
+            s.setStatusSepultura(jcbStatusSepultura.getSelectedItem().toString());
             s.setFamiliarResponsavel(txtFamiliarResponsavelSepultura.getText());
             s.setDataCriacao(dataCriacao);
             
@@ -94,12 +105,17 @@ public class TelaSepultura extends javax.swing.JFrame {
 
         DateTimeFormatter brasil = DateTimeFormatter.ofPattern("dd/MM/yyyy"); 
         LocalDate dataCriacao = LocalDate.parse(txtDataCriacao.getText(), brasil);
+        
+        if (jcbTipoSepultura.getSelectedItem() == null || jcbStatusSepultura.getSelectedItem() == null) {
+            JOptionPane.showMessageDialog(this, "Selecione o tipo e o status antes de atualizar.");
+            return;
+        }
 
         Sepultura s = new Sepultura();
         s.setIdSepultura(id);
         s.setLote(txtLote.getText());
-        s.setTipoSepultura(txtTipoSepultura.getText());
-        s.setStatusSepultura(txtStatusSepultura.getText());
+        s.setTipoSepultura(jcbTipoSepultura.getSelectedItem().toString());
+        s.setStatusSepultura(jcbStatusSepultura.getSelectedItem().toString());
         s.setFamiliarResponsavel(txtFamiliarResponsavelSepultura.getText());
         s.setDataCriacao(dataCriacao);
 
@@ -150,8 +166,8 @@ public class TelaSepultura extends javax.swing.JFrame {
     
     private void limparCampos() {
         txtLote.setText("");
-        txtTipoSepultura.setText("");
-        txtStatusSepultura.setText("");
+        jcbTipoSepultura.setSelectedIndex(-1);;
+        jcbStatusSepultura.setSelectedIndex(-1);
         txtFamiliarResponsavelSepultura.setText("");
         txtDataCriacao.setText("");
         txtLote.requestFocus();
@@ -168,10 +184,18 @@ public class TelaSepultura extends javax.swing.JFrame {
         Object data     = tblSepulturas.getValueAt(row, 5);
 
         txtLote.setText(lote != null ? lote.toString() : "");
-        txtTipoSepultura.setText(tipo != null ? tipo.toString() : "");
-        txtStatusSepultura.setText(status != null ? status.toString() : "");
         txtFamiliarResponsavelSepultura.setText(familiar != null ? familiar.toString() : "");
+        
+        //Tipo e status
+        if (tipo != null) {
+            jcbTipoSepultura.setSelectedItem(tipo.toString());
+        }
 
+        if (status != null) {
+            jcbStatusSepultura.setSelectedItem(status.toString());
+        }
+        
+        //data
         if (data != null) {
             if (data instanceof java.time.LocalDate ld) {
                 DateTimeFormatter brasil = DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -223,9 +247,7 @@ public class TelaSepultura extends javax.swing.JFrame {
         lblLote = new javax.swing.JLabel();
         lblTipoSepultura = new javax.swing.JLabel();
         txtLote = new javax.swing.JTextField();
-        txtTipoSepultura = new javax.swing.JTextField();
         lblStatusSepultura = new javax.swing.JLabel();
-        txtStatusSepultura = new javax.swing.JTextField();
         lblFamiliarResponsavelSepultura = new javax.swing.JLabel();
         txtFamiliarResponsavelSepultura = new javax.swing.JTextField();
         lblDataCriacao = new javax.swing.JLabel();
@@ -239,6 +261,8 @@ public class TelaSepultura extends javax.swing.JFrame {
         txtBuscarLoteSepultura = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         btnBuscarLote = new javax.swing.JButton();
+        jcbTipoSepultura = new javax.swing.JComboBox<>();
+        jcbStatusSepultura = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -321,23 +345,9 @@ public class TelaSepultura extends javax.swing.JFrame {
             }
         });
 
-        txtTipoSepultura.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 102)));
-        txtTipoSepultura.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtTipoSepulturaActionPerformed(evt);
-            }
-        });
-
         lblStatusSepultura.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblStatusSepultura.setForeground(new java.awt.Color(0, 102, 102));
         lblStatusSepultura.setText("Status da Sepultura:");
-
-        txtStatusSepultura.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 102)));
-        txtStatusSepultura.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtStatusSepulturaActionPerformed(evt);
-            }
-        });
 
         lblFamiliarResponsavelSepultura.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblFamiliarResponsavelSepultura.setForeground(new java.awt.Color(0, 102, 102));
@@ -434,6 +444,20 @@ public class TelaSepultura extends javax.swing.JFrame {
                 .addContainerGap(15, Short.MAX_VALUE))
         );
 
+        jcbTipoSepultura.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Perpétuo", "Temporário", "Ossuário", "Gaveta" }));
+        jcbTipoSepultura.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcbTipoSepulturaActionPerformed(evt);
+            }
+        });
+
+        jcbStatusSepultura.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Disponível", "Ocupado", "Reservado", "Manutenção" }));
+        jcbStatusSepultura.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcbStatusSepulturaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
@@ -462,11 +486,11 @@ public class TelaSepultura extends javax.swing.JFrame {
                                 .addGap(12, 12, 12)))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel5Layout.createSequentialGroup()
                                 .addComponent(lblStatusSepultura)
                                 .addGap(18, 18, 18)
-                                .addComponent(txtStatusSepultura))
+                                .addComponent(jcbStatusSepultura, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel5Layout.createSequentialGroup()
                                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(lblTipoSepultura)
@@ -474,7 +498,7 @@ public class TelaSepultura extends javax.swing.JFrame {
                                 .addGap(28, 28, 28)
                                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(txtLote, javax.swing.GroupLayout.PREFERRED_SIZE, 403, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtTipoSepultura, javax.swing.GroupLayout.PREFERRED_SIZE, 403, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addComponent(jcbTipoSepultura, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 205, Short.MAX_VALUE)
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(80, 80, 80))))
@@ -495,17 +519,17 @@ public class TelaSepultura extends javax.swing.JFrame {
                             .addComponent(lblLote)
                             .addComponent(txtLote, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(14, 14, 14)
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblTipoSepultura)
-                            .addComponent(txtTipoSepultura, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jcbTipoSepultura, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblStatusSepultura)
-                    .addComponent(txtStatusSepultura, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                    .addComponent(jcbStatusSepultura, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(21, 21, 21)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblFamiliarResponsavelSepultura)
                     .addComponent(txtFamiliarResponsavelSepultura, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -514,7 +538,7 @@ public class TelaSepultura extends javax.swing.JFrame {
                     .addComponent(txtDataCriacao, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblDataCriacao))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnCadastrarSepultura)
                     .addComponent(btnListarSepulturas)
                     .addComponent(btnDeletarSepultura)
@@ -567,45 +591,13 @@ public class TelaSepultura extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtLoteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtLoteActionPerformed
+    private void btnVoltarMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarMenuActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtLoteActionPerformed
-
-    private void txtTipoSepulturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTipoSepulturaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtTipoSepulturaActionPerformed
-
-    private void txtStatusSepulturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtStatusSepulturaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtStatusSepulturaActionPerformed
-
-    private void txtFamiliarResponsavelSepulturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFamiliarResponsavelSepulturaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtFamiliarResponsavelSepulturaActionPerformed
-
-    private void txtDataCriacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDataCriacaoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtDataCriacaoActionPerformed
-
-    private void btnDeletarSepulturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeletarSepulturaActionPerformed
-        // TODO add your handling code here:
-        deletar();
-    }//GEN-LAST:event_btnDeletarSepulturaActionPerformed
-
-    private void btnCadastrarSepulturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarSepulturaActionPerformed
-        // TODO add your handling code here:
-      cadastrar();
-    }//GEN-LAST:event_btnCadastrarSepulturaActionPerformed
-
-    private void btnAtualizarSepulturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarSepulturaActionPerformed
-        // TODO add your handling code here:
-        atualizar();
-    }//GEN-LAST:event_btnAtualizarSepulturaActionPerformed
-
-    private void btnListarSepulturasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListarSepulturasActionPerformed
-        // TODO add your handling code here:
-        listar();
-    }//GEN-LAST:event_btnListarSepulturasActionPerformed
+        Menu menu = new Menu(usuarioAutenticado);          
+        menu.setLocationRelativeTo(this);
+        menu.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnVoltarMenuActionPerformed
 
     private void btnBuscarLoteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarLoteActionPerformed
         // TODO add your handling code here:
@@ -615,13 +607,45 @@ public class TelaSepultura extends javax.swing.JFrame {
         preencherTabelaSepulturas(lista);
     }//GEN-LAST:event_btnBuscarLoteActionPerformed
 
-    private void btnVoltarMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarMenuActionPerformed
+    private void btnListarSepulturasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListarSepulturasActionPerformed
         // TODO add your handling code here:
-        Menu menu = new Menu(usuarioAutenticado);          
-        menu.setLocationRelativeTo(this);
-        menu.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_btnVoltarMenuActionPerformed
+        listar();
+    }//GEN-LAST:event_btnListarSepulturasActionPerformed
+
+    private void btnDeletarSepulturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeletarSepulturaActionPerformed
+        // TODO add your handling code here:
+        deletar();
+    }//GEN-LAST:event_btnDeletarSepulturaActionPerformed
+
+    private void btnAtualizarSepulturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarSepulturaActionPerformed
+        // TODO add your handling code here:
+        atualizar();
+    }//GEN-LAST:event_btnAtualizarSepulturaActionPerformed
+
+    private void btnCadastrarSepulturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarSepulturaActionPerformed
+        // TODO add your handling code here:
+        cadastrar();
+    }//GEN-LAST:event_btnCadastrarSepulturaActionPerformed
+
+    private void txtDataCriacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDataCriacaoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtDataCriacaoActionPerformed
+
+    private void txtFamiliarResponsavelSepulturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFamiliarResponsavelSepulturaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtFamiliarResponsavelSepulturaActionPerformed
+
+    private void txtLoteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtLoteActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtLoteActionPerformed
+
+    private void jcbStatusSepulturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbStatusSepulturaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jcbStatusSepulturaActionPerformed
+
+    private void jcbTipoSepulturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbTipoSepulturaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jcbTipoSepulturaActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -640,6 +664,8 @@ public class TelaSepultura extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JComboBox<String> jcbStatusSepultura;
+    private javax.swing.JComboBox<String> jcbTipoSepultura;
     private javax.swing.JLabel lblDataCriacao;
     private javax.swing.JLabel lblFamiliarResponsavelSepultura;
     private javax.swing.JLabel lblLote;
@@ -650,7 +676,5 @@ public class TelaSepultura extends javax.swing.JFrame {
     private javax.swing.JTextField txtDataCriacao;
     private javax.swing.JTextField txtFamiliarResponsavelSepultura;
     private javax.swing.JTextField txtLote;
-    private javax.swing.JTextField txtStatusSepultura;
-    private javax.swing.JTextField txtTipoSepultura;
     // End of variables declaration//GEN-END:variables
 }

@@ -1,6 +1,7 @@
 package view;
 
 
+import dao.SepulturaDao;
 import dao.ServicoDao;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -23,6 +24,7 @@ public class TelaServico extends javax.swing.JFrame {
         initComponents();
         this.usuarioAutenticado = usuario;
         aplicarPermissoes();
+        carregarSepulturas();
         tblServicos.addMouseListener(new java.awt.event.MouseAdapter() {
         @Override
         public void mouseClicked(java.awt.event.MouseEvent e) {
@@ -48,28 +50,54 @@ public class TelaServico extends javax.swing.JFrame {
    
     private void cadastrar(){
         try{
+            
+            if (txtDataServico.getText().isBlank()) {
+                JOptionPane.showMessageDialog(this, "Informe a data do serviço.");
+                return;
+            }
+
             //ajusta a data para o padrao do Brasil
             DateTimeFormatter brasil = DateTimeFormatter.ofPattern("dd/MM/yyyy");
             LocalDate dataServico = LocalDate.parse(txtDataServico.getText(), brasil);
-            int idSepultura = Integer.parseInt(txtSepulturaServico.getText());
             
-            Sepultura sepult = new Sepultura();
-            sepult.setIdSepultura(idSepultura);
+            //Validação dos ComboBoxes de Tipo de serviço e sepultura
+            if (jcbTipoServico.getSelectedItem() == null || jcbSepulturaServico.getSelectedItem() == null) {
+                JOptionPane.showMessageDialog(this, "Selecione o Tipo de serviço e a Sepultura.");
+                return;
+            }
+
+            //Validação do Radio Button
+            if (!jrb1StatusServico.isSelected() && !jrb2StatusServico.isSelected() && !jrb3StatusServico.isSelected()) {
+                JOptionPane.showMessageDialog(this, "Informe o status do serviço.");
+                return;
+            }
+            Sepultura sepult = (Sepultura) jcbSepulturaServico.getSelectedItem();
             //Cria o obj sepultura e dps seta os atributos com base nos valores inseridos nos campos
             //o s.setLote é a referencia ao atributo, o txtLote é o nome do campo, e getText é o metodo para pegar
             // o valor do campo com base no tipo;[
             Servico se = new Servico();
-            se.setTipoServico(txtTipoServico.getText());
-            se.setStatusServico(txtStatusServico.getText());
-            se.setSepultura(sepult);
+            se.setSepultura(sepult); // Passa o objeto sepultura completo
             se.setNotificacaoServico(txtNotificacaoServico.getText());
             se.setDataServico(dataServico);
+            // Tipo do serviço
+            se.setTipoServico(jcbTipoServico.getSelectedItem().toString());
+            
+            // Status do serviço via radio
+            if (jrb1StatusServico.isSelected()) {
+                se.setStatusServico("Pendente");
+            } else if (jrb2StatusServico.isSelected()) {
+                se.setStatusServico("Em andamento");
+            } else if (jrb3StatusServico.isSelected()) {
+                se.setStatusServico("Concluído");
+            }
+
             
             //Cria o objeto Dao e depois chama o metodo de dao, inserir;
            ServicoDao dao = new ServicoDao();
             dao.inserir(se);
             //metodo listar e limpar campo
             listar();
+            carregarSepulturas();
             limparCampos();
             JOptionPane.showMessageDialog(this, "Serviço cadastrado com sucesso!");
                         
@@ -89,27 +117,53 @@ public class TelaServico extends javax.swing.JFrame {
 
     try {
         int id = Integer.parseInt(tblServicos.getValueAt(row, 0).toString());
+        
+        if (txtDataServico.getText().isBlank()) {
+            JOptionPane.showMessageDialog(this, "Informe a data do serviço.");
+            return;
+        }
+
 
         DateTimeFormatter brasil = DateTimeFormatter.ofPattern("dd/MM/yyyy"); 
         LocalDate dataServico = LocalDate.parse(txtDataServico.getText(), brasil);
         
-        //mesmo processo para pegar o id da sepultura
-        int idSepultura = Integer.parseInt(txtSepulturaServico.getText());
-        Sepultura sepult = new Sepultura();
-        sepult.setIdSepultura(idSepultura);
+        //Validação dos ComboBoxes de Tipo de serviço e sepultura
+        if (jcbTipoServico.getSelectedItem() == null || jcbSepulturaServico.getSelectedItem() == null) {
+            JOptionPane.showMessageDialog(this, "Selecione o Tipo do serviço e a sepultura.");
+            return;
+        }
 
+        //Validação do Radio Button
+        if (!jrb1StatusServico.isSelected() && !jrb2StatusServico.isSelected() && !jrb3StatusServico.isSelected()) {
+            JOptionPane.showMessageDialog(this, "Informe o status do serviço.");
+            return;
+        }
+        Sepultura sepult = (Sepultura) jcbSepulturaServico.getSelectedItem();
+        //Cria o obj sepultura e dps seta os atributos com base nos valores inseridos nos campos
+        //o s.setLote é a referencia ao atributo, o txtLote é o nome do campo, e getText é o metodo para pegar
+        // o valor do campo com base no tipo;[
         Servico se = new Servico();
-            se.setIdServico(id);
-            se.setTipoServico(txtTipoServico.getText());
-            se.setStatusServico(txtStatusServico.getText());
-            se.setSepultura(sepult);
-            se.setNotificacaoServico(txtNotificacaoServico.getText());
-            se.setDataServico(dataServico);
+        se.setIdServico(id);
+        se.setSepultura(sepult); // Passa o objeto sepultura completo
+        se.setNotificacaoServico(txtNotificacaoServico.getText());
+        se.setDataServico(dataServico);
+        // Tipo do serviço
+        se.setTipoServico(jcbTipoServico.getSelectedItem().toString());
+
+        // Status do serviço via radio
+        if (jrb1StatusServico.isSelected()) {
+            se.setStatusServico("Pendente");
+        } else if (jrb2StatusServico.isSelected()) {
+            se.setStatusServico("Em andamento");
+        } else if (jrb3StatusServico.isSelected()) {
+            se.setStatusServico("Concluído");
+        }
 
         ServicoDao dao = new ServicoDao();
         dao.atualizar(se);
 
         listar();
+        carregarSepulturas();
         limparCampos();
         JOptionPane.showMessageDialog(this, "Servico atualizado com sucesso!");
     } catch (Exception e) {
@@ -160,9 +214,9 @@ public class TelaServico extends javax.swing.JFrame {
        }
 }
     private void limparCampos() {
-        txtSepulturaServico.setText("");
-        txtStatusServico.setText("");
-        txtTipoServico.setText("");
+        jcbTipoServico.setSelectedIndex(-1);
+        jcbSepulturaServico.setSelectedIndex(-1);
+        buttonGroup1.clearSelection();
         txtDataServico.setText("");
         txtNotificacaoServico.setText("");
           
@@ -180,11 +234,43 @@ public class TelaServico extends javax.swing.JFrame {
         Object idSepult   = tblServicos.getValueAt(row, 4);
         Object notificacao   = tblServicos.getValueAt(row, 5);
        
-        txtTipoServico.setText(tipoServico != null ? tipoServico.toString() : "");
-        txtStatusServico.setText(statusServ != null ? statusServ.toString() : "");
-        txtSepulturaServico.setText(idSepult != null ? idSepult.toString() : "");
         txtNotificacaoServico.setText(notificacao != null ? notificacao.toString() : "");
+        
+         // 1. Preencher ComboBox de Tipo (String)
+         if (tipoServico != null) {
+             jcbTipoServico.setSelectedItem(tipoServico.toString());
+         }
 
+         // 2. Marcar o Radio Button de Status correto
+         if (statusServ != null) {
+             String s = statusServ.toString();
+             if (s.equalsIgnoreCase("Pendente")) {
+                 jrb1StatusServico.setSelected(true);
+             } else if (s.equalsIgnoreCase("Em Andamento")) {
+                 jrb2StatusServico.setSelected(true);
+             } else if (s.equalsIgnoreCase("Concluído")) {
+                 jrb3StatusServico.setSelected(true);
+             }
+         }
+
+         // 3. Preencher ComboBox de Sepultura 
+         jcbSepulturaServico.setSelectedItem(null);
+         if (idSepult != null) {
+             int id = Integer.parseInt(idSepult.toString());
+
+             for (int i = 0; i < jcbSepulturaServico.getItemCount(); i++) {
+                 Object item = jcbSepulturaServico.getItemAt(i);
+
+                 if (item instanceof Sepultura) {
+                     Sepultura s = (Sepultura) item;
+                     if (s.getIdSepultura() == id) {
+                         jcbSepulturaServico.setSelectedIndex(i);
+                         break;
+                     }
+                 }
+             }
+         }
+         
         DateTimeFormatter brasil = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
         // Tratamento da Data do servico, verifica se é do tipo localdate se for aplica a formatação
@@ -197,10 +283,29 @@ public class TelaServico extends javax.swing.JFrame {
             }
         } else {
             txtDataServico.setText("");
-        }
+        }   
+    }
+    
+     //carrega as sepultura para o serviços
+    private void carregarSepulturas() {
+        try {
+            SepulturaDao dao = new SepulturaDao();
 
-        
-}
+            // listarTodos() garante que tanto as livres (para novos) quanto as ocupadas (para quem já está na tabela) apareçam.
+            List<Sepultura> lista = dao.listarTodos();
+
+            jcbSepulturaServico.removeAllItems();
+
+            for (Sepultura s : lista) {
+                jcbSepulturaServico.addItem(s);
+            }
+
+            jcbSepulturaServico.setSelectedItem(null); // Inicia sem nada selecionado
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -211,6 +316,7 @@ public class TelaServico extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblServicos = new javax.swing.JTable();
@@ -222,13 +328,15 @@ public class TelaServico extends javax.swing.JFrame {
         btnListarServicos = new javax.swing.JButton();
         lblNotificacaoServico = new javax.swing.JLabel();
         lblSepulturaServico = new javax.swing.JLabel();
-        txtSepulturaServico = new javax.swing.JTextField();
         lblStatusServico = new javax.swing.JLabel();
-        txtStatusServico = new javax.swing.JTextField();
         txtDataServico = new javax.swing.JTextField();
         lblDataServico = new javax.swing.JLabel();
         lblTipoServico = new javax.swing.JLabel();
-        txtTipoServico = new javax.swing.JTextField();
+        jcbTipoServico = new javax.swing.JComboBox<>();
+        jrb1StatusServico = new javax.swing.JRadioButton();
+        jrb2StatusServico = new javax.swing.JRadioButton();
+        jrb3StatusServico = new javax.swing.JRadioButton();
+        jcbSepulturaServico = new javax.swing.JComboBox<>();
         jPanel3 = new javax.swing.JPanel();
         btnVoltarMenu = new javax.swing.JButton();
         lblTituloServicos = new javax.swing.JLabel();
@@ -300,23 +408,9 @@ public class TelaServico extends javax.swing.JFrame {
         lblSepulturaServico.setForeground(new java.awt.Color(0, 102, 102));
         lblSepulturaServico.setText("Sepultura:");
 
-        txtSepulturaServico.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        txtSepulturaServico.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtSepulturaServicoActionPerformed(evt);
-            }
-        });
-
         lblStatusServico.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblStatusServico.setForeground(new java.awt.Color(0, 102, 102));
         lblStatusServico.setText("Status do Serviço:");
-
-        txtStatusServico.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        txtStatusServico.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtStatusServicoActionPerformed(evt);
-            }
-        });
 
         txtDataServico.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         txtDataServico.addActionListener(new java.awt.event.ActionListener() {
@@ -333,10 +427,30 @@ public class TelaServico extends javax.swing.JFrame {
         lblTipoServico.setForeground(new java.awt.Color(0, 102, 102));
         lblTipoServico.setText("Tipo do Serviço:");
 
-        txtTipoServico.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        txtTipoServico.addActionListener(new java.awt.event.ActionListener() {
+        jcbTipoServico.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Sepultamento", "Exumação e translados", "Limpeza ou Manutenção" }));
+
+        buttonGroup1.add(jrb1StatusServico);
+        jrb1StatusServico.setText("Pendente");
+        jrb1StatusServico.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtTipoServicoActionPerformed(evt);
+                jrb1StatusServicoActionPerformed(evt);
+            }
+        });
+
+        buttonGroup1.add(jrb2StatusServico);
+        jrb2StatusServico.setText("Em andamento");
+        jrb2StatusServico.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jrb2StatusServicoActionPerformed(evt);
+            }
+        });
+
+        buttonGroup1.add(jrb3StatusServico);
+        jrb3StatusServico.setText("Concluído");
+
+        jcbSepulturaServico.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcbSepulturaServicoActionPerformed(evt);
             }
         });
 
@@ -350,21 +464,30 @@ public class TelaServico extends javax.swing.JFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                                .addComponent(lblStatusServico, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblDataServico)
+                                    .addComponent(lblTipoServico, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(txtStatusServico, javax.swing.GroupLayout.PREFERRED_SIZE, 459, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtDataServico, javax.swing.GroupLayout.PREFERRED_SIZE, 459, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jcbTipoServico, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                                .addComponent(lblDataServico)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(txtDataServico, javax.swing.GroupLayout.PREFERRED_SIZE, 459, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(lblTipoServico, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(txtTipoServico, javax.swing.GroupLayout.PREFERRED_SIZE, 459, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(lblSepulturaServico, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(txtSepulturaServico, javax.swing.GroupLayout.PREFERRED_SIZE, 459, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblSepulturaServico, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lblStatusServico, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jrb1StatusServico, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(64, 64, 64)
+                                        .addComponent(jrb2StatusServico, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(69, 69, 69)
+                                        .addComponent(jrb3StatusServico, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(32, 32, 32))
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addGap(3, 3, 3)
+                                        .addComponent(jcbSepulturaServico, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(0, 0, Short.MAX_VALUE)))))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addComponent(lblNotificacaoServico, javax.swing.GroupLayout.DEFAULT_SIZE, 117, Short.MAX_VALUE)
@@ -384,22 +507,24 @@ public class TelaServico extends javax.swing.JFrame {
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(31, 31, 31)
+                .addGap(30, 30, 30)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblTipoServico)
-                    .addComponent(txtTipoServico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(15, 15, 15)
+                    .addComponent(jcbTipoServico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(14, 14, 14)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblDataServico)
                     .addComponent(txtDataServico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(15, 15, 15)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblStatusServico)
-                    .addComponent(txtStatusServico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jrb1StatusServico)
+                    .addComponent(jrb2StatusServico)
+                    .addComponent(jrb3StatusServico))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblSepulturaServico)
-                    .addComponent(txtSepulturaServico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jcbSepulturaServico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblNotificacaoServico)
@@ -490,7 +615,7 @@ public class TelaServico extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(33, 33, 33)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 121, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 118, Short.MAX_VALUE)
                 .addGap(129, 129, 129))
         );
 
@@ -510,21 +635,9 @@ public class TelaServico extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtTipoServicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTipoServicoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtTipoServicoActionPerformed
-
     private void txtDataServicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDataServicoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtDataServicoActionPerformed
-
-    private void txtStatusServicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtStatusServicoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtStatusServicoActionPerformed
-
-    private void txtSepulturaServicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSepulturaServicoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtSepulturaServicoActionPerformed
 
     private void txtNotificacaoServicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNotificacaoServicoActionPerformed
         // TODO add your handling code here:
@@ -558,6 +671,18 @@ public class TelaServico extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btnVoltarMenuActionPerformed
 
+    private void jrb2StatusServicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrb2StatusServicoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jrb2StatusServicoActionPerformed
+
+    private void jrb1StatusServicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrb1StatusServicoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jrb1StatusServicoActionPerformed
+
+    private void jcbSepulturaServicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbSepulturaServicoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jcbSepulturaServicoActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAtualizarServicos;
@@ -565,12 +690,18 @@ public class TelaServico extends javax.swing.JFrame {
     private javax.swing.JButton btnDeletarServicos;
     private javax.swing.JButton btnListarServicos;
     private javax.swing.JButton btnVoltarMenu;
+    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JComboBox<model.Sepultura> jcbSepulturaServico;
+    private javax.swing.JComboBox<String> jcbTipoServico;
+    private javax.swing.JRadioButton jrb1StatusServico;
+    private javax.swing.JRadioButton jrb2StatusServico;
+    private javax.swing.JRadioButton jrb3StatusServico;
     private javax.swing.JLabel lblDataServico;
     private javax.swing.JLabel lblNotificacaoServico;
     private javax.swing.JLabel lblSepulturaServico;
@@ -580,8 +711,5 @@ public class TelaServico extends javax.swing.JFrame {
     private javax.swing.JTable tblServicos;
     private javax.swing.JTextField txtDataServico;
     private javax.swing.JTextField txtNotificacaoServico;
-    private javax.swing.JTextField txtSepulturaServico;
-    private javax.swing.JTextField txtStatusServico;
-    private javax.swing.JTextField txtTipoServico;
     // End of variables declaration//GEN-END:variables
 }

@@ -119,16 +119,15 @@
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Component id="lblLogin" alignment="0" min="-2" max="-2" attributes="0"/>
                                       <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
-                                          <Group type="102" alignment="1" attributes="0">
-                                              <EmptySpace min="90" pref="90" max="-2" attributes="0"/>
-                                              <Component id="txtLogin" min="-2" pref="182" max="-2" attributes="0"/>
-                                          </Group>
+                                          <Component id="btnEntrar" alignment="0" max="32767" attributes="0"/>
                                           <Group type="102" alignment="1" attributes="0">
                                               <Component id="lblSenha" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace max="32767" attributes="0"/>
-                                              <Component id="txtSenha" min="-2" pref="182" max="-2" attributes="0"/>
+                                              <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
+                                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                                  <Component id="txtLogin" pref="182" max="32767" attributes="0"/>
+                                                  <Component id="jpfSenhaLogin" max="32767" attributes="0"/>
+                                              </Group>
                                           </Group>
-                                          <Component id="btnEntrar" alignment="0" max="32767" attributes="0"/>
                                       </Group>
                                   </Group>
                               </Group>
@@ -156,7 +155,7 @@
                           <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="lblSenha" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="txtSenha" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="jpfSenhaLogin" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
                           <Component id="btnEntrar" min="-2" max="-2" attributes="0"/>
@@ -199,11 +198,6 @@
                     <Property name="text" type="java.lang.String" value="Login"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JTextField" name="txtSenha">
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtSenhaActionPerformed"/>
-                  </Events>
-                </Component>
                 <Component class="javax.swing.JTextField" name="txtLogin">
                 </Component>
                 <Component class="javax.swing.JButton" name="btnEntrar">
@@ -222,6 +216,8 @@
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnEntrarActionPerformed"/>
                   </Events>
+                </Component>
+                <Component class="javax.swing.JPasswordField" name="jpfSenhaLogin">
                 </Component>
               </SubComponents>
             </Container>

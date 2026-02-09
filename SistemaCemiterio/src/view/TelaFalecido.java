@@ -2,6 +2,7 @@
 
 import java.time.format.DateTimeFormatter;
 import dao.FalecidoDao;
+import dao.SepulturaDao;
 import java.time.LocalDate;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -22,6 +23,7 @@ public class TelaFalecido extends javax.swing.JFrame {
         initComponents();
         this.usuarioAutenticado = usuario;
         aplicarPermissoes();
+        carregarSepulturas();
         tblFalecidos.addMouseListener(new java.awt.event.MouseAdapter() {
         @Override
         public void mouseClicked(java.awt.event.MouseEvent e) {
@@ -52,18 +54,33 @@ public class TelaFalecido extends javax.swing.JFrame {
             DateTimeFormatter brasil = DateTimeFormatter.ofPattern("dd/MM/yyyy");
             LocalDate dataNascimento = LocalDate.parse(txtDataNascimento.getText(),brasil);
             LocalDate dataFalecimento = LocalDate.parse(txtDataFalecimento.getText(),brasil);
-
-            // Converte certidão de óbito (entrada: "sim" ou "não")
-            boolean possuiCertidao = txtCertidaoObito.getText().equalsIgnoreCase("sim");
             
-            //Pega o texto do campo onde o usuário digitou o ID da sepultura e converte para inteiro
-            int idSepultura = Integer.parseInt(txtSepulturaFalecido.getText());
-
-
-            // Cria sepultura apenas com o id
-            Sepultura sepult = new Sepultura();
-            sepult.setIdSepultura(idSepultura);
-
+            //Faz com que o usuário entenda que tem que selecionar um dos rádios
+         if (!jrbCertidaoSim.isSelected() && !jrbCertidaoNao.isSelected()) {
+             JOptionPane.showMessageDialog(this, "Informe se possui certidão de óbito (Sim ou Não).");
+                return;
+}
+            
+            // Regra: só cadastra se tiver certidão de óbito
+         if (!jrbCertidaoSim.isSelected()) {
+             JOptionPane.showMessageDialog(this, "Não é possível cadastrar o falecido sem certidão de óbito.");
+                return; // não permite o cadastro
+    }
+         
+            boolean possuiCertidao = true; // se chegou aqui, é porque marcou SIM
+               
+            //Pega do comboBox o objeto Sepultura completo vindo do DAO
+            Sepultura sepult = (Sepultura) jcbSepulturaFalecido.getSelectedItem();
+            //verifica se selecionou uma opção
+            if (sepult == null) {
+                JOptionPane.showMessageDialog(this, "Selecione uma sepultura");
+                return;
+        }
+            //Verifica o status
+            if (sepult.getStatusSepultura().equals("Ocupada")) {
+                JOptionPane.showMessageDialog(null, "A sepultura escolhida está ocupada!");
+                return;
+        }
             
             //Cria objeto falecido
             Falecido f = new Falecido(
@@ -79,9 +96,14 @@ public class TelaFalecido extends javax.swing.JFrame {
             
                //inserindo no banco
             new FalecidoDao().inserir(f);
+            
+             // Marca a sepultura como ocupada
+             new SepulturaDao().atualizarStatus(sepult.getIdSepultura(), "Ocupada");
+
                JOptionPane.showMessageDialog(this,"Falecido cadastrado com sucesso!");
                
                listar();
+               carregarSepulturas(); 
                limparCampos();
                
         } catch(Exception e) {
@@ -130,28 +152,59 @@ public class TelaFalecido extends javax.swing.JFrame {
         //pega a linha que o usuário selecionar
         int row = tblFalecidos.getSelectedRow();
         //Quando nenhuma linha é escolhida
-        if (row == -1) return;
-        
+        if (row == -1){
+            JOptionPane.showMessageDialog(this, "Selecione um falecido na tabela para atualizar.");
+            return;
+        }
+        //Pega o id do falecido
         int id = Integer.parseInt(tblFalecidos.getValueAt(row,0).toString());
+        
+        //Pega o id da sepultura atual que na tabela está na Coluna 4
+        int idSepulturaNaTabela = Integer.parseInt(tblFalecidos.getValueAt(row, 4).toString());
         
         try{
             
             // ajusta o modelo da data para o formato BR
             DateTimeFormatter brasil = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-            
-            //Pega o texto do campo onde o usuário digitou o ID da sepultura e converte para inteiro
-            int idSepultura = Integer.parseInt(txtSepulturaFalecido.getText());
-            
-            // Cria sepultura apenas com o id
-            Sepultura sepult = new Sepultura();
-            sepult.setIdSepultura(idSepultura);
+        
+        //Faz com que o usuário entenda que tem que selecionar um dos rádios
+         if (!jrbCertidaoSim.isSelected() && !jrbCertidaoNao.isSelected()) {
+             JOptionPane.showMessageDialog(this, "Informe se possui certidão de óbito (Sim ou Não).");
+                return;
+         }
+         
+          boolean possuiCertidao = jrbCertidaoSim.isSelected();
 
+         // Regra: só atualiza se tiver certidão
+        if (!possuiCertidao) {
+            JOptionPane.showMessageDialog(this, 
+                "Não é possível atualizar o falecido sem certidão de óbito.");
+            return;
+        }
+            
+            //Pega do comboBox o objeto Sepultura completo vindo do DAO
+            Sepultura sepult = (Sepultura) jcbSepulturaFalecido.getSelectedItem();
+            if (sepult == null) {
+                JOptionPane.showMessageDialog(this, "Selecione uma sepultura.");
+                return;
+        }
+            /* Verifica se a sepultura escolhida já é a do próprio falecido,
+             mas se for ocupada por outro falecido, o usuario não pode a escolher.*/
+            if (sepult.getStatusSepultura().equalsIgnoreCase("Ocupada")) {
+                // ...verificamos se o ID dela é DIFERENTE do ID que estava na tabela.
+                // Se for diferente, significa que o usuário tentou escolher a sepultura de outro falecido.
+                if (sepult.getIdSepultura() != idSepulturaNaTabela) {
+                    JOptionPane.showMessageDialog(this, "A sepultura escolhida já está ocupada por outro falecido");
+                    return;
+            }
+            }
+            
             //Cria objeto falecido
             Falecido f = new Falecido(
                id,// id gerado automaticamente
                txtNomeCompleto.getText(),
                LocalDate.parse(txtDataNascimento.getText(), brasil),   
-               txtCertidaoObito.getText().equalsIgnoreCase("Sim"),
+               possuiCertidao,
                txtCpf.getText(),
                sepult,
                LocalDate.parse(txtDataFalecimento.getText(),brasil),
@@ -161,11 +214,18 @@ public class TelaFalecido extends javax.swing.JFrame {
          // chama o DAO para atualizar os dados
             new FalecidoDao().atualizar(f);
             
+            // Se trocou de sepultura, libera a antiga e ocupa a nova
+            if (sepult.getIdSepultura() != idSepulturaNaTabela) {
+                new SepulturaDao().atualizarStatus(idSepulturaNaTabela, "Disponível");
+                new SepulturaDao().atualizarStatus(sepult.getIdSepultura(), "Ocupada");
+            }
+            
             //Atualiza a lista
             listar();
              JOptionPane.showMessageDialog(this,
             "Dados do falecido \"" + f.getNomeCompleto() + "\" atualizados com sucesso!");    
              
+             carregarSepulturas(); 
              limparCampos();
              
         } catch(Exception e) {
@@ -177,9 +237,9 @@ public class TelaFalecido extends javax.swing.JFrame {
     private void limparCampos(){
         txtNomeCompleto.setText("");
         txtDataNascimento.setText("");
-        txtCertidaoObito.setText("");
+        buttonGroup1.clearSelection();
         txtCpf.setText("");
-        txtSepulturaFalecido.setText("");
+        jcbSepulturaFalecido.setSelectedIndex(-1);
         txtDataFalecimento.setText("");
         txtFamiliarResponsavelFalecido.setText("");
         txtNomeCompleto.requestFocus();//O cursor volta pro inicio
@@ -201,12 +261,34 @@ public class TelaFalecido extends javax.swing.JFrame {
 
         txtNomeCompleto.setText(nome != null ? nome.toString() : "");
         txtCpf.setText(cpf != null ? cpf.toString() : "");
-        txtCertidaoObito.setText(certidao != null ? certidao.toString() : "");
-        txtSepulturaFalecido.setText(idSepult != null ? idSepult.toString() : "");
         txtFamiliarResponsavelFalecido.setText(familiar != null ? familiar.toString() : "");
+        
+        //Certidão de óbito
+        if (certidao != null && certidao.toString().equalsIgnoreCase("Sim")) {
+        jrbCertidaoSim.setSelected(true);
+            }else {
+        jrbCertidaoNao.setSelected(true);
+    }
+        // Seleciona a sepultura no ComboBox usando apenas o ID
+        jcbSepulturaFalecido.setSelectedItem(null); // Limpa seleção atual antes de selecionar
+        if (idSepult != null) {
+            int id = Integer.parseInt(idSepult.toString());
 
+            for (int i = 0; i < jcbSepulturaFalecido.getItemCount(); i++) {
+                Object item = jcbSepulturaFalecido.getItemAt(i);
+
+                // Verifica se o item não é nulo e se é realmente um objeto Sepultura
+                if (item instanceof Sepultura) {
+                    Sepultura s = (Sepultura) item;
+                    if (s.getIdSepultura() == id) {
+                        jcbSepulturaFalecido.setSelectedIndex(i);
+                        break;
+                    }
+                }
+            }
+        }
+        
         DateTimeFormatter brasil = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-
         // Data de nascimento
         if (dataNasc != null) {
             if (dataNasc instanceof java.time.LocalDate ld) {
@@ -249,7 +331,25 @@ public class TelaFalecido extends javax.swing.JFrame {
         });
     }
 }
+    //carrega as sepultura para o falecido
+    private void carregarSepulturas() {
+        try {
+            SepulturaDao dao = new SepulturaDao();
 
+            // listarTodos() garante que tanto as livres (para novos) quanto as ocupadas (para quem já está na tabela) apareçam.
+            List<Sepultura> lista = dao.listarTodos();
+
+            jcbSepulturaFalecido.removeAllItems();
+
+            for (Sepultura s : lista) {
+                jcbSepulturaFalecido.addItem(s);
+            }
+
+            jcbSepulturaFalecido.setSelectedItem(null); // Inicia sem nada selecionado
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
 
     /**
@@ -261,6 +361,7 @@ public class TelaFalecido extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
         jPanel2 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         lblNomeCompleto = new javax.swing.JLabel();
@@ -268,11 +369,9 @@ public class TelaFalecido extends javax.swing.JFrame {
         lblDataNascimento = new javax.swing.JLabel();
         txtDataNascimento = new javax.swing.JTextField();
         lblCertidaoObito = new javax.swing.JLabel();
-        txtCertidaoObito = new javax.swing.JTextField();
         lblCpf = new javax.swing.JLabel();
         txtCpf = new javax.swing.JTextField();
         lblSepulturaFalecido = new javax.swing.JLabel();
-        txtSepulturaFalecido = new javax.swing.JTextField();
         lblDataFalecimento = new javax.swing.JLabel();
         txtDataFalecimento = new javax.swing.JTextField();
         lblFamiliarResponsavelFalecido = new javax.swing.JLabel();
@@ -286,6 +385,9 @@ public class TelaFalecido extends javax.swing.JFrame {
         btnAtualizarFalecido = new javax.swing.JButton();
         btnDeletarFalecido = new javax.swing.JButton();
         btnListarFalecidos = new javax.swing.JButton();
+        jrbCertidaoSim = new javax.swing.JRadioButton();
+        jrbCertidaoNao = new javax.swing.JRadioButton();
+        jcbSepulturaFalecido = new javax.swing.JComboBox<>();
         jPanel5 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         btnVoltarMenu = new javax.swing.JButton();
@@ -324,12 +426,6 @@ public class TelaFalecido extends javax.swing.JFrame {
         lblCertidaoObito.setForeground(new java.awt.Color(0, 102, 102));
         lblCertidaoObito.setText("Possui Certidão de óbito?");
 
-        txtCertidaoObito.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtCertidaoObitoActionPerformed(evt);
-            }
-        });
-
         lblCpf.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblCpf.setForeground(new java.awt.Color(0, 102, 102));
         lblCpf.setText("CPF:");
@@ -343,12 +439,6 @@ public class TelaFalecido extends javax.swing.JFrame {
         lblSepulturaFalecido.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblSepulturaFalecido.setForeground(new java.awt.Color(0, 102, 102));
         lblSepulturaFalecido.setText("Sepultura:");
-
-        txtSepulturaFalecido.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtSepulturaFalecidoActionPerformed(evt);
-            }
-        });
 
         lblDataFalecimento.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblDataFalecimento.setForeground(new java.awt.Color(0, 102, 102));
@@ -451,6 +541,18 @@ public class TelaFalecido extends javax.swing.JFrame {
             }
         });
 
+        buttonGroup1.add(jrbCertidaoSim);
+        jrbCertidaoSim.setText("Sim");
+
+        buttonGroup1.add(jrbCertidaoNao);
+        jrbCertidaoNao.setText("Não");
+
+        jcbSepulturaFalecido.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcbSepulturaFalecidoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
@@ -458,16 +560,6 @@ public class TelaFalecido extends javax.swing.JFrame {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(15, 15, 15)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(lblSepulturaFalecido, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblDataFalecimento, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblFamiliarResponsavelFalecido, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 97, Short.MAX_VALUE)
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtSepulturaFalecido)
-                            .addComponent(txtDataFalecimento)
-                            .addComponent(txtFamiliarResponsavelFalecido, javax.swing.GroupLayout.PREFERRED_SIZE, 311, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addGroup(jPanel4Layout.createSequentialGroup()
@@ -481,17 +573,31 @@ public class TelaFalecido extends javax.swing.JFrame {
                                 .addComponent(lblCpf, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel4Layout.createSequentialGroup()
-                                .addGap(87, 87, 87)
-                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(txtCpf, javax.swing.GroupLayout.DEFAULT_SIZE, 312, Short.MAX_VALUE)
-                                    .addComponent(txtCertidaoObito)
-                                    .addComponent(txtNomeCompleto)
-                                    .addComponent(txtDataNascimento)))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel4Layout.createSequentialGroup()
                                 .addGap(27, 27, 27)
                                 .addComponent(btnAtualizarFalecido)
                                 .addGap(18, 18, 18)
-                                .addComponent(btnCadastrarFalecido)))))
+                                .addComponent(btnCadastrarFalecido))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel4Layout.createSequentialGroup()
+                                .addGap(87, 87, 87)
+                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel4Layout.createSequentialGroup()
+                                        .addComponent(jrbCertidaoSim, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jrbCertidaoNao, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(txtCpf, javax.swing.GroupLayout.DEFAULT_SIZE, 312, Short.MAX_VALUE)
+                                        .addComponent(txtNomeCompleto)
+                                        .addComponent(txtDataNascimento))))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblDataFalecimento, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblFamiliarResponsavelFalecido, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblSepulturaFalecido, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 98, Short.MAX_VALUE)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtDataFalecimento)
+                            .addComponent(txtFamiliarResponsavelFalecido, javax.swing.GroupLayout.PREFERRED_SIZE, 311, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jcbSepulturaFalecido, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 291, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 304, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(27, 27, 27))
@@ -510,9 +616,11 @@ public class TelaFalecido extends javax.swing.JFrame {
                             .addComponent(lblDataNascimento)
                             .addComponent(txtDataNascimento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(lblCertidaoObito)
-                            .addComponent(txtCertidaoObito, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jrbCertidaoSim)
+                                .addComponent(jrbCertidaoNao))))
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -520,8 +628,8 @@ public class TelaFalecido extends javax.swing.JFrame {
                     .addComponent(txtCpf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtSepulturaFalecido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblSepulturaFalecido))
+                    .addComponent(lblSepulturaFalecido)
+                    .addComponent(jcbSepulturaFalecido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtDataFalecimento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -636,7 +744,7 @@ public class TelaFalecido extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(42, Short.MAX_VALUE))
+                .addContainerGap(43, Short.MAX_VALUE))
         );
 
         pack();
@@ -650,17 +758,9 @@ public class TelaFalecido extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtDataNascimentoActionPerformed
 
-    private void txtCertidaoObitoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCertidaoObitoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtCertidaoObitoActionPerformed
-
     private void txtCpfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCpfActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtCpfActionPerformed
-
-    private void txtSepulturaFalecidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSepulturaFalecidoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtSepulturaFalecidoActionPerformed
 
     private void btnDeletarFalecidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeletarFalecidoActionPerformed
         deletar();
@@ -707,6 +807,10 @@ public class TelaFalecido extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btnVoltarMenuActionPerformed
 
+    private void jcbSepulturaFalecidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbSepulturaFalecidoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jcbSepulturaFalecidoActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAtualizarFalecido;
     private javax.swing.JButton btnBuscarNomeFalecido;
@@ -714,6 +818,7 @@ public class TelaFalecido extends javax.swing.JFrame {
     private javax.swing.JButton btnDeletarFalecido;
     private javax.swing.JButton btnListarFalecidos;
     private javax.swing.JButton btnVoltarMenu;
+    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -722,6 +827,9 @@ public class TelaFalecido extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JComboBox<model.Sepultura> jcbSepulturaFalecido;
+    private javax.swing.JRadioButton jrbCertidaoNao;
+    private javax.swing.JRadioButton jrbCertidaoSim;
     private javax.swing.JLabel lblCertidaoObito;
     private javax.swing.JLabel lblCpf;
     private javax.swing.JLabel lblDataFalecimento;
@@ -732,12 +840,10 @@ public class TelaFalecido extends javax.swing.JFrame {
     private javax.swing.JLabel lblTituloFalecidos;
     private javax.swing.JTable tblFalecidos;
     private javax.swing.JTextField txtBuscarNomeFalecido;
-    private javax.swing.JTextField txtCertidaoObito;
     private javax.swing.JTextField txtCpf;
     private javax.swing.JTextField txtDataFalecimento;
     private javax.swing.JTextField txtDataNascimento;
     private javax.swing.JTextField txtFamiliarResponsavelFalecido;
     private javax.swing.JTextField txtNomeCompleto;
-    private javax.swing.JTextField txtSepulturaFalecido;
     // End of variables declaration//GEN-END:variables
 }

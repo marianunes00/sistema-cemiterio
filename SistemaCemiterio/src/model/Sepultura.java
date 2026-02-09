@@ -26,6 +26,13 @@ public class Sepultura {
         this.statusSepultura = statusSepultura;
     }
 
+    @Override
+    public String toString() {
+        return "Sepultura de ID " + idSepultura +" - " + statusSepultura;
+    }
+    
+    
+
     public int getIdSepultura() {
         return idSepultura;
     }

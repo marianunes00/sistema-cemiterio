@@ -70,6 +70,21 @@ public class SepulturaDao {
         }    
     }
     
+    public void atualizarStatus(int idSepultura, String status) {
+    String sql = "UPDATE sepultura SET statusSepultura = ? WHERE idSepultura = ?";
+
+    try (Connection conn = ConnectionFactory.getConnection();
+         PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+        stmt.setString(1, status);
+        stmt.setInt(2, idSepultura);
+        stmt.executeUpdate();
+
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+}
+    
     public void deletar(int idSepultura) {
             //detro dessa string coloca o comando sql do metodo para deletar
     String sql = "DELETE FROM sepultura WHERE idSepultura = ?";

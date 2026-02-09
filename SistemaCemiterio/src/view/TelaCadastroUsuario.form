@@ -119,19 +119,22 @@
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Component id="lblUsuarioNovo" min="-2" max="-2" attributes="0"/>
                                       <Component id="lblLoginNovo" min="-2" max="-2" attributes="0"/>
-                                      <Group type="103" alignment="0" groupAlignment="1" attributes="0">
-                                          <Component id="lblSenhaNovo" alignment="0" min="-2" max="-2" attributes="0"/>
-                                          <Group type="102" alignment="1" attributes="0">
-                                              <Component id="lblPerfilNovo" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
-                                              <Group type="103" groupAlignment="0" attributes="0">
-                                                  <Component id="cmbPerfilNovo" min="-2" pref="172" max="-2" attributes="0"/>
-                                                  <Group type="103" groupAlignment="1" attributes="0">
-                                                      <Component id="txtUsuarioNovo" min="-2" pref="182" max="-2" attributes="0"/>
-                                                      <Component id="txtLoginNovo" min="-2" pref="182" max="-2" attributes="0"/>
-                                                      <Component id="txtSenhaNova" alignment="1" min="-2" pref="182" max="-2" attributes="0"/>
-                                                  </Group>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Group type="103" groupAlignment="0" attributes="0">
+                                              <Group type="102" alignment="1" attributes="0">
+                                                  <Component id="lblPerfilNovo" min="-2" max="-2" attributes="0"/>
+                                                  <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
                                               </Group>
+                                              <Group type="102" alignment="0" attributes="0">
+                                                  <Component id="lblSenhaNovo" min="-2" max="-2" attributes="0"/>
+                                                  <EmptySpace min="-2" pref="44" max="-2" attributes="0"/>
+                                              </Group>
+                                          </Group>
+                                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                              <Component id="cmbPerfilNovo" min="-2" pref="172" max="-2" attributes="0"/>
+                                              <Component id="txtUsuarioNovo" alignment="0" pref="182" max="32767" attributes="0"/>
+                                              <Component id="txtLoginNovo" alignment="0" pref="182" max="32767" attributes="0"/>
+                                              <Component id="jpfSenhaCadastro" alignment="0" max="32767" attributes="0"/>
                                           </Group>
                                       </Group>
                                       <Component id="btnCadastrarNovoUsuario" alignment="0" min="-2" pref="274" max="-2" attributes="0"/>
@@ -165,7 +168,7 @@
                           <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="lblSenhaNovo" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="txtSenhaNova" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="jpfSenhaCadastro" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
@@ -261,8 +264,6 @@
                     <Property name="text" type="java.lang.String" value="Senha"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JTextField" name="txtSenhaNova">
-                </Component>
                 <Component class="javax.swing.JComboBox" name="cmbPerfilNovo">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -303,6 +304,11 @@
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnVoltarAoMenuActionPerformed"/>
+                  </Events>
+                </Component>
+                <Component class="javax.swing.JPasswordField" name="jpfSenhaCadastro">
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jpfSenhaCadastroActionPerformed"/>
                   </Events>
                 </Component>
               </SubComponents>
