@@ -20,6 +20,7 @@ public class FalecidoDao {
     
       public void inserir(Falecido falecido){
         
+          //coamndo sql que insere os dados na tabela do banco
         String sql = "INSERT INTO falecido(nomecompleto,dataNascimento,possuiCertidaoObito"
                 + ",cpf,sepultura,dataFalecimento,familiarResponsavel)VALUES(?,?,?,?,?,?,?) ";
         

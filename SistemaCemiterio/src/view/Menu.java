@@ -72,10 +72,8 @@ public class Menu extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
-        lblNomeUsuario = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         btnSairLogin = new javax.swing.JButton();
-        lblPerfilUsuario = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         btnAvisosInternos = new javax.swing.JButton();
         btnCadastrarUsuario = new javax.swing.JButton();
@@ -95,6 +93,8 @@ public class Menu extends javax.swing.JFrame {
         lblImgRelatorio = new javax.swing.JLabel();
         btnAcessarRelatorio = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
+        lblNomeUsuario = new javax.swing.JLabel();
+        lblPerfilUsuario = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -102,11 +102,6 @@ public class Menu extends javax.swing.JFrame {
         jPanel1.setPreferredSize(new java.awt.Dimension(1700, 2342));
 
         jPanel6.setBackground(new java.awt.Color(255, 255, 255));
-
-        lblNomeUsuario.setBackground(new java.awt.Color(0, 102, 102));
-        lblNomeUsuario.setFont(new java.awt.Font("Garamond", 1, 18)); // NOI18N
-        lblNomeUsuario.setForeground(new java.awt.Color(0, 102, 102));
-        lblNomeUsuario.setText("  ");
 
         btnSairLogin.setBackground(new java.awt.Color(0, 102, 102));
         btnSairLogin.setFont(new java.awt.Font("Garamond", 1, 18)); // NOI18N
@@ -118,11 +113,6 @@ public class Menu extends javax.swing.JFrame {
                 btnSairLoginActionPerformed(evt);
             }
         });
-
-        lblPerfilUsuario.setBackground(new java.awt.Color(0, 204, 204));
-        lblPerfilUsuario.setFont(new java.awt.Font("Garamond", 0, 18)); // NOI18N
-        lblPerfilUsuario.setForeground(new java.awt.Color(0, 102, 102));
-        lblPerfilUsuario.setText("  ");
 
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/logoretangularnova.png"))); // NOI18N
 
@@ -162,28 +152,16 @@ public class Menu extends javax.swing.JFrame {
                     .addComponent(btnCadastrarUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, 141, Short.MAX_VALUE)
                     .addComponent(btnAvisosInternos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnSairLogin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 456, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 406, Short.MAX_VALUE)
                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblNomeUsuario, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblPerfilUsuario, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(17, 17, 17))
+                .addGap(286, 286, 286))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addGap(17, 17, 17)
-                        .addComponent(lblNomeUsuario)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(lblPerfilUsuario)
-                        .addGap(51, 51, 51))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                .addContainerGap()
+                .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel3))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
@@ -406,6 +384,16 @@ public class Menu extends javax.swing.JFrame {
                 .addContainerGap(1501, Short.MAX_VALUE))
         );
 
+        lblNomeUsuario.setBackground(new java.awt.Color(0, 102, 102));
+        lblNomeUsuario.setFont(new java.awt.Font("Garamond", 1, 18)); // NOI18N
+        lblNomeUsuario.setForeground(new java.awt.Color(0, 102, 102));
+        lblNomeUsuario.setText("  ");
+
+        lblPerfilUsuario.setBackground(new java.awt.Color(0, 204, 204));
+        lblPerfilUsuario.setFont(new java.awt.Font("Garamond", 0, 18)); // NOI18N
+        lblPerfilUsuario.setForeground(new java.awt.Color(0, 102, 102));
+        lblPerfilUsuario.setText("  ");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -413,15 +401,26 @@ public class Menu extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblNomeUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblPerfilUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(192, 192, 192))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(26, 26, 26)
+                        .addComponent(lblNomeUsuario)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(lblPerfilUsuario)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );

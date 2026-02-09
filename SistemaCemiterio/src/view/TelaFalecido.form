@@ -41,7 +41,7 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="43" max="32767" attributes="0"/>
+              <EmptySpace pref="37" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -92,43 +92,26 @@
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                      <EmptySpace min="-2" pref="48" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
-                              <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="lblDataNascimento" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblNomeCompleto" min="-2" pref="135" max="-2" attributes="0"/>
+                                  <Component id="lblCertidaoObito" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblCpf" alignment="0" min="-2" pref="73" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace min="-2" pref="45" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" attributes="0">
-                                      <Component id="btnListarFalecidos" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace max="32767" attributes="0"/>
-                                      <Component id="btnDeletarFalecido" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jrbCertidaoSim" min="-2" pref="98" max="-2" attributes="0"/>
+                                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                                      <Component id="jrbCertidaoNao" min="-2" pref="98" max="-2" attributes="0"/>
                                   </Group>
                                   <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="lblDataNascimento" min="-2" max="-2" attributes="0"/>
-                                      <Component id="lblNomeCompleto" min="-2" pref="135" max="-2" attributes="0"/>
-                                      <Component id="lblCertidaoObito" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="lblCpf" alignment="0" min="-2" pref="73" max="-2" attributes="0"/>
-                                  </Group>
-                              </Group>
-                              <Group type="103" groupAlignment="1" attributes="0">
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
-                                      <Component id="btnAtualizarFalecido" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Component id="btnCadastrarFalecido" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <EmptySpace min="-2" pref="87" max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Group type="102" attributes="0">
-                                              <Component id="jrbCertidaoSim" min="-2" pref="98" max="-2" attributes="0"/>
-                                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                                              <Component id="jrbCertidaoNao" min="-2" pref="98" max="-2" attributes="0"/>
-                                          </Group>
-                                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                              <Component id="txtCpf" pref="312" max="32767" attributes="0"/>
-                                              <Component id="txtNomeCompleto" max="32767" attributes="0"/>
-                                              <Component id="txtDataNascimento" max="32767" attributes="0"/>
-                                          </Group>
-                                      </Group>
+                                      <Component id="txtNomeCompleto" max="32767" attributes="0"/>
+                                      <Component id="txtDataNascimento" max="32767" attributes="0"/>
+                                      <Component id="txtCpf" alignment="0" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
                           </Group>
@@ -138,26 +121,37 @@
                                   <Component id="lblFamiliarResponsavelFalecido" min="-2" pref="154" max="-2" attributes="0"/>
                                   <Component id="lblSepulturaFalecido" alignment="0" min="-2" pref="73" max="-2" attributes="0"/>
                               </Group>
-                              <EmptySpace pref="98" max="32767" attributes="0"/>
-                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="txtDataFalecimento" max="32767" attributes="0"/>
-                                  <Component id="txtFamiliarResponsavelFalecido" alignment="0" min="-2" pref="311" max="-2" attributes="0"/>
-                                  <Component id="jcbSepulturaFalecido" alignment="0" min="-2" pref="190" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="52" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="jcbSepulturaFalecido" min="-2" pref="357" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                      <Component id="txtDataFalecimento" pref="357" max="32767" attributes="0"/>
+                                      <Component id="txtFamiliarResponsavelFalecido" max="32767" attributes="0"/>
+                                  </Group>
                               </Group>
                           </Group>
+                          <Group type="102" alignment="1" attributes="0">
+                              <Component id="btnListarFalecidos" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Component id="btnDeletarFalecido" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
+                              <Component id="btnAtualizarFalecido" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Component id="btnCadastrarFalecido" min="-2" max="-2" attributes="0"/>
+                          </Group>
                       </Group>
-                      <EmptySpace pref="291" max="32767" attributes="0"/>
+                      <EmptySpace min="-2" pref="248" max="-2" attributes="0"/>
                       <Component id="jPanel1" min="-2" pref="304" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
+                              <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="lblNomeCompleto" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="txtNomeCompleto" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -176,9 +170,12 @@
                                   </Group>
                               </Group>
                           </Group>
-                          <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
+                          <Group type="102" alignment="1" attributes="0">
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
+                          </Group>
                       </Group>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="lblCpf" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="txtCpf" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -444,6 +441,9 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="N&#xe3;o"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jrbCertidaoNaoActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JComboBox" name="jcbSepulturaFalecido">
               <Properties>
